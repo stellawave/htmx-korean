@@ -71,7 +71,7 @@ if(window.location.search=="?ads=true") {
 <div class="dark-hero full-width" classes="add appear">
   <div class="main">
       <span class="logo dark">&lt;<span class="blue">/</span>&gt; <span class="no-mobile">htm<span class="blue">x</span></span></span>
-      <sub class="no-mobile"><i>high power tools for HTML</i></sub>
+      <sub class="no-mobile"><i>HTML을 위한 고성능 도구</i></sub>
   </div>
   <div class="wuw">
      <a href="https://swag.htmx.org/products/shut-up-warren-tee">
@@ -91,57 +91,57 @@ if(window.location.search=="?ads=true") {
 </div>
 
 <div class="alert">
-<b>NEWS:</b> htmx 2.0 has been released!  It is not currently marked as <a href="https://docs.npmjs.com/cli/v10/commands/npm-dist-tag#purpose"><code>latest</code></a>
-in NPM so that people using the <a href="https://v1.htmx.org">1.x line</a> are not accidentally upgraded.  We will mark
-2.0 as <code>latest</code> at some point in 2025.
+<b>NEWS:</b> htmx 2.0이 출시되었습니다! <a href="https://v1.htmx.org">1.x 라인</a>을 사용하는 사람들이 
+실수로 업그레이드하는 일이 없도록 현재 NPM에는 <a href="https://docs.npmjs.com/cli/v10/commands/npm-dist-tag#purpose"><code>latest</code></a>로 표시되지 있지 않습니다. 
+2025년 어느 시점에 2.0을 <code>latest</code>으로 표시할 예정입니다.
 </div>
 
-<h2>introduction</h2>
+<h2>소개</h2>
 
-htmx gives you access to [AJAX](@/docs.md#ajax), [CSS Transitions](@/docs.md#css_transitions), [WebSockets](@/docs.md#websockets-and-sse) and [Server Sent Events](@/docs.md#websockets-and-sse)
-directly in HTML, using [attributes](@/reference.md#attributes), so you can build
-[modern user interfaces](@/examples/_index.md) with the [simplicity](https://en.wikipedia.org/wiki/HATEOAS) and
-[power](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) of hypertext
+htmx를 사용하면 [속성들(attributes)](https://htmx.org/reference#attributes)을 사용하여 HTML에서 직접
+[AJAX](https://htmx.org/docs#ajax), [CSS Transitions](https://htmx.org/docs#css_transitions), [WebSockets](https://htmx.org/docs#websockets) 및 [Server Sent Events](https://htmx.org/docs#sse)를
+사용할 수 있으므로 하이퍼텍스트의 [강력함](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)과 [단순성](https://en.wikipedia.org/wiki/HATEOAS)으로
+[최신 사용자 인터페이스](https://htmx.org/examples)를 구축할 수 있습니다.
 
-htmx is small ([~14k min.gz'd](https://unpkg.com/htmx.org/dist/)),
-[dependency-free](https://github.com/bigskysoftware/htmx/blob/master/package.json),
-[extendable](https://extensions.htmx.org) & has **reduced** code base sizes by [67% when compared with react](@/essays/a-real-world-react-to-htmx-port.md)
+htmx은 작고 ([~14k min.gz'd](https://unpkg.com/htmx.org/dist/)),
+[종속성이 없으며](https://github.com/bigskysoftware/htmx/blob/master/package.json),
+[확장가능하며](https://extensions.htmx.org) & [react에 비해 코드 베이스 크기를 67%](@/essays/a-real-world-react-to-htmx-port.md) **줄였습니다.**
 
-<h2>motivation</h2>
+<h2>시작을 위한 동기부여</h2>
 
-* Why should only [`<a>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a) & [`<form>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form) be able to make HTTP requests?
-* Why should only [`click`](https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event) & [`submit`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event) events trigger them?
-* Why should only [`GET`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) & [`POST`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST) methods be [available](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)?
-* Why should you only be able to replace the **entire** screen?
+* 왜 [`<a>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a)와 [`<form>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form)만 HTTP 요청을 할 수 있나요?
+* 왜 오직 [`click`](https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event)과 [`submit`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event) 이벤트만 트리거할 수 있나요?
+* 왜 [`GET`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)과 [`POST`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST)만 [사용](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)할 수 있나요?
+* 왜 우리는 **전체** 화면만 교체할 수 있나요?
 
-By removing these constraints, htmx completes HTML as a [hypertext](https://en.wikipedia.org/wiki/Hypertext)
+htmx는 이런 제멋대로인 제약 조건을 제거함으로써 HTML을 
+[hypertext](https://en.wikipedia.org/wiki/Hypertext)로 완성합니다.
 
-<h2>quick start</h2>
+<h2>빠른 시작</h2>
 
 ```html
   <script src="https://unpkg.com/htmx.org@2.0.0"></script>
-  <!-- have a button POST a click via AJAX -->
+  <!-- AJAX를 통해 클릭으로 POST를 요청하는 버튼입니다 -->
   <button hx-post="/clicked" hx-swap="outerHTML">
     Click Me
   </button>
 ```
 
-The [`hx-post`](@/attributes/hx-post.md) and [`hx-swap`](@/attributes/hx-swap.md) attributes on
-this button tell htmx:
+[`hx-post`](@/attributes/hx-post.md)와 [`hx-swap`](@/attributes/hx-swap.md) 속성들은 htmx에게 알려줍니다:
 
-> "When a user clicks on this button, issue an AJAX request to /clicked, and replace the entire button with the HTML response"
+> "사용자가 이 버튼을 클릭하면 /clicked으로 AJAX 요청을 보내고 버튼 전체를 응답 컨텐츠로 바꿉니다."
 
-htmx is the successor to [intercooler.js](http://intercoolerjs.org)
+htmx는 [intercooler.js](http://intercoolerjs.org)의 후계 프로젝트입니다.
 
-Read the [docs introduction](@/docs.md#introduction) for a more in-depth... introduction.
+더 자세한 소개는 [docs introduction](@/docs.md#introduction)를 읽어보세요.
 
-Note that htmx 2.x has dropped IE support.  If you require IE support you can use the [1.x](https://v1.htmx.org)
-code-line, which will be supported in perpetuity.
+NOTE: htmx 2.x에서는 IE 지원이 중단되었습니다.  
+IE 지원이 필요한 경우 [1.x](https://v1.htmx.org) 코드줄을 사용하면 영구적으로 지원됩니다.
 
 <h2><a name='book'></a>book</h2>
 
-We are happy to announce the release of [Hypermedia Systems](https://hypermedia.systems), a book on how to build
-[Hypermedia-Driven Applications](@/essays/hypermedia-driven-applications.md) using htmx & more:
+htmx를 사용하여 [Hypermedia-Driven Applications](@/essays/hypermedia-driven-applications.md)을 
+구축하는 방법에 대한 책인 [Hypermedia Systems](https://hypermedia.systems)의 출시를 발표하게 되어 기쁩니다:
 
 <div style="text-align: center;padding: 24px">
 <a href="https://www.amazon.com/dp/B0C9S88QV6/ref=sr_1_1?crid=1P0I3GXQK32TN"><img src="/img/hypermedia-systems.png" alt="hypermedia systems"></a>
@@ -150,10 +150,10 @@ We are happy to announce the release of [Hypermedia Systems](https://hypermedia.
 <h2>sponsors <iframe src="https://github.com/sponsors/bigskysoftware/button" title="Sponsor htmx" height="32" width="114" style="border: 1px solid gray; border-radius: 12px; float:right"></iframe></h2>
 
 
-htmx development can be supported via [GitHub Sponsors](https://github.com/sponsors/bigskysoftware?o=esb)
+[깃허브 스폰서](https://github.com/sponsors/bigskysoftware?o=esb)를 통해 htmx 개발을 지원할 수 있습니다.
 
 
-Thank you to all our generous <a href="https://github.com/sponsors/bigskysoftware?o=esb">supporters</a>, including:
+아낌없는 <a href="https://github.com/sponsors/bigskysoftware?o=esb">후원자</a> 여러분께 감사드립니다:
 
 <style>
 #sponsor-table td {

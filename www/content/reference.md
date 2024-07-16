@@ -16,7 +16,7 @@ title = "Reference"
 
 ## Core Attribute Reference {#attributes}
 
-The most common attributes when using htmx.
+htmx를 사용할 때 가장 일반적으로 사용되는 속성입니다.
 
 <div class="info-table">
 

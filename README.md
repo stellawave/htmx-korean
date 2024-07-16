@@ -16,8 +16,7 @@ htmx를 사용하면 [속성들(attributes)](https://htmx.org/reference#attribut
 
 htmx는 크기가 작고 ([~14k min.gz'd](https://unpkg.com/htmx.org/dist/)),
 [종속성이 없으며](https://github.com/bigskysoftware/htmx/blob/master/package.json),
-[확장가능하며](https://htmx.org/extensions) &
-IE11에서도 호환됩니다.
+[확장가능](https://htmx.org/extensions)합니다.
 
 ## 시작을 위한 동기부여
 
@@ -41,7 +40,7 @@ htmx는 이런 제멋대로인 제약 조건을 제거함으로써 HTML을
 
 [`hx-post`](https://htmx.org/attributes/hx-post)와 [`hx-swap`](https://htmx.org/attributes/hx-swap) 속성들은 htmx에게 알려줍니다:
 
-> "사용자가 이 버튼을 클릭하면 /clicked으로 AJAX 요청을 보내고 전체 버튼을 응답으로 바꿉니다."
+> "사용자가 이 버튼을 클릭하면 /clicked으로 AJAX 요청을 보내고 버튼 전체를 응답 컨텐츠로 바꿉니다."
 
 htmx는 [intercooler.js](http://intercoolerjs.org)의 후계 프로젝트입니다.
 
@@ -71,6 +70,7 @@ npm install htmx.org --save
 
 이 한국어 번역은 htmx 개발과 별개로 이루어지고 있는 독자적인 문서 번역입니다.
 htmx 같은 완전한 고유명사의 경우 영어로 표기하였으며, 한국어로 변환할 수 있는 경우 가능하면 변환하였습니다.
+번역은 htmx 2.0 버전을 기준으로 번역되었습니다.
 번역 등에 대해 의견을 제안해주시려면 이슈나 풀 리퀘스트를 올려주세요.
 
 ### 개발 가이드
