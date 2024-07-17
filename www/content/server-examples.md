@@ -2,15 +2,15 @@
 title = "Server-Side Examples"
 +++
 
-There are many examples of integrating htmx with server-side frameworks available on GitHub. Generally speaking,
-most server-side frameworks are already pretty well set up to integrate with htmx - after all, most of them were
-rendering HTML long before JSON became popular.
+GitHub에는 서버 측 프레임워크와 htmx를 통합하는 예제가 많이 있습니다. 
+일반적으로 대부분의 서버 측 프레임워크는 이미 htmx와 통합되도록 꽤 잘 설정되어 있으며, 
+JSON이 대중화되기 훨씬 전부터 HTML을 렌더링해 왔습니다.
 
-Different frameworks and platforms may offer alternative systems for installing htmx - for example, in the Java / JVM
-ecosystem, [WebJars](https://www.webjars.org) allows the use of npm packages with popular Java build tools such as
-Maven and Gradle.
+다른 프레임워크와 플랫폼에서는 htmx를 설치하기 위한 대체 시스템을 제공할 수 있습니다. 
+예를 들어 Java / JVM 에코시스템에서는 [WebJars](https://www.webjars.org)를 통해 Maven 및 Gradle과 같은 
+널리 사용되는 Java 빌드 도구에서 npm 패키지를 사용할 수 있습니다.
 
-These examples may make it a bit easier to get started using htmx with your platform of choice.
+이러한 예제를 잘 이용하면 선택한 플랫폼에서 htmx를 사용하는 것이 좀 더 쉬워질 것 입니다.
 
 ## General Resources
 

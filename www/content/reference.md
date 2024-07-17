@@ -253,7 +253,7 @@ Htmx에는 프로그래밍 방식으로 또는 선언적으로 액세스할 수 
 
 </div>
 
-자바스크립트에서 직접 설정하거나 'meta' 태그를 사용할 수 있습니다:
+자바스크립트에서 직접 설정하거나 `meta` 태그를 사용할 수 있습니다:
 
 ```html
 <meta name="htmx-config" content='{"defaultSwapStyle":"outerHTML"}'>
