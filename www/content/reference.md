@@ -20,53 +20,53 @@ htmx를 사용할 때 가장 일반적으로 사용되는 속성입니다.
 
 <div class="info-table">
 
-| Attribute                                        | Description                                                                                                        |
-|--------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
-| [`hx-get`](@/attributes/hx-get.md)               | issues a `GET` to the specified URL                                                                                |
-| [`hx-post`](@/attributes/hx-post.md)             | issues a `POST` to the specified URL                                                                               |
-| [`hx-on*`](@/attributes/hx-on.md)                | handle events with inline scripts on elements                                                                      |
-| [`hx-push-url`](@/attributes/hx-push-url.md)     | push a URL into the browser location bar to create history                                                         |
-| [`hx-select`](@/attributes/hx-select.md)         | select content to swap in from a response                                                                          |
-| [`hx-select-oob`](@/attributes/hx-select-oob.md) | select content to swap in from a response, somewhere other than the target (out of band)                           |
-| [`hx-swap`](@/attributes/hx-swap.md)             | controls how content will swap in (`outerHTML`, `beforeend`, `afterend`, ...)                                      |
-| [`hx-swap-oob`](@/attributes/hx-swap-oob.md)     | mark element to swap in from a response (out of band)                                                              |
-| [`hx-target`](@/attributes/hx-target.md)         | specifies the target element to be swapped                                                                         |
-| [`hx-trigger`](@/attributes/hx-trigger.md)       | specifies the event that triggers the request                                                                      |
-| [`hx-vals`](@/attributes/hx-vals.md)             | add values to submit with the request (JSON format)                                                                |
+| Attribute                                        | Description                                                  |
+|--------------------------------------------------|--------------------------------------------------------------|
+| [`hx-get`](@/attributes/hx-get.md)               | 지정된 URL로 `GET` 요청을 보냅니다                                      |
+| [`hx-post`](@/attributes/hx-post.md)             | 지정된 URL로 `POST` 요청을 보냅니다                                     |
+| [`hx-on*`](@/attributes/hx-on.md)                | 요소에서 인라인 스크립트로 이벤트를 처리합니다                                    |
+| [`hx-push-url`](@/attributes/hx-push-url.md)     | 히스토리를 생성하기 위해 브라우저 주소창에 URL을 추가합니다                           |
+| [`hx-select`](@/attributes/hx-select.md)         | 응답으로 교체할 콘텐츠를 선택합니다                                          |
+| [`hx-select-oob`](@/attributes/hx-select-oob.md) | 대상 이외의 위치(out of band)에서 응답으로 교체할 콘텐츠를 선택합니다                 |
+| [`hx-swap`](@/attributes/hx-swap.md)             | 콘텐츠 교체 방식을 제어합니다 (`outerHTML`, `beforeend`, `afterend`, ...) |
+| [`hx-swap-oob`](@/attributes/hx-swap-oob.md)     | 응답으로 교체할 요소 표시 (out of band)                                 |
+| [`hx-target`](@/attributes/hx-target.md)         | 교체할 대상 요소를 지정합니다                                             |
+| [`hx-trigger`](@/attributes/hx-trigger.md)       | 요청을 트리거하는 이벤트를 지정합니다                                         |
+| [`hx-vals`](@/attributes/hx-vals.md)             | 요청과 함께 보낼 값을 추가합니다 (JSON 양식으로)                               |
 
 </div>
 
 ## Additional Attribute Reference {#attributes-additional}
 
-All other attributes available in htmx.
+기타 모든 속성은 htmx에서 사용할 수 있습니다.
 
 <div class="info-table">
 
-| Attribute                                            | Description                                                                                                                        |
-|------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| [`hx-boost`](@/attributes/hx-boost.md)               | add [progressive enhancement](https://en.wikipedia.org/wiki/Progressive_enhancement) for links and forms                           |
-| [`hx-confirm`](@/attributes/hx-confirm.md)           | shows a `confirm()` dialog before issuing a request                                                                                |
-| [`hx-delete`](@/attributes/hx-delete.md)             | issues a `DELETE` to the specified URL                                                                                             |
-| [`hx-disable`](@/attributes/hx-disable.md)           | disables htmx processing for the given node and any children nodes                                                                 |
-| [`hx-disabled-elt`](@/attributes/hx-disabled-elt.md) | adds the `disabled` attribute to the specified elements while a request is in flight                                               |
-| [`hx-disinherit`](@/attributes/hx-disinherit.md)     | control and disable automatic attribute inheritance for child nodes                                                                |
-| [`hx-encoding`](@/attributes/hx-encoding.md)         | changes the request encoding type                                                                                                  |
-| [`hx-ext`](@/attributes/hx-ext.md)                   | extensions to use for this element                                                                                                 |
-| [`hx-headers`](@/attributes/hx-headers.md)           | adds to the headers that will be submitted with the request                                                                        |
-| [`hx-history`](@/attributes/hx-history.md)           | prevent sensitive data being saved to the history cache                                                                            |
-| [`hx-history-elt`](@/attributes/hx-history-elt.md)   | the element to snapshot and restore during history navigation                                                                      |
-| [`hx-include`](@/attributes/hx-include.md)           | include additional data in requests                                                                                                |
-| [`hx-indicator`](@/attributes/hx-indicator.md)       | the element to put the `htmx-request` class on during the request                                                                  |
-| [`hx-inherit`](@/attributes/hx-inherit.md)           | control and enable automatic attribute inheritance for child nodes if it has been disabled by default                            |
-| [`hx-params`](@/attributes/hx-params.md)             | filters the parameters that will be submitted with a request                                                                       |
-| [`hx-patch`](@/attributes/hx-patch.md)               | issues a `PATCH` to the specified URL                                                                                              |
-| [`hx-preserve`](@/attributes/hx-preserve.md)         | specifies elements to keep unchanged between requests                                                                              |
-| [`hx-prompt`](@/attributes/hx-prompt.md)             | shows a `prompt()` before submitting a request                                                                                     |
-| [`hx-put`](@/attributes/hx-put.md)                   | issues a `PUT` to the specified URL                                                                                                |
-| [`hx-replace-url`](@/attributes/hx-replace-url.md)   | replace the URL in the browser location bar                                                                                        |
-| [`hx-request`](@/attributes/hx-request.md)           | configures various aspects of the request                                                                                          |
-| [`hx-sync`](@/attributes/hx-sync.md)                 | control how requests made by different elements are synchronized                                                                   |
-| [`hx-validate`](@/attributes/hx-validate.md)         | force elements to validate themselves before a request                                                                             |
+| Attribute                                            | Description                                                                                                                       |
+|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| [`hx-boost`](@/attributes/hx-boost.md)               | 링크 및 양식에 [점진적 향상](https://en.wikipedia.org/wiki/Progressive_enhancement)을 추가합니다                                                   |
+| [`hx-confirm`](@/attributes/hx-confirm.md)           | 요청을 실행하기 전에 `confirm()` 대화 상자를 표시합니다                                                                                              |
+| [`hx-delete`](@/attributes/hx-delete.md)             | 지정된 URL로 `delete` 요청을 보냅니다                                                                                                        |
+| [`hx-disable`](@/attributes/hx-disable.md)           | 지정된 노드 및 모든 하위 노드에 대한 HTMX 처리를 비활성화합니다                                                                                            |
+| [`hx-disabled-elt`](@/attributes/hx-disabled-elt.md) | 요청이 전송되는 동안 지정된 요소에 `disabled` 속성을 추가합니다                                                                                          |
+| [`hx-disinherit`](@/attributes/hx-disinherit.md)     | 자식 노드에 대한 자동 속성 상속 제어 및 비활성화                                                                                                      |
+| [`hx-encoding`](@/attributes/hx-encoding.md)         | 요청의 인코딩 유형 변경                                                                                                                     |
+| [`hx-ext`](@/attributes/hx-ext.md)                   | 이 요소에 사용할 확장 지정                                                                                                                   |
+| [`hx-headers`](@/attributes/hx-headers.md)           | 요청과 함께 보내질 헤더를 추가합니다                                                                                                              |
+| [`hx-history`](@/attributes/hx-history.md)           | 민감한 데이터가 히스토리 캐시에 저장되는 것을 방지합니다                                                                                                   |
+| [`hx-history-elt`](@/attributes/hx-history-elt.md)   | 히스토리 탐색 중 스냅샷 및 복원할 요소를 선택합니다                                                                                                     |
+| [`hx-include`](@/attributes/hx-include.md)           | 요청에 추가 데이터를 포함합니다                                                                                                                 |
+| [`hx-indicator`](@/attributes/hx-indicator.md)       | 요청 중에 `htmx-request` 클래스를 넣을 요소 지정                                                                                                |
+| [`hx-inherit`](@/attributes/hx-inherit.md)           | 기본적으로 비활성화된 경우, 자식 노드에 대한 자동 속성 상속을 제어하고 활성화합니다                                                                                   |
+| [`hx-params`](@/attributes/hx-params.md)             | 요청과 함께 제출될 매개변수를 필터링합니다                                                                                                           |
+| [`hx-patch`](@/attributes/hx-patch.md)               | 지정된 URL로 `PATCH` 요청을 보냅니다                                                                                                         |
+| [`hx-preserve`](@/attributes/hx-preserve.md)         | 요청 사이에 변경되지 않을 요소를 지정합니다                                                                                                          |
+| [`hx-prompt`](@/attributes/hx-prompt.md)             | 요청을 제출하기 전에 `prompt()`를 보여줍니다                                                                                                     |
+| [`hx-put`](@/attributes/hx-put.md)                   | 지정된 URL로 `PUT` 요청을 보냅니다                                                                                                           |
+| [`hx-replace-url`](@/attributes/hx-replace-url.md)   | 브라우저 위치 표시줄에 URL을 바꿉니다                                                                                                            |
+| [`hx-request`](@/attributes/hx-request.md)           | 요청의 다양한 측면을 구성합니다                                                                                         |
+| [`hx-sync`](@/attributes/hx-sync.md)                 | 다른 요소에 의해 수행된 요청이 어떻게 동기화되는지를 제어합니다                                                                                               |
+| [`hx-validate`](@/attributes/hx-validate.md)         | 요청 전에 요소가 스스로 유효성을 검사하도록 강제                                                                                                       |
 | [`hx-vars`](@/attributes/hx-vars.md)                 | adds values dynamically to the parameters to submit with the request (deprecated, please use [`hx-vals`](@/attributes/hx-vals.md)) |
 
 </div>
@@ -77,11 +77,11 @@ All other attributes available in htmx.
 
 | Class | Description |
 |-----------|-------------|
-| `htmx-added` | Applied to a new piece of content before it is swapped, removed after it is settled.
-| `htmx-indicator` | A dynamically generated class that will toggle visible (opacity:1) when a `htmx-request` class is present
-| `htmx-request` | Applied to either the element or the element specified with [`hx-indicator`](@/attributes/hx-indicator.md) while a request is ongoing
-| `htmx-settling` | Applied to a target after content is swapped, removed after it is settled. The duration can be modified via [`hx-swap`](@/attributes/hx-swap.md).
-| `htmx-swapping` | Applied to a target before any content is swapped, removed after it is swapped. The duration can be modified via [`hx-swap`](@/attributes/hx-swap.md).
+| `htmx-added` | 새 콘텐츠가 교체되기 전에 적용되며, 정착된 후에 제거됩니다.
+| `htmx-indicator` | `htmx-request` 클래스가 존재할 때 가시성(opacity:1)이 전환되는 동적으로 생성된 클래스입니다.
+| `htmx-request` | 요청이 진행되는 동안 요소나 [`hx-indicator`](@/attributes/hx-indicator.md)로 지정된 요소에 적용됩니다.
+| `htmx-settling` | 콘텐츠가 교체된 후 대상에 적용되며, 정착된 후에 제거됩니다. 지속 시간은 [`hx-swap`](@/attributes/hx-swap.md)을 통해 수정할 수 있습니다.
+| `htmx-swapping` | 콘텐츠가 교체되기 전에 대상에 적용되며, 교체된 후에 제거됩니다. 지속 시간은 [`hx-swap`](@/attributes/hx-swap.md)을 통해 수정할 수 있습니다.
 
 </div>
 
@@ -93,14 +93,14 @@ All other attributes available in htmx.
 
 | Header | Description |
 |--------|-------------|
-| `HX-Boosted` | indicates that the request is via an element using [hx-boost](@/attributes/hx-boost.md)
-| `HX-Current-URL` | the current URL of the browser
-| `HX-History-Restore-Request` | "true" if the request is for history restoration after a miss in the local history cache
-| `HX-Prompt` | the user response to an [hx-prompt](@/attributes/hx-prompt.md)
-| `HX-Request` | always "true"
-| `HX-Target` | the `id` of the target element if it exists
-| `HX-Trigger-Name` | the `name` of the triggered element if it exists
-| `HX-Trigger` | the `id` of the triggered element if it exists
+| `HX-Boosted` | 요청이 [hx-boost](@/attributes/hx-boost.md)를 사용하는 요소를 통해 이루어졌음을 나타냅니다.
+| `HX-Current-URL` | 브라우저의 현재 URL
+| `HX-History-Restore-Request` | 로컬 히스토리 캐시 누락 후 히스토리 복원 요청인 경우 "true"입니다.
+| `HX-Prompt` | [hx-prompt](@/attributes/hx-prompt.md)에 대한 사용자 응답.
+| `HX-Request` | 항상 "true"
+| `HX-Target` | 대상 요소가 있는 경우 그것의 `id`
+| `HX-Trigger-Name` | 트리거된 요소가 존재하는 경우 그것의 `name`
+| `HX-Trigger` | 트리거된 요소가 존재하는 경우 그것의 `id`
 
 </div>
 
@@ -110,17 +110,17 @@ All other attributes available in htmx.
 
 | Header                                               | Description |
 |------------------------------------------------------|-------------|
-| [`HX-Location`](@/headers/hx-location.md)            | allows you to do a client-side redirect that does not do a full page reload
-| [`HX-Push-Url`](@/headers/hx-push-url.md)            | pushes a new url into the history stack
-| `HX-Redirect`                                        | can be used to do a client-side redirect to a new location
-| `HX-Refresh`                                         | if set to "true" the client-side will do a full refresh of the page
-| [`HX-Replace-Url`](@/headers/hx-replace-url.md)      | replaces the current URL in the location bar
-| `HX-Reswap`                                          | allows you to specify how the response will be swapped. See [hx-swap](@/attributes/hx-swap.md) for possible values
-| `HX-Retarget`                                        | a CSS selector that updates the target of the content update to a different element on the page
-| `HX-Reselect`                                        | a CSS selector that allows you to choose which part of the response is used to be swapped in. Overrides an existing [`hx-select`](@/attributes/hx-select.md) on the triggering element
-| [`HX-Trigger`](@/headers/hx-trigger.md)              | allows you to trigger client-side events
-| [`HX-Trigger-After-Settle`](@/headers/hx-trigger.md) | allows you to trigger client-side events after the settle step
-| [`HX-Trigger-After-Swap`](@/headers/hx-trigger.md)   | allows you to trigger client-side events after the swap step
+| [`HX-Location`](@/headers/hx-location.md)            | 전체 페이지를 새로 고침하지 않고 클라이언트 측에서 리디렉션을 수행할 수 있습니다
+| [`HX-Push-Url`](@/headers/hx-push-url.md)            | 새 URL을 히스토리 스택에 추가합니다
+| `HX-Redirect`                                        | 클라이언트 측에서 새로운 위치로 리디렉션하는 데 사용할 수 있습니다
+| `HX-Refresh`                                         | "true"로 설정되면 클라이언트 측에서 페이지를 전체 새로 고침합니다
+| [`HX-Replace-Url`](@/headers/hx-replace-url.md)      | 위치 표시줄의 현재 URL을 대체합니다
+| `HX-Reswap`                                          | 응답이 어떻게 교체될지를 지정할 수 있습니다. 가능한 값은 [hx-swap](@/attributes/hx-swap.md)을 참조하세요
+| `HX-Retarget`                                        | 콘텐츠 업데이트의 대상을 페이지의 다른 요소로 업데이트하는 CSS 선택자입니다
+| `HX-Reselect`                                        | 응답의 어느 부분을 교체할지 선택할 수 있는 CSS 선택자입니다. 트리거 요소에 존재하는 [`hx-select`](@/attributes/hx-select.md)을 재정의합니다
+| [`HX-Trigger`](@/headers/hx-trigger.md)              | 클라이언트 측 이벤트를 트리거할 수 있습니다
+| [`HX-Trigger-After-Settle`](@/headers/hx-trigger.md) | 정착 단계 후에 클라이언트 측 이벤트를 트리거할 수 있습니다
+| [`HX-Trigger-After-Swap`](@/headers/hx-trigger.md)   | 교체 단계 후에 클라이언트 측 이벤트를 트리거할 수 있습니다
 
 </div>
 
@@ -130,48 +130,48 @@ All other attributes available in htmx.
 
 | Event | Description |
 |-------|-------------|
-| [`htmx:abort`](@/events.md#htmx:abort) | send this event to an element to abort a request
-| [`htmx:afterOnLoad`](@/events.md#htmx:afterOnLoad) | triggered after an AJAX request has completed processing a successful response
-| [`htmx:afterProcessNode`](@/events.md#htmx:afterProcessNode) | triggered after htmx has initialized a node
-| [`htmx:afterRequest`](@/events.md#htmx:afterRequest)  | triggered after an AJAX request has completed
-| [`htmx:afterSettle`](@/events.md#htmx:afterSettle)  | triggered after the DOM has settled
-| [`htmx:afterSwap`](@/events.md#htmx:afterSwap)  | triggered after new content has been swapped in
-| [`htmx:beforeCleanupElement`](@/events.md#htmx:beforeCleanupElement)  | triggered before htmx [disables](@/attributes/hx-disable.md) an element or removes it from the DOM
-| [`htmx:beforeOnLoad`](@/events.md#htmx:beforeOnLoad)  | triggered before any response processing occurs
-| [`htmx:beforeProcessNode`](@/events.md#htmx:beforeProcessNode) | triggered before htmx initializes a node
-| [`htmx:beforeRequest`](@/events.md#htmx:beforeRequest)  | triggered before an AJAX request is made
-| [`htmx:beforeSwap`](@/events.md#htmx:beforeSwap)  | triggered before a swap is done, allows you to configure the swap
-| [`htmx:beforeSend`](@/events.md#htmx:beforeSend)  | triggered just before an ajax request is sent
-| [`htmx:configRequest`](@/events.md#htmx:configRequest)  | triggered before the request, allows you to customize parameters, headers
-| [`htmx:confirm`](@/events.md#htmx:confirm)  | triggered after a trigger occurs on an element, allows you to cancel (or delay) issuing the AJAX request
-| [`htmx:historyCacheError`](@/events.md#htmx:historyCacheError)  | triggered on an error during cache writing
-| [`htmx:historyCacheMiss`](@/events.md#htmx:historyCacheMiss)  | triggered on a cache miss in the history subsystem
-| [`htmx:historyCacheMissError`](@/events.md#htmx:historyCacheMissError)  | triggered on a unsuccessful remote retrieval
-| [`htmx:historyCacheMissLoad`](@/events.md#htmx:historyCacheMissLoad)  | triggered on a successful remote retrieval
-| [`htmx:historyRestore`](@/events.md#htmx:historyRestore)  | triggered when htmx handles a history restoration action
-| [`htmx:beforeHistorySave`](@/events.md#htmx:beforeHistorySave)  | triggered before content is saved to the history cache
-| [`htmx:load`](@/events.md#htmx:load)  | triggered when new content is added to the DOM
-| [`htmx:noSSESourceError`](@/events.md#htmx:noSSESourceError)  | triggered when an element refers to a SSE event in its trigger, but no parent SSE source has been defined
-| [`htmx:onLoadError`](@/events.md#htmx:onLoadError)  | triggered when an exception occurs during the onLoad handling in htmx
-| [`htmx:oobAfterSwap`](@/events.md#htmx:oobAfterSwap)  | triggered after an out of band element as been swapped in
-| [`htmx:oobBeforeSwap`](@/events.md#htmx:oobBeforeSwap)  | triggered before an out of band element swap is done, allows you to configure the swap
-| [`htmx:oobErrorNoTarget`](@/events.md#htmx:oobErrorNoTarget)  | triggered when an out of band element does not have a matching ID in the current DOM
-| [`htmx:prompt`](@/events.md#htmx:prompt)  | triggered after a prompt is shown
-| [`htmx:pushedIntoHistory`](@/events.md#htmx:pushedIntoHistory)  | triggered after an url is pushed into history
-| [`htmx:responseError`](@/events.md#htmx:responseError)  | triggered when an HTTP response error (non-`200` or `300` response code) occurs
-| [`htmx:sendError`](@/events.md#htmx:sendError)  | triggered when a network error prevents an HTTP request from happening
-| [`htmx:sseError`](@/events.md#htmx:sseError)  | triggered when an error occurs with a SSE source
-| [`htmx:sseOpen`](/events#htmx:sseOpen)  | triggered when a SSE source is opened
-| [`htmx:swapError`](@/events.md#htmx:swapError)  | triggered when an error occurs during the swap phase
-| [`htmx:targetError`](@/events.md#htmx:targetError)  | triggered when an invalid target is specified
-| [`htmx:timeout`](@/events.md#htmx:timeout)  | triggered when a request timeout occurs
-| [`htmx:validation:validate`](@/events.md#htmx:validation:validate)  | triggered before an element is validated
-| [`htmx:validation:failed`](@/events.md#htmx:validation:failed)  | triggered when an element fails validation
-| [`htmx:validation:halted`](@/events.md#htmx:validation:halted)  | triggered when a request is halted due to validation errors
-| [`htmx:xhr:abort`](@/events.md#htmx:xhr:abort)  | triggered when an ajax request aborts
-| [`htmx:xhr:loadend`](@/events.md#htmx:xhr:loadend)  | triggered when an ajax request ends
-| [`htmx:xhr:loadstart`](@/events.md#htmx:xhr:loadstart)  | triggered when an ajax request starts
-| [`htmx:xhr:progress`](@/events.md#htmx:xhr:progress)  | triggered periodically during an ajax request that supports progress events
+| [`htmx:abort`](@/events.md#htmx:abort) | 이 이벤트를 요소에 전송하여 요청을 중단합니다
+| [`htmx:afterOnLoad`](@/events.md#htmx:afterOnLoad) | AJAX 요청이 성공적인 응답 처리를 완료한 후 트리거됩니다
+| [`htmx:afterProcessNode`](@/events.md#htmx:afterProcessNode) | htmx가 노드를 초기화한 후 트리거됩니다
+| [`htmx:afterRequest`](@/events.md#htmx:afterRequest)  | AJAX 요청이 완료된 후 트리거됩니다
+| [`htmx:afterSettle`](@/events.md#htmx:afterSettle)  | DOM이 안정된 후 트리거됩니다
+| [`htmx:afterSwap`](@/events.md#htmx:afterSwap)  | 새 콘텐츠가 교체된 후 트리거됩니다.
+| [`htmx:beforeCleanupElement`](@/events.md#htmx:beforeCleanupElement)  | htmx [비활성화](@/attributes/hx-disable.md) 전에 트리거되거나 DOM에서 요소를 제거하기 전에 트리거됩니다
+| [`htmx:beforeOnLoad`](@/events.md#htmx:beforeOnLoad)  | 응답 처리가 발생하기 전에 트리거됩니다
+| [`htmx:beforeProcessNode`](@/events.md#htmx:beforeProcessNode) | htmx가 노드를 초기화하기 전에 트리거됩니다
+| [`htmx:beforeRequest`](@/events.md#htmx:beforeRequest)  | AJAX 요청이 이루어지기 전에 트리거됩니다
+| [`htmx:beforeSwap`](@/events.md#htmx:beforeSwap)  | 교체가 완료되기 전에 트리거되어 교체를 설정할 수 있습니다
+| [`htmx:beforeSend`](@/events.md#htmx:beforeSend)  | AJAX 요청이 전송되기 직전에 트리거됩니다
+| [`htmx:configRequest`](@/events.md#htmx:configRequest)  | 요청 전에 트리거되며 매개변수, 헤더를 사용자 정의할 수 있습니다
+| [`htmx:confirm`](@/events.md#htmx:confirm)  | 요소에서 트리거가 발생한 후에 트리거되며, AJAX 요청 발행을 취소하거나 지연시킬 수 있습니다
+| [`htmx:historyCacheError`](@/events.md#htmx:historyCacheError)  | 캐시 쓰기 중 오류가 발생했을 때 트리거됩니다
+| [`htmx:historyCacheMiss`](@/events.md#htmx:historyCacheMiss)  | 히스토리 하위 시스템에서 캐시 미스가 발생했을 때 트리거됩니다
+| [`htmx:historyCacheMissError`](@/events.md#htmx:historyCacheMissError)  | 원격 검색이 실패했을 때 트리거됩니다
+| [`htmx:historyCacheMissLoad`](@/events.md#htmx:historyCacheMissLoad)  | 원격 검색이 성공했을 때 트리거됩니다
+| [`htmx:historyRestore`](@/events.md#htmx:historyRestore)  | htmx가 히스토리 복원 작업을 처리할 때 트리거됩니다
+| [`htmx:beforeHistorySave`](@/events.md#htmx:beforeHistorySave)  | 콘텐츠가 히스토리 캐시에 저장되기 전에 트리거됩니다
+| [`htmx:load`](@/events.md#htmx:load)  | 새 콘텐츠가 DOM에 추가될 때 트리거됩니다
+| [`htmx:noSSESourceError`](@/events.md#htmx:noSSESourceError)  | 요소가 트리거에서 SSE 이벤트를 참조하지만 상위 SSE 소스가 정의되지 않은 경우 트리거됩니다
+| [`htmx:onLoadError`](@/events.md#htmx:onLoadError)  | htmx에서 onLoad 처리 중 예외가 발생하면 트리거됩니다
+| [`htmx:oobAfterSwap`](@/events.md#htmx:oobAfterSwap)  | out of band 요소가 교체된 후 트리거됩니다
+| [`htmx:oobBeforeSwap`](@/events.md#htmx:oobBeforeSwap)  | out of band 요소 교체가 완료되기 전에 트리거되어 교체를 설정할 수 있습니다
+| [`htmx:oobErrorNoTarget`](@/events.md#htmx:oobErrorNoTarget)  | out of band 요소와 현재 DOM에 일치하는 ID가 없을 때 트리거됩니다
+| [`htmx:prompt`](@/events.md#htmx:prompt)  | prompt가 표시된 후 트리거됩니다
+| [`htmx:pushedIntoHistory`](@/events.md#htmx:pushedIntoHistory)  | URL이 히스토리에 들어간 후 트리거됩니다
+| [`htmx:responseError`](@/events.md#htmx:responseError)  | HTTP 응답 오류(`200` 또는 `300`이 아닌 응답 코드)가 발생하면 트리거됩니다
+| [`htmx:sendError`](@/events.md#htmx:sendError)  | 네트워크 오류로 인해 HTTP 요청이 발생하지 않을 때 트리거됩니다
+| [`htmx:sseError`](@/events.md#htmx:sseError)  | SSE 소스에서 오류가 발생하면 트리거됩니다
+| [`htmx:sseOpen`](/events#htmx:sseOpen)  | SSE 소스가 열릴 때 트리거됩니다
+| [`htmx:swapError`](@/events.md#htmx:swapError)  | 교체 단계에서 오류가 발생하면 트리거됩니다
+| [`htmx:targetError`](@/events.md#htmx:targetError)  | 잘못된 대상을 지정하면 트리거됩니다
+| [`htmx:timeout`](@/events.md#htmx:timeout)  | 요청 시간 초과가 발생하면 트리거됩니다
+| [`htmx:validation:validate`](@/events.md#htmx:validation:validate)  | 요소의 유효성을 검사하기 전에 트리거됩니다
+| [`htmx:validation:failed`](@/events.md#htmx:validation:failed)  | 요소 유효성 검사에 실패하면 트리거됩니다
+| [`htmx:validation:halted`](@/events.md#htmx:validation:halted)  | 유효성 검사 오류로 인해 요청이 중단될 때 트리거됩니다
+| [`htmx:xhr:abort`](@/events.md#htmx:xhr:abort)  | ajax 요청이 중단될 때 트리거됩니다
+| [`htmx:xhr:loadend`](@/events.md#htmx:xhr:loadend)  | ajax 요청이 종료되면 트리거됩니다
+| [`htmx:xhr:loadstart`](@/events.md#htmx:xhr:loadstart)  | ajax 요청이 시작될 때 트리거됩니다
+| [`htmx:xhr:progress`](@/events.md#htmx:xhr:progress)  | 진행 이벤트를 지원하는 Ajax 요청 중에 주기적으로 트리거됩니다
 
 </div>
 
@@ -181,79 +181,79 @@ All other attributes available in htmx.
 
 | Method | Description |
 |-------|-------------|
-| [`htmx.addClass()`](@/api.md#addClass)  | Adds a class to the given element
-| [`htmx.ajax()`](@/api.md#ajax)  | Issues an htmx-style ajax request
-| [`htmx.closest()`](@/api.md#closest)  | Finds the closest parent to the given element matching the selector
-| [`htmx.config`](@/api.md#config)  | A property that holds the current htmx config object
-| [`htmx.createEventSource`](@/api.md#createEventSource)  | A property holding the function to create SSE EventSource objects for htmx
-| [`htmx.createWebSocket`](@/api.md#createWebSocket)  | A property holding the function to create WebSocket objects for htmx
-| [`htmx.defineExtension()`](@/api.md#defineExtension)  | Defines an htmx [extension](https://extensions.htmx.org)
-| [`htmx.find()`](@/api.md#find)  | Finds a single element matching the selector
-| [`htmx.findAll()` `htmx.findAll(elt, selector)`](@/api.md#find)  | Finds all elements matching a given selector
-| [`htmx.logAll()`](@/api.md#logAll)  | Installs a logger that will log all htmx events
-| [`htmx.logger`](@/api.md#logger)  | A property set to the current logger (default is `null`)
-| [`htmx.off()`](@/api.md#off)  | Removes an event listener from the given element
-| [`htmx.on()`](@/api.md#on)  | Creates an event listener on the given element, returning it
-| [`htmx.onLoad()`](@/api.md#onLoad)  | Adds a callback handler for the `htmx:load` event
-| [`htmx.parseInterval()`](@/api.md#parseInterval)  | Parses an interval declaration into a millisecond value
-| [`htmx.process()`](@/api.md#process)  | Processes the given element and its children, hooking up any htmx behavior
-| [`htmx.remove()`](@/api.md#remove)  | Removes the given element
-| [`htmx.removeClass()`](@/api.md#removeClass)  | Removes a class from the given element
-| [`htmx.removeExtension()`](@/api.md#removeExtension)  | Removes an htmx [extension](https://extensions.htmx.org)
-| [`htmx.swap()`](@/api.md#swap)  | Performs swapping (and settling) of HTML content
-| [`htmx.takeClass()`](@/api.md#takeClass)  | Takes a class from other elements for the given element
-| [`htmx.toggleClass()`](@/api.md#toggleClass)  | Toggles a class from the given element
-| [`htmx.trigger()`](@/api.md#trigger)  | Triggers an event on an element
-| [`htmx.values()`](@/api.md#values)  | Returns the input values associated with the given element
+| [`htmx.addClass()`](@/api.md#addClass)  | 주어진 요소에 클래스를 추가합니다
+| [`htmx.ajax()`](@/api.md#ajax)  | htmx 스타일 ajax 요청을 보냅니다
+| [`htmx.closest()`](@/api.md#closest)  | 주어진 선택자와 일치하는 요소랑 가장 가까운 부모를 찾습니다
+| [`htmx.config`](@/api.md#config)  | 현재 htmx 구성 객체를 보유하는 property
+| [`htmx.createEventSource`](@/api.md#createEventSource)  | htmx용 SSE 이벤트 소스 객체를 생성하는 함수를 보유하는 property
+| [`htmx.createWebSocket`](@/api.md#createWebSocket)  | htmx용 WebSocket 객체를 생성하는 함수를 보유하는 property
+| [`htmx.defineExtension()`](@/api.md#defineExtension)  | htmx [확장자](https://extensions.htmx.org)를 정의합니다
+| [`htmx.find()`](@/api.md#find)  | 선택자와 일치하는 단일 요소를 찾습니다
+| [`htmx.findAll()` `htmx.findAll(elt, selector)`](@/api.md#find)  | 지정된 선택자와 일치하는 모든 요소를 찾습니다
+| [`htmx.logAll()`](@/api.md#logAll)  | 모든 htmx 이벤트를 기록하는 logger를 설치합니다
+| [`htmx.logger`](@/api.md#logger)  | 현재 로거로 설정된 property (기본값은 `null`)
+| [`htmx.off()`](@/api.md#off)  | 지정된 요소에서 event listener를 제거합니다
+| [`htmx.on()`](@/api.md#on)  | 지정된 요소에 event listener를 생성하여 반환합니다
+| [`htmx.onLoad()`](@/api.md#onLoad)  | `htmx:load` 이벤트에 대한 callback handler를 추가합니다
+| [`htmx.parseInterval()`](@/api.md#parseInterval)  | 간격 선언을 밀리초 값으로 구문 분석합니다
+| [`htmx.process()`](@/api.md#process)  | 주어진 요소와 그 자식을 처리하여 모든 htmx 동작을 연결합니다
+| [`htmx.remove()`](@/api.md#remove)  | 지정된 요소를 제거합니다
+| [`htmx.removeClass()`](@/api.md#removeClass)  | 지정된 요소에서 클래스를 제거합니다
+| [`htmx.removeExtension()`](@/api.md#removeExtension)  | htmx [확장](https://extensions.htmx.org)을 제거합니다
+| [`htmx.swap()`](@/api.md#swap)  | HTML 콘텐츠의 교체(및 정리)을 수행합니다.
+| [`htmx.takeClass()`](@/api.md#takeClass)  | 주어진 요소에 대해 다른 요소에서 클래스를 가져옵니다
+| [`htmx.toggleClass()`](@/api.md#toggleClass)  | 주어진 요소에서 클래스를 toggle합니다
+| [`htmx.trigger()`](@/api.md#trigger)  | 요소에서 이벤트를 트리거합니다
+| [`htmx.values()`](@/api.md#values)  | 주어진 요소와 연관된 입력 값을 반환합니다
 
 </div>
 
 
 ## Configuration Reference {#config}
 
-Htmx has some configuration options that can be accessed either programmatically or declaratively.  They are
-listed below:
+Htmx에는 프로그래밍 방식으로 또는 선언적으로 액세스할 수 있는 몇 가지 구성 옵션이 있습니다.  
+그 옵션은 아래에 나열되어 있습니다:
 
 <div class="info-table">
 
-| Config Variable                       | Info                                                                                                                                                                       |
-|---------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `htmx.config.historyEnabled`          | defaults to `true`, really only useful for testing                                                                                                                         |
-| `htmx.config.historyCacheSize`        | defaults to 10                                                                                                                                                             |
-| `htmx.config.refreshOnHistoryMiss`    | defaults to `false`, if set to `true` htmx will issue a full page refresh on history misses rather than use an AJAX request                                                |
-| `htmx.config.defaultSwapStyle`        | defaults to `innerHTML`                                                                                                                                                    |
-| `htmx.config.defaultSwapDelay`        | defaults to 0                                                                                                                                                              |
-| `htmx.config.defaultSettleDelay`      | defaults to 20                                                                                                                                                             |
-| `htmx.config.includeIndicatorStyles`  | defaults to `true` (determines if the indicator styles are loaded)                                                                                                         |
-| `htmx.config.indicatorClass`          | defaults to `htmx-indicator`                                                                                                                                               |
-| `htmx.config.requestClass`            | defaults to `htmx-request`                                                                                                                                                 |
-| `htmx.config.addedClass`              | defaults to `htmx-added`                                                                                                                                                   |
-| `htmx.config.settlingClass`           | defaults to `htmx-settling`                                                                                                                                                |
-| `htmx.config.swappingClass`           | defaults to `htmx-swapping`                                                                                                                                                |
-| `htmx.config.allowEval`               | defaults to `true`, can be used to disable htmx's use of eval for certain features (e.g. trigger filters)                                                                  |
-| `htmx.config.allowScriptTags`         | defaults to `true`, determines if htmx will process script tags found in new content                                                                                       |
-| `htmx.config.inlineScriptNonce`       | defaults to `''`, meaning that no nonce will be added to inline scripts                                                                                                    |
-| `htmx.config.inlineSlyeNonce`         | defaults to `''`, meaning that no nonce will be added to inline styles                                                                                                     |
-| `htmx.config.attributesToSettle`      | defaults to `["class", "style", "width", "height"]`, the attributes to settle during the settling phase                                                                    |
-| `htmx.config.wsReconnectDelay`        | defaults to `full-jitter`                                                                                                                                                  |
-| `htmx.config.wsBinaryType`            | defaults to `blob`, the [the type of binary data](https://developer.mozilla.org/docs/Web/API/WebSocket/binaryType) being received over the WebSocket connection            |
-| `htmx.config.disableSelector`         | defaults to `[hx-disable], [data-hx-disable]`, htmx will not process elements with this attribute on it or a parent                                                        |
-| `htmx.config.withCredentials`         | defaults to `false`, allow cross-site Access-Control requests using credentials such as cookies, authorization headers or TLS client certificates                          |
-| `htmx.config.timeout`                 | defaults to 0, the number of milliseconds a request can take before automatically being terminated                                                                         |
-| `htmx.config.scrollBehavior`          | defaults to 'smooth', the behavior for a boosted link on page transitions. The allowed values are `auto` and `smooth`. Smooth will smoothscroll to the top of the page while auto will behave like a vanilla link.      |
-| `htmx.config.defaultFocusScroll`      | if the focused element should be scrolled into view, defaults to false and can be overridden using the [focus-scroll](@/attributes/hx-swap.md#focus-scroll) swap modifier. |
-| `htmx.config.getCacheBusterParam`     | defaults to false, if set to true htmx will append the target element to the `GET` request in the format `org.htmx.cache-buster=targetElementId`                           |
-| `htmx.config.globalViewTransitions`   | if set to `true`, htmx will use the [View Transition](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API) API when swapping in new content.             |
-| `htmx.config.methodsThatUseUrlParams` | defaults to `["get"]`, htmx will format requests with these methods by encoding their parameters in the URL, not the request body                                          |
-| `htmx.config.selfRequestsOnly`        | defaults to `false`, if set to `true` will only allow AJAX requests to the same domain as the current document                                                             |
-| `htmx.config.ignoreTitle`             | defaults to `false`, if set to `true` htmx will not update the title of the document when a `title` tag is found in new content                                            |
-| `htmx.config.scrollIntoViewOnBoost`   | defaults to `true`, whether or not the target of a boosted element is scrolled into the viewport. If `hx-target` is omitted on a boosted element, the target defaults to `body`, causing the page to scroll to the top. |
-| `htmx.config.triggerSpecsCache`       | defaults to `null`, the cache to store evaluated trigger specifications into, improving parsing performance at the cost of more memory usage. You may define a simple object to use a never-clearing cache, or implement your own system using a [proxy object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy) |
-| `htmx.config.allowNestedOobSwaps`     | defaults to `true`, whether to process OOB swaps on elements that are nested within the main response element. See [Nested OOB Swaps](@/attributes/hx-swap-oob.md#nested-oob-swaps). |
+| Config Variable                       | Info                                                                                                                                                                                                                                    |
+|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `htmx.config.historyEnabled`          | defaults to `true`, 테스트에만 유용합니다                                                                                                                                                                                                         |
+| `htmx.config.historyCacheSize`        | defaults to 10                                                                                                                                                                                                                          |
+| `htmx.config.refreshOnHistoryMiss`    | defaults to `false`, `true`로 설정하면 htmx는 히스토리 누락 시 AJAX 요청을 사용하는 대신 전체 페이지 새로 고침을 실행합니다                                                                                                                                                  |
+| `htmx.config.defaultSwapStyle`        | defaults to `innerHTML`                                                                                                                                                                                                                 |
+| `htmx.config.defaultSwapDelay`        | defaults to 0                                                                                                                                                                                                                           |
+| `htmx.config.defaultSettleDelay`      | defaults to 20                                                                                                                                                                                                                          |
+| `htmx.config.includeIndicatorStyles`  | defaults to `true` (indicator 스타일이 로드되는지 여부를 결정합니다)                                                                                                                                                                                     |
+| `htmx.config.indicatorClass`          | defaults to `htmx-indicator`                                                                                                                                                                                                            |
+| `htmx.config.requestClass`            | defaults to `htmx-request`                                                                                                                                                                                                              |
+| `htmx.config.addedClass`              | defaults to `htmx-added`                                                                                                                                                                                                                |
+| `htmx.config.settlingClass`           | defaults to `htmx-settling`                                                                                                                                                                                                             |
+| `htmx.config.swappingClass`           | defaults to `htmx-swapping`                                                                                                                                                                                                             |
+| `htmx.config.allowEval`               | defaults to `true`, 특정 기능(예: 트리거 필터)에 대한 htmx의 eval 사용을 비활성화하는 데 사용할 수 있습니다                                                                                                                                                             |
+| `htmx.config.allowScriptTags`         | defaults to `true`, 새 콘텐츠에서 발견된 스크립트 태그를 htmx가 처리할지 여부를 결정합니다                                                                                                                                                                           |
+| `htmx.config.inlineScriptNonce`       | defaults to `''`, 이것의 의미는 인라인 스크립트에 nonce가 추가되지 않는 것입니다                                                                                                                                                                                 |
+| `htmx.config.inlineSlyeNonce`         | defaults to `''`, 이것의 의미는 인라인 스타일에 nonce가 추가되지 않는 것입니다                                                                                                                                                                                  |
+| `htmx.config.attributesToSettle`      | defaults to `["class", "style", "width", "height"]`, 정리 단계에서 정리할 속성                                                                                                                                                                     |
+| `htmx.config.wsReconnectDelay`        | defaults to `full-jitter`                                                                                                                                                                                                               |
+| `htmx.config.wsBinaryType`            | defaults to `blob`, WebSocket 연결을 통해 수신되는 [binary 데이터 유형](https://developer.mozilla.org/docs/Web/API/WebSocket/binaryType)                                                                                                              |
+| `htmx.config.disableSelector`         | defaults to `[hx-disable], [data-hx-disable]`, htmx는 이 속성이 있는 요소나 상위 요소를 처리하지 않습니다                                                                                                                                                      |
+| `htmx.config.withCredentials`         | defaults to `false`, 쿠키, 인증 헤더 또는 TLS 클라이언트 인증서와 같은 자격 증명을 사용하여 크로스-사이트 액세스 제어 요청을 허용합니다                                                                                                                                                |
+| `htmx.config.timeout`                 | defaults to 0, 요청이 자동으로 종료되기까지 걸릴 수 있는 시간(milliseconds)                                                                                                                                                                                 |
+| `htmx.config.scrollBehavior`          | defaults to 'smooth', 페이지 전환 시 부스트 링크의 동작을 설정합니다. 허용되는 값은 `auto` 및 `Smooth`입니다. Smooth는 페이지 상단으로 부드럽게 스크롤되는 반면 Auto는 바닐라 링크처럼 작동합니다.                                                                                                    |
+| `htmx.config.defaultFocusScroll`      | focused 요소를 스크롤하여 뷰에 표시해야 하는 경우 기본값은 false이며 [focus-scroll](@/attributes/hx-swap.md#focus-scroll) 교체 수정자를 사용하여 재정의할 수 있습니다.                                                                                                             |
+| `htmx.config.getCacheBusterParam`     | defaults to false, true로 설정하면 htmx는 `org.htmx.cache-buster=targetElementId` 형식으로 `GET` 요청에 대상 요소를 추가합니다.                                                                                                                                |
+| `htmx.config.globalViewTransitions`   | `true`로 설정하면 htmx는 새 콘텐츠를 교체할 때 [View Transition](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API) API를 사용합니다.                                                                                                    |
+| `htmx.config.methodsThatUseUrlParams` | defaults to `["get"]`, htmx는 요청 본문이 아닌 URL에서 매개 변수를 인코딩하여 이러한 메서드를 사용하는 요청의 형식을 지정합니다.                                                                                                                                                  |
+| `htmx.config.selfRequestsOnly`        | 기본값은 현재 문서와 동일한 도메인에 대한 AJAX 요청만 허용할지 여부를 나타내는 true입니다.                                                                                                                                                                                 |
+| `htmx.config.ignoreTitle`             | defaults to `false`, `true`로 설정하면 htmx는 새 콘텐츠에서 `title` 태그가 발견될 때 문서 제목을 업데이트하지 않습니다.                                                                                                                                                   |
+| `htmx.config.scrollIntoViewOnBoost`   | 부스트된 요소의 대상이 뷰포트로 스크롤되는지 여부에 관계없이 기본값이 true로 설정됩니다. 부스트된 요소에서 `hx-target`을 생략하면 대상은 기본적으로 `body`로 설정되어 페이지가 맨 위로 스크롤됩니다.                                                                                                                |
+| `htmx.config.triggerSpecsCache`       | 기본값은 평가된 트리거 사양을 저장할 캐시인 `null`이므로 메모리 사용량을 늘리는 대신 구문 분석 성능을 향상시킬 수 있습니다. 절대 지워지지 않는 캐시를 사용하도록 간단한 객체를 정의하거나 [proxy object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy)를 사용하여 자체 시스템을 구현할 수 있습니다. |
+| `htmx.config.allowNestedOobSwaps`     | 기본 응답 요소 내에 중첩된 요소에 대해 OOB 교체를 처리할지 여부, 기본값은 `true`입니다. [Nested OOB Swaps](@/attributes/hx-swap-oob.md#nested-oob-swaps)를 참조하세요.                                                                                                        |
 
 </div>
 
-You can set them directly in javascript, or you can use a `meta` tag:
+자바스크립트에서 직접 설정하거나 'meta' 태그를 사용할 수 있습니다:
 
 ```html
 <meta name="htmx-config" content='{"defaultSwapStyle":"outerHTML"}'>
