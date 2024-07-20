@@ -52,21 +52,20 @@ custom_classes = "wide-content"
 
 ## htmx in a Nutshell {#introduction}
 
-htmx is a library that allows you to access modern browser features directly from HTML, rather than using
-javascript.
+htmx는 자바스크립트를 사용하는 대신 HTML에서 직접 최신 브라우저 기능에 액세스할 수 있게 해주는 라이브러리입니다.
 
-To understand htmx, first lets take a look at an anchor tag:
+htmx를 이해하려면 먼저 anchor 태그를 살펴봐야 합니다:
 
 ```html
 <a href="/blog">Blog</a>
 ```
 
-This anchor tag tells a browser:
+이 anchor 태그는 브라우저에게 아래를 말해줍니다:
 
-> "When a user clicks on this link, issue an HTTP GET request to '/blog' and load the response content
->  into the browser window".
+> "사용자가 이 링크를 클릭하면 '/blog'에 HTTP GET 요청을 보내고 응답 콘텐츠를 
+>  브라우저 창에 로드합니다".
 
-With that in mind, consider the following bit of HTML:
+이를 염두에 두고 다음 HTML을 살펴 보세요.:
 
 ```html
 <button hx-post="/clicked"
@@ -78,67 +77,65 @@ With that in mind, consider the following bit of HTML:
 </button>
 ```
 
-This tells htmx:
+이것은 htmx에게 아래를 말해줍니다:
 
-> "When a user clicks on this button, issue an HTTP POST request to '/clicked' and use the content from the response
->  to replace the element with the id `parent-div` in the DOM"
+> "사용자가 이 버튼을 클릭하면 '/clicked'로 HTTP POST 요청을 발행하고 DOM에서 id가 `parent-div`인
+>  요소를 응답으로 온 콘텐츠를 사용하여 바꿉니다."
 
-htmx extends and generalizes the core idea of HTML as a hypertext, opening up many more possibilities directly
-within the language:
+htmx는 하이퍼텍스트로서의 HTML의 핵심 개념을 확장하고 일반화하여 언어 내에서 직접 더 많은 가능성을 열어줍니다:
 
-* Now any element, not just anchors and forms, can issue an HTTP request
-* Now any event, not just clicks or form submissions, can trigger requests
-* Now any [HTTP verb](https://en.wikipedia.org/wiki/HTTP_Verbs), not just `GET` and `POST`, can be used
-* Now any element, not just the entire window, can be the target for update by the request
+* 이제 anchor와 form뿐만 아니라 모든 요소에서 HTTP 요청을 발행할 수 있습니다
+* 이제 click이나 form 제출뿐만 아니라 모든 이벤트가 요청을 트리거할 수 있습니다
+* 이제 GET 및 POST뿐만 아니라 모든 [HTTP verb](https://en.wikipedia.org/wiki/HTTP_Verbs)를 사용할 수 있습니다
+* 이제 전체 창뿐만 아니라 모든 요소가 요청에 의한 업데이트 대상이 될 수 있습니다
 
-Note that when you are using htmx, on the server side you typically respond with *HTML*, not *JSON*.  This keeps you firmly
-within the [original web programming model](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm),
-using [Hypertext As The Engine Of Application State](https://en.wikipedia.org/wiki/HATEOAS)
-without even needing to really understand that concept.
+htmx를 사용하는 경우 서버 측에서는 일반적으로 *JSON*이 아닌 *HTML*로 응답한다는 점에 유의하세요. 
+이렇게 하면 [하이퍼텍스트를 애플리케이션 상태 엔진](https://en.wikipedia.org/wiki/HATEOAS)으로 사용하는 
+[오리지널 웹 프로그래밍 모델](https://en.wikipedia.org/wiki/HATEOAS)에 충실하게 유지되므로 해당 개념을 제대로 이해할 필요도 없습니다.
 
-It's worth mentioning that, if you prefer, you can use the [`data-`](https://html.spec.whatwg.org/multipage/dom.html#attr-data-*) prefix when using htmx:
+원하는 경우 htmx를 사용할 때 [`data-`](https://html.spec.whatwg.org/multipage/dom.html#attr-data-*) 접두사를 사용할 수 있다는 점을 언급할 가치가 있습니다:
 
 ```html
 <a data-hx-post="/click">Click Me!</a>
 ```
 
-Finally, [Version 1](https://v1.htmx.org) of htmx is still supported and supports IE11.
+마지막으로 htmx [Version 1](https://v1.htmx.org)은 여전히 지원되며 IE11을 지원합니다.
 
 ## 1.x to 2.x Migration Guide
 
-If you are migrating to htmx 2.x from [htmx 1.x](https://v1.htmx.org), please see the [htmx 1.x migration guide](@/migration-guide-htmx-1.md).
+[htmx 1.x](https://v1.htmx.org)에서 htmx 2.x로 마이그레이션하는 경우 [htmx 1.x migration guide](@/migration-guide-htmx-1.md)를 참조하세요.
 
-If you are migrating to htmx from intercooler.js, please see the [intercooler migration guide](@/migration-guide-intercooler.md).
+intercooler.js에서 htmx로 마이그레이션하는 경우 [intercooler 마이그레이션 가이드](@/migration-guide-intercooler.md)를 참조하세요.
 
 ## Installing
 
-Htmx is a dependency-free, browser-oriented javascript library. This means that using it is as simple as adding a `<script>`
-tag to your document head.  There is no need for a build system to use it.
+Htmx는 종속성이 없는 브라우저 지향 자바스크립트 라이브러리입니다. 즉, 문서 head에 `<script>` 태그를 추가하는 것만큼이나 간단하게 사용할 수 있습니다. 
+이를 사용하기 위한 빌드 시스템은 필요하지 않습니다.
 
 ### Via A CDN (e.g. unpkg.com)
 
-The fastest way to get going with htmx is to load it via a CDN. You can simply add this to 
-your head tag and get going:
+htmx를 사용하는 가장 빠른 방법은 CDN을 통해 로드하는 것입니다. 
+아래를 head 태그에 추가하고 시작하면 됩니다:
 
 ```html
 <script src="https://unpkg.com/htmx.org@2.0.0" integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw" crossorigin="anonymous"></script>
 ```
 
-An unminified version is also available for debugging as well:
+디버깅을 위한 비마이닝 버전도 사용할 수 있습니다:
 
 ```html
 <script src="https://unpkg.com/htmx.org@2.0.0/dist/htmx.js" integrity="sha384-Xh+GLLi0SMFPwtHQjT72aPG19QvKB8grnyRbYBNIdHWc2NkCrz65jlU7YrzO6qRp" crossorigin="anonymous"></script>
 ```
 
-While the CDN approach is extremely simple, you may want to consider 
-[not using CDNs in production](https://blog.wesleyac.com/posts/why-not-javascript-cdn).
+CDN 접근 방식은 매우 간단하지만 [프로덕션 환경에서는 CDN을 사용하지 않는 것](https://blog.wesleyac.com/posts/why-not-javascript-cdn)을 
+고려해보아야 합니다.
 
 ### Download a copy
 
-The next easiest way to install htmx is to simply copy it into your project.
+다음으로 가장 쉽게 설치하는 방법은 프로젝트에 htmx를 복사하는 것입니다.
 
-Download `htmx.min.js` [from unpkg.com](https://unpkg.com/htmx.org/dist/htmx.min.js) and add it to the appropriate directory in your project
-and include it where necessary with a `<script>` tag:
+[unpkg.com](https://unpkg.com/htmx.org/dist/htmx.min.js)에서 `htmx.min.js`를 다운로드하여 프로젝트의 적절한 디렉터리에 추가하고 
+필요한 경우 `<script>` 태그에 포함하여 사용하세요:
 
 ```html
 <script src="/path/to/htmx.min.js"></script>
@@ -146,57 +143,57 @@ and include it where necessary with a `<script>` tag:
 
 ### npm
 
-For npm-style build systems, you can install htmx via [npm](https://www.npmjs.com/):
+[npm](https://www.npmjs.com/) 스타일 빌드 시스템의 경우 npm을 통해 htmx를 설치할 수 있습니다:
 
 ```sh
 npm install htmx.org
 ```
 
-After installing, you’ll need to use appropriate tooling to use `node_modules/htmx.org/dist/htmx.js` (or `.min.js`).
-For example, you might bundle htmx with some extensions and project-specific code.
+설치 후에는 적절한 툴을 사용하여 `node_modules/htmx.org/dist/htmx.js`(또는 `.min.js`)를 사용해야 합니다. 
+예를 들어, 일부 확장 프로그램 및 프로젝트별 코드와 함께 htmx를 번들로 제공하는 것이 가능합니다.
 
 ### Webpack
 
-If you are using webpack to manage your javascript:
+Webpack을 사용하여 자바스크립트를 관리하는 경우:
 
-* Install `htmx` via your favourite package manager (like npm or yarn)
-* Add the import to your `index.js`
+* 선호하는 패키지 관리자(예: npm 또는 yarn)를 통해 `htmx`를 설치합니다.
+* `index.js`에 import 구문을 추가합니다.
 
 ```js
 import 'htmx.org';
 ```
 
-If you want to use the global `htmx` variable (recommended), you need to inject it to the window scope:
+전역 `htmx` 변수를 사용하려면(권장) window 범위에 변수를 삽입해야 합니다:
 
-* Create a custom JS file
-* Import this file to your `index.js` (below the import from step 2)
+* 커스텀 JS 파일을 생성합니다
+* 이 파일을 (2번째 단계 밑에 있던 import 구문처럼) `index.js`로 가져옵니다.
 
 ```js
 import 'path/to/my_custom.js';
 ```
 
-* Then add this code to the file:
+* 그런 다음 이 코드를 파일에 추가합니다:
 
 ```js
 window.htmx = require('htmx.org');
 ```
 
-* Finally, rebuild your bundle
+* 마지막으로 번들을 다시 빌드합니다.
 
 ## AJAX
 
-The core of htmx is a set of attributes that allow you to issue AJAX requests directly from HTML:
+htmx의 핵심은 HTML에서 직접 AJAX 요청을 발행할 수 있는 일련의 속성입니다:
 
-| Attribute                              | Description                                |
-|----------------------------------------|--------------------------------------------|
-| [hx-get](@/attributes/hx-get.md)       | Issues a `GET` request to the given URL    |
-| [hx-post](@/attributes/hx-post.md)     | Issues a `POST` request to the given URL   |
-| [hx-put](@/attributes/hx-put.md)       | Issues a `PUT` request to the given URL    |
-| [hx-patch](@/attributes/hx-patch.md)   | Issues a `PATCH` request to the given URL  |
-| [hx-delete](@/attributes/hx-delete.md) | Issues a `DELETE` request to the given URL |
+| Attribute                              | Description                 |
+|----------------------------------------|-----------------------------|
+| [hx-get](@/attributes/hx-get.md)       | 지정된 URL로 `GET` 요청을 보냅니다.    |
+| [hx-post](@/attributes/hx-post.md)     | 지정된 URL로 `POST` 요청을 보냅니다.   |
+| [hx-put](@/attributes/hx-put.md)       | 지정된 URL로 `PUT` 요청을 보냅니다.    |
+| [hx-patch](@/attributes/hx-patch.md)   | 지정된 URL로 `PATCH` 요청을 보냅니다.  |
+| [hx-delete](@/attributes/hx-delete.md) | 지정된 URL로 `DELETE` 요청을 보냅니다. |
 
-Each of these attributes takes a URL to issue an AJAX request to.  The element will issue a request of the specified
-type to the given URL when the element is [triggered](#triggers):
+이러한 각 속성은 AJAX 요청을 보낼 때 URL을 사용합니다. 
+요소는 요소가 [트리거](#triggers)될 때 지정된 URL에 지정된 유형의 요청을 보냅니다:
 
 ```html
 <button hx-put="/messages">
@@ -204,22 +201,22 @@ type to the given URL when the element is [triggered](#triggers):
 </button>
 ```
 
-This tells the browser:
+이 코드는 브라우저에게 알려줍니다:
 
-> When a user clicks on this button, issue a PUT request to the URL /messages and load the response into the button
+> 사용자가 이 버튼을 클릭하면 URL /messages에 PUT 요청을 보내고 응답을 button에 로드합니다.
 
 ### Triggering Requests {#triggers}
 
-By default, AJAX requests are triggered by the "natural" event of an element:
+기본적으로 AJAX 요청은 요소의 '자연스러운' 이벤트에 의해 트리거됩니다:
 
-* `input`, `textarea` & `select` are triggered on the `change` event
-* `form` is triggered on the `submit` event
-* everything else is triggered by the `click` event
+* `input`, `textarea` 및 `select`은 `change` 이벤트에서 트리거됩니다.
+* `form`은 `submit` 이벤트에서 트리거됩니다.
+* 이외 나머지는 `click` 이벤트에서 트리거됩니다.
 
-If you want different behavior you can use the [hx-trigger](@/attributes/hx-trigger.md)
-attribute to specify which event will cause the request.
+다른 동작을 원한다면 [hx-trigger](@/attributes/hx-trigger.md) 속성을 사용하여 
+요청을 유발할 이벤트를 지정할 수 있습니다.
 
-Here is a `div` that posts to `/mouse_entered` when a mouse enters it:
+다음은 마우스를 올려두면 `/mouse_entered`에 post 요청을 보내는 `div`입니다:
 
 ```html
 <div hx-post="/mouse_entered" hx-trigger="mouseenter">
@@ -229,8 +226,8 @@ Here is a `div` that posts to `/mouse_entered` when a mouse enters it:
 
 #### Trigger Modifiers
 
-A trigger can also have a few additional modifiers that change its behavior.  For example, if you want a request to only
- happen once, you can use the `once` modifier for the trigger:
+트리거는 동작을 변경하는 몇 가지 추가 수정자를 가질 수도 있습니다. 
+예를 들어 요청이 한 번만 발생하도록 하려면 트리거에 `once` 수정자를 사용할 수 있습니다:
 
 ```html
 <div hx-post="/mouse_entered" hx-trigger="mouseenter once">
@@ -238,17 +235,15 @@ A trigger can also have a few additional modifiers that change its behavior.  Fo
 </div>
 ```
 
-Other modifiers you can use for triggers are:
+트리거에 사용할 수 있는 다른 수정자는 다음과 같습니다:
 
-* `changed` - only issue a request if the value of the element has changed
-*  `delay:<time interval>` - wait the given amount of time (e.g. `1s`) before
-issuing the request.  If the event triggers again, the countdown is reset.
-*  `throttle:<time interval>` - wait the given amount of time (e.g. `1s`) before
-issuing the request.  Unlike `delay` if a new event occurs before the time limit is hit the event will be discarded,
-so the request will trigger at the end of the time period.
-*  `from:<CSS Selector>` - listen for the event on a different element.  This can be used for things like keyboard shortcuts.
+* `changed` - 요소의 값이 변경된 경우에만 요청을 발행합니다.
+*  `delay:<time interval>` - 요청을 보내기 전에 주어진 시간(예: `1s`)만큼 기다립니다. 이벤트가 다시 트리거되면 카운트다운이 초기화됩니다.
+*  `throttle:<time interval>` - 요청을 보내기 전에 주어진 시간(예: `1s`)만큼 기다립니다. 
+`delay`와 달리 시간 제한에 도달하기 전에 새로운 이벤트가 발생하면 그 이벤트는 무시되며, 요청은 처음 트리거될 때의 시간 간격이 끝날 때 보내집니다.
+*  `from:<CSS Selector>` - 다른 요소에서 이벤트를 감지합니다. 이는 키보드 단축키와 같은 기능에 사용할 수 있습니다.
 
-You can use these attributes to implement many common UX patterns, such as [Active Search](@/examples/active-search.md):
+이러한 속성을 사용하여 [Active 검색](@/examples/active-search.md)과 같은 많은 일반적인 UX 패턴을 구현할 수 있습니다:
 
 ```html
 <input type="text" name="q"
@@ -260,17 +255,17 @@ You can use these attributes to implement many common UX patterns, such as [Acti
 <div id="search-results"></div>
 ```
 
-This input will issue a request 500 milliseconds after a key up event if the input has been changed and inserts the results
-into the `div` with the id `search-results`.
+이 입력은 입력이 변경된 경우 key up 이벤트가 발생한 후 500밀리초 후에 요청을 보내고 
+ID가 `search-results`인 `div`에 결과를 삽입합니다.
 
-Multiple triggers can be specified in the [hx-trigger](@/attributes/hx-trigger.md) attribute, separated by commas.
+여러 트리거를 쉼표로 구분하여 [hx-trigger](@/attributes/hx-trigger.md) 속성에 지정할 수 있습니다.
 
 #### Trigger Filters
 
-You may also apply trigger filters by using square brackets after the event name, enclosing a javascript expression that
-will be evaluated.  If the expression evaluates to `true` the event will trigger, otherwise it will not.
+이벤트 이름 뒤에 대괄호를 사용하여, 평가할 자바스크립트 표현식을 대괄호로 묶어 트리거 필터를 적용할 수도 있습니다. 
+표현식이 `true`로 평가되면 이벤트가 트리거되고, 그렇지 않으면 트리거되지 않습니다.
 
-Here is an example that triggers only on a Control-Click of the element
+다음은 요소를 Control-클릭할 때만 트리거되는 예제입니다.
 
 ```html
 <div hx-get="/clicked" hx-trigger="click[ctrlKey]">
@@ -278,41 +273,41 @@ Here is an example that triggers only on a Control-Click of the element
 </div>
 ```
 
-Properties like `ctrlKey` will be resolved against the triggering event first, then against the global scope.  The
-`this` symbol will be set to the current element.
+`ctrlKey`와 같은 프로퍼티는 트리거 이벤트에 대해 먼저 확인된 다음 전역 범위에 대해 확인됩니다. 
+`this` 심볼은 현재 요소로 설정됩니다.
 
 #### Special Events
 
-htmx provides a few special events for use in [hx-trigger](@/attributes/hx-trigger.md):
+htmx는 [hx-trigger](@/attributes/hx-trigger.md)에서 사용할 수 있는 몇 가지 특별한 이벤트를 제공합니다:
 
-* `load` - fires once when the element is first loaded
-* `revealed` - fires once when an element first scrolls into the viewport
-* `intersect` - fires once when an element first intersects the viewport.  This supports two additional options:
-    * `root:<selector>` - a CSS selector of the root element for intersection
-    * `threshold:<float>` - a floating point number between 0.0 and 1.0, indicating what amount of intersection to fire the event on
+* `load` - 요소가 처음 로드될 때 한 번 발동됩니다.
+* `revealed` - 요소가 뷰포트에 처음 스크롤될 때 한 번 발동됩니다.
+* `intersect` - 요소가 뷰포트와 처음 교차할 때 한 번 발동됩니다. 이 옵션에는 두 가지 추가 옵션이 있습니다:
+    * `root:<selector>` - 교차되는 루트 요소에 대한 CSS 선택자입니다.
+    * `threshold:<float>` - 0.0에서 1.0 사이의 부동 소수점 숫자로, 이벤트를 발동되게 할 교차점의 양을 나타냅니다.
 
-You can also use custom events to trigger requests if you have an advanced use case.
+고급 사용 사례가 있는 경우 사용자 지정 이벤트를 사용하여 요청을 트리거할 수도 있습니다.
 
 #### Polling
 
-If you want an element to poll the given URL rather than wait for an event, you can use the `every` syntax
-with the [`hx-trigger`](@/attributes/hx-trigger.md) attribute:
+요소가 이벤트를 기다리지 않고 지정된 URL을 polling하도록 하려면 
+[`hx-trigger`](@/attributes/hx-trigger.md) 속성과 함께 `every` 구문을 사용하면 됩니다:
 
 ```html
 <div hx-get="/news" hx-trigger="every 2s"></div>
 ```
 
-This tells htmx
+이것은 htmx에게 말해줍니다.
 
-> Every 2 seconds, issue a GET to /news and load the response into the div
+> 2초마다 /news로 GET을 보내고 div에 응답을 로드합니다.
 
-If you want to stop polling from a server response you can respond with the HTTP response code [`286`](https://en.wikipedia.org/wiki/86_(term))
-and the element will cancel the polling.
+서버 응답에서 polling을 중지하려면 HTTP 응답 코드 [`286`](https://en.wikipedia.org/wiki/86_(term))으로 응답하면 
+요소에서 polling을 자동으로 취소합니다.
 
 #### Load Polling {#load_polling}
 
-Another technique that can be used to achieve polling in htmx is "load polling", where an element specifies
-a `load` trigger along with a delay, and replaces itself with the response:
+htmx에서 polling을 달성하는 데 사용할 수 있는 또 다른 기술은 요소가 delay와 함께 
+`load` 트리거를 지정하고 응답으로 자신을 대체하는 "load polling"입니다.
 
 ```html
 <div hx-get="/messages"
@@ -322,23 +317,21 @@ a `load` trigger along with a delay, and replaces itself with the response:
 </div>
 ```
 
-If the `/messages` end point keeps returning a div set up this way, it will keep "polling" back to the URL every
-second.
+`/messages`의 엔드포인트가 이런 식으로 설정된 div를 계속 반환하면 매초마다 URL에 대한 'polling'을 계속합니다.
 
-Load polling can be useful in situations where a poll has an end point at which point the polling terminates, such as
-when you are showing the user a [progress bar](@/examples/progress-bar.md).
+load polling은 사용자에게 [progress bar](@/examples/progress-bar.md)을 표시하는 경우와 같이 
+polling이 종료되는 종료 지점이 있는 상황에서 유용할 수 있습니다.
 
 ### Request Indicators {#indicators}
 
-When an AJAX request is issued it is often good to let the user know that something is happening since the browser
-will not give them any feedback.  You can accomplish this in htmx by using `htmx-indicator` class.
+브라우저에서는 피드백을 제공하지 않기 때문에 AJAX 요청이 실행되면 사용자에게 어떤 일이 일어나고 있음을 알려주는 것이 좋습니다. 
+htmx에서는 `htmx-indicator` 클래스를 사용하여 이 작업을 수행할 수 있습니다.
 
-The `htmx-indicator` class is defined so that the opacity of any element with this class is 0 by default, making it invisible
-but present in the DOM.
+`htmx-indicator` 클래스는 이 클래스가 있는 모든 요소의 불투명도가 
+기본적으로 0이 되도록 정의되어 보이지 않지만 DOM에는 존재하게 만듭니다.
 
-When htmx issues a request, it will put a `htmx-request` class onto an element (either the requesting element or
-another element, if specified).  The `htmx-request` class will cause a child element with the `htmx-indicator` class
-on it to transition to an opacity of 1, showing the indicator.
+htmx가 요청을 보내면 요소(요청하는 요소 또는 지정된 경우 다른 요소)에 `htmx-request` 클래스를 넣습니다. 
+`htmx-request` 클래스는 `htmx-indicator` 클래스가 있는 하위 요소의 불투명도를 1로 전환하여 indicator를 표시합니다.
 
 ```html
 <button hx-get="/click">
@@ -347,11 +340,11 @@ on it to transition to an opacity of 1, showing the indicator.
 </button>
 ```
 
-Here we have a button.  When it is clicked the `htmx-request` class will be added to it, which will reveal the spinner
-gif element.  (I like [SVG spinners](http://samherbert.net/svg-loaders/) these days.)
+여기 버튼이 있습니다. 이 버튼을 클릭하면 `htmx-request` 클래스가 추가되어 
+spinner gif 요소가 표시됩니다. (저는 요즘 [SVG spinners](http://samherbert.net/svg-loaders/)를 좋아합니다.)
 
-While the `htmx-indicator` class uses opacity to hide and show the progress indicator, if you would prefer another mechanism
-you can create your own CSS transition like so:
+`htmx-indicator` 클래스는 불투명도를 사용하여 진행률 표시기를 숨기고 표시하지만, 
+다른 방법을 선호하는 경우 다음과 같이 자체 CSS 전환을 만들 수 있습니다:
 
 ```css
 .htmx-indicator{
@@ -365,8 +358,8 @@ you can create your own CSS transition like so:
 }
 ```
 
-If you want the `htmx-request` class added to a different element, you can use the [hx-indicator](@/attributes/hx-indicator.md)
-attribute with a CSS selector to do so:
+`htmx-request` 클래스를 다른 요소에 추가하려면 
+CSS 선택자와 함께 [hx-indicator](@/attributes/hx-indicator.md) 속성을 사용하면 됩니다:
 
 ```html
 <div>
@@ -377,16 +370,16 @@ attribute with a CSS selector to do so:
 </div>
 ```
 
-Here we call out the indicator explicitly by id.  Note that we could have placed the class on the parent `div` as well
-and had the same effect.
+여기서는 ID로 indicator를 명시적으로 호출합니다. 
+부모 `div`에 클래스를 배치해도 동일한 효과를 얻을 수 있다는 점에 유의하세요.
 
-You can also add the [`disabled` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled) to
-elements for the duration of a request by using the [hx-disabled-elt](@/attributes/hx-disabled-elt.md) attribute.
+또한 [hx-disabled-elt](@/attributes/hx-disabled-elt.md) 속성을 사용하여 요청 기간 동안 요소에 
+[`disabled` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled) 속성을 추가할 수도 있습니다.
 
 ### Targets
 
-If you want the response to be loaded into a different element other than the one that made the request, you can
-use the [hx-target](@/attributes/hx-target.md) attribute, which takes a CSS selector.  Looking back at our Live Search example:
+요청을 한 요소가 아닌 다른 요소에 응답을 로드하려는 경우 CSS 선택자를 사용하는 
+[hx-target](@/attributes/hx-target.md) 속성을 사용할 수 있습니다. 라이브 검색 예시를 다시 살펴보겠습니다:
 
 ```html
 <input type="text" name="q"
@@ -398,113 +391,107 @@ use the [hx-target](@/attributes/hx-target.md) attribute, which takes a CSS sele
 <div id="search-results"></div>
 ```
 
-You can see that the results from the search are going to be loaded into `div#search-results`, rather than into the
-input tag.
+검색 결과가 input 태그가 아닌 `div#search-results`에 로드되는 것을 볼 수 있습니다.
 
 
 #### Extended CSS Selectors {#extended-css-selectors}
 
-`hx-target`, and most attributes that take a CSS selector, support an "extended" CSS syntax:
+`hx-target` 및 대부분의 CSS 선택자를 사용하는 속성들은 "확장된" CSS 구문을 지원합니다:
 
-* You can use the `this` keyword, which indicates that the element that the `hx-target` attribute is on is the target
-* The `closest <CSS selector>` syntax will find the [closest](https://developer.mozilla.org/docs/Web/API/Element/closest)
-  ancestor element or itself, that matches the given CSS selector.
-  (e.g. `closest tr` will target the closest table row to the element)
-* The `next <CSS selector>` syntax will find the next element in the DOM matching the given CSS selector.
-* The `previous <CSS selector>` syntax will find the previous element in the DOM the given CSS selector.
-* `find <CSS selector>` which will find the first child descendant element that matches the given CSS selector.
-  (e.g `find tr` would target the first child descendant row to the element)
+* `this` 키워드를 사용할 수 있으며, 이는 `hx-target` 속성이 있는 요소 자체가 대상임을 나타냅니다.
+* `closest <CSS 선택자>` 구문은 주어진 CSS 선택자와 일치하는 가장 [가까운](https://developer.mozilla.org/docs/Web/API/Element/closest) 상위 요소 또는 자기 자신을 찾습니다.
+  (예: `closest tr`은 요소에서 가장 가까운 테이블 행을 대상으로 합니다)
+* `next <CSS 선택자>` 구문은 DOM에서 주어진 CSS 선택자와 일치하는 다음 요소를 찾습니다.
+* `previous <CSS 선택자>` 구문은 DOM에서 주어진 CSS 선택자와 일치하는 이전 요소를 찾습니다.
+* `find <CSS 선택자>` 구문은 주어진 CSS 선택자와 일치하는 첫 번째 하위 자손 요소를 찾습니다.
+  (예: `find tr`은 요소의 첫 번째 하위 자손 행을 대상으로 합니다)
 
-In addition, a CSS selector may be wrapped in `<` and `/>` characters, mimicking the
-[query literal](https://hyperscript.org/expressions/query-reference/) syntax of hyperscript.
+추가로, CSS 선택자는 `<` 및 `/>` 문자로 감싸서 hyperscript의 
+[query literal](https://hyperscript.org/expressions/query-reference/) 구문을 모방할 수 있습니다.
 
-Relative targets like this can be useful for creating flexible user interfaces without peppering your DOM with lots
-of `id` attributes.
-
+이와 같이 상대적으로 조절할 수 있는 대상들은 많은 `id` 속성을 DOM에 추가하지 않고도 
+유연한 사용자 인터페이스를 만드는 데 유용할 수 있습니다.
 
 ### Swapping {#swapping}
 
-htmx offers a few different ways to swap the HTML returned into the DOM.  By default, the content replaces the
-`innerHTML` of the target element.  You can modify this by using the [hx-swap](@/attributes/hx-swap.md) attribute
-with any of the following values:
+htmx는 DOM으로 반환되는 HTML을 교체하는 몇 가지 방법을 제공합니다. 
+기본적으로 콘텐츠는 대상 요소를 `innerHTML`으로 대체합니다. 
+다음 값 중 하나와 함께 [hx-swap](@/attributes/hx-swap.md) 속성을 사용하여 이를 수정할 수 있습니다:
 
 | Name | Description
 |------|-------------
-| `innerHTML` | the default, puts the content inside the target element
-| `outerHTML` | replaces the entire target element with the returned content
-| `afterbegin` | prepends the content before the first child inside the target
-| `beforebegin` | prepends the content before the target in the target's parent element
-| `beforeend` | appends the content after the last child inside the target
-| `afterend` | appends the content after the target in the target's parent element
-| `delete` | deletes the target element regardless of the response
-| `none` | does not append content from response ([Out of Band Swaps](#oob_swaps) and [Response Headers](#response-headers) will still be processed)
+| `innerHTML` | 기본값으로, 대상 요소 안에 콘텐츠를 넣습니다.
+| `outerHTML` | 전체 대상 요소를 응답으로 받은 콘텐츠로 바꿉니다.
+| `afterbegin` | 대상 내부의 첫 번째 자식 앞에 콘텐츠를 추가합니다.
+| `beforebegin` | 대상의 부모 요소 안에서 대상 앞에 콘텐츠를 추가합니다.
+| `beforeend` | 대상 내부의 마지막 자식 다음에 콘텐츠를 추가합니다.
+| `afterend` | 대상의 부모 요소 안에서 대상 뒤에 콘텐츠를 추가합니다.
+| `delete` | 응답에 관계없이 대상 요소를 삭제합니다.
+| `none` | 응답으로 온 콘텐츠를 추가하지 않습니다([Out of Band 교체](#oob_swaps) 및 [Response Headers](#response-headers)는 계속 처리됩니다).
 
 #### Morph Swaps {#morphing}
 
-In addition to the standard swap mechanisms above, htmx also supports _morphing_ swaps, via extensions.  Morphing swaps
-attempt to _merge_ new content into the existing DOM, rather than simply replacing it.  They often do a better job
-preserving things like focus, video state, etc. by mutating existing nodes in-place during the swap operation, at the
-cost of more CPU.
+위의 표준 교체 메커니즘 외에도 htmx는 확장을 통해 _Morphing_ Swap도 지원합니다.
+Morph Swap은 단순히 교체하는 것이 아니라 새 콘텐츠를 기존 DOM에 _병합_하려고 시도합니다. 
+교체 작업 중에 기존 노드를 제자리에서 변경하여 focus, 동영상 상태 등을 더 잘 보존하는 경우가 많지만 CPU를 더 많이 사용하게 됩니다.
 
-The following extensions are available for morph-style swaps:
+morph-style swaps에 사용할 수 있는 확장 기능은 다음과 같습니다:
 
-* [Idiomorph](https://github.com/bigskysoftware/idiomorph#htmx) - A morphing algorithm created by the htmx developers.
-* [Morphdom Swap](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/morphdom-swap/README.md) - Based on the [morphdom](https://github.com/patrick-steele-idem/morphdom),
-  the original DOM morphing library.
-* [Alpine-morph](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/alpine-morph/README.md) - Based on the [alpine morph](https://alpinejs.dev/plugins/morph) plugin, plays
-  well with alpine.js
+* [Idiomorph](https://github.com/bigskysoftware/idiomorph#htmx) - htmx 개발자가 만든 morphing 알고리즘입니다.
+* [Morphdom Swap](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/morphdom-swap/README.md) - 오리지널 DOM morphing 라이브러리인 
+[morphdom](https://github.com/patrick-steele-idem/morphdom)을 기반으로 합니다.
+* [Alpine-morph](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/alpine-morph/README.md) - [alpine morph](https://alpinejs.dev/plugins/morph) 플러그인을 기반으로 하며, alpine.js와 잘 조합됩니다.
 
 #### View Transitions {#view-transitions}
 
-The new, experimental [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API)
-gives developers a way to create an animated transition between different DOM states.  It is still in active development
-and is not available in all browsers, but htmx provides a way to work with this new API that falls back to the non-transition
-mechanism if the API is not available in a given browser.
+새롭고 실험적인 [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API)는 개발자가 서로 다른 DOM 상태 간에 애니메이션 전환을 만들 수 있는 방법을 제공합니다. 
+아직 개발 중이며 모든 브라우저에서 사용할 수 있는 것은 아니지만, 특정 브라우저에서 API를 사용할 수 없는 경우
+non-transition 메커니즘으로 돌아가는 이 새로운 API로 작업할 수 있는 방법을 htmx를 통해 제공합니다.
 
-You can experiment with this new API using the following approaches:
+다음 방법을 사용하여 이 새로운 API를 실험해 볼 수 있습니다:
 
-* Set the `htmx.config.globalViewTransitions` config variable to `true` to use transitions for all swaps
-* Use the `transition:true` option in the `hx-swap` attribute
-* If an element swap is going to be transitioned due to either of the above configurations, you may catch the
-  `htmx:beforeTransition` event and call `preventDefault()` on it to cancel the transition.
+* 모든 교체 작업에 트랜지션을 사용하려면 `htmx.config.globalViewTransitions` 구성 변수를 `true`로 설정합니다.
+* `hx-swap` 속성에서 `transition:true` 옵션을 사용합니다.
+* 위의 구성 중 하나로 인해 요소 교체가 전환되는 경우 
+`htmx:beforeTransition` 이벤트를 포착하고 이에 대해 `preventDefault()`를 호출하여 전환을 취소하는 것이 가능합니다.
 
-View Transitions can be configured using CSS, as outlined in [the Chrome documentation for the feature](https://developer.chrome.com/docs/web-platform/view-transitions/#simple-customization).
+View Transitions은 [해당 기능에 대한 Chrome 문서](https://developer.chrome.com/docs/web-platform/view-transitions/#simple-customization)에 설명된 대로 CSS를 사용하여 구성할 수 있습니다.
 
-You can see a view transition example on the [Animation Examples](/examples/animations#view-transitions) page.
+[Animation Examples](/examples/animations#view-transitions) 페이지에서 view transition 예제를 확인할 수 있습니다.
 
 #### Swap Options
 
-The [hx-swap](@/attributes/hx-swap.md) attribute supports many options for tuning the swapping behavior of htmx.  For
-example, by default htmx will swap in the title of a title tag found anywhere in the new content.  You can turn this
-behavior off by setting the `ignoreTitle` modifier to true:
+[hx-swap](@/attributes/hx-swap.md) 속성은 htmx의 스왑 동작을 조정하기 위한 다양한 옵션을 지원합니다. 
+예를 들어, 기본적으로 htmx는 웹 페이지의 title을 새 콘텐츠의 어느 곳에서나 발견되는 title 태그의 제목으로 바뀝니다. 
+`ignoreTitle` 수정자를 true로 설정하여 이 동작을 해제할 수 있습니다:
 
 ```html
     <button hx-post="/like" hx-swap="outerHTML ignoreTitle:true">Like</button>
 ```
 
-The modifiers available on `hx-swap` are:
+`hx-swap`에서 사용할 수 있는 수정자는 다음과 같습니다:
 
-| Option        | Description                                                                                              |
-|---------------|----------------------------------------------------------------------------------------------------------|
-| `transition`  | `true` or `false`, whether to use the view transition API for this swap                                  |
-| `swap`        | The swap delay to use (e.g. `100ms`) between when old content is cleared and the new content is inserted |
-| `settle`      | The settle delay to use (e.g. `100ms`) between when new content is inserted and when it is settled       |
-| `ignoreTitle` | If set to `true`, any title found in the new content will be ignored and not update the document title   |
-| `scroll`      | `top` or `bottom`, will scroll the target element to its top or bottom                                   |
-| `show`        | `top` or `bottom`, will scroll the target element's top or bottom into view                               |
+| Option        | Description                                                                  |
+|---------------|------------------------------------------------------------------------------|
+| `transition`  | `true` 또는 `false`, 이 교체에 대해 View Transitions API를 사용할지 여부                    |
+| `swap`        | 오래된 콘텐츠가 지워지고 새로운 콘텐츠가 삽입될 때까지 사용할 교체 지연 시간 (예: `100ms`)                     |
+| `settle`      | 새로운 콘텐츠가 삽입되고 정착될 때까지 사용할 정착 지연 시간 (예: `100ms`)                              |
+| `ignoreTitle` | `true`로 설정되면, 새로운 콘텐츠에서 발견된 title은 무시되고 문서 title이 업데이트되지 않습니다                |
+| `scroll`      | `top` 또는 `bottom`, 대상 요소를 상단 또는 하단으로 스크롤합니다                                  |
+| `show`        | `top` 또는 `bottom`, 대상 요소의 상단 또는 하단을 뷰에 보이도록 스크롤합니다                           |
 
-All swap modifiers appear after the swap style is specified, and are colon-separated.
+모든 교체 수정자는 교체 스타일이 지정된 후에 나타나며 콜론으로 구분됩니다.
 
-See the [hx-swap](@/attributes/hx-swap.md) documentation for more details on these options.
+이러한 옵션에 대한 자세한 내용은 [hx-swap](@/attributes/hx-swap.md) 문서를 참조하세요.
 
 ### Synchronization {#synchronization}
 
-Often you want to coordinate the requests between two elements.  For example, you may want a request from one element
-to supersede the request of another element, or to wait until the other element's request has finished.
+종종 두 요소 간의 요청을 조정하고 싶을 때가 있습니다. 예를 들어 한 요소의 요청이 다른 요소의 요청을 대체하거나 
+다른 요소의 요청이 완료될 때까지 기다리기를 원할 수 있습니다.
 
-htmx offers a [`hx-sync`](@/attributes/hx-sync.md) attribute to help you accomplish this.
+htmx는 이를 달성하는 데 도움이 되는 [`hx-sync`](@/attributes/hx-sync.md) 속성을 제공합니다.
 
-Consider a race condition between a form submission and an individual input's validation request in this HTML:
+이 HTML에서 form 제출과 개별 input의 유효성 검사 요청 사이의 경합 조건을 생각해 보세요:
 
 ```html
 <form hx-post="/store">
@@ -515,11 +502,10 @@ Consider a race condition between a form submission and an individual input's va
 </form>
 ```
 
-Without using `hx-sync`, filling out the input and immediately submitting the form triggers two parallel requests to
-`/validate` and `/store`.
+`hx-sync`를 사용하지 않고 입력을 작성하고 즉시 양식을 제출하면 `/validate` 및 `/store`에 대한 두 개의 병렬 요청이 트리거됩니다.
 
-Using `hx-sync="closest form:abort"` on the input will watch for requests on the form and abort the input's request if
-a form request is present or starts while the input request is in flight:
+`hx-sync="closest form:abort"`를 input 요소에 사용하면 form에서의 요청을 감시하고, 
+input 요청이 진행 중일 때 form 요청이 존재하거나 시작되면 input 요청을 중단합니다.
 
 ```html
 <form hx-post="/store">
@@ -531,10 +517,10 @@ a form request is present or starts while the input request is in flight:
 </form>
 ```
 
-This resolves the synchronization between the two elements in a declarative way.
+이렇게 하면 두 요소 간의 동기화가 선언적 방식으로 해결됩니다.
 
-htmx also supports a programmatic way to cancel requests: you can send the `htmx:abort` event to an element to
-cancel any in-flight requests:
+htmx는 요청을 취소하는 프로그래밍 방식도 지원합니다. 
+`htmx:abort` 이벤트를 요소에 전달하여 모든 in-flight 요청을 취소할 수 있습니다:
 
 ```html
 <button id="request-button" hx-post="/example">
@@ -545,29 +531,28 @@ cancel any in-flight requests:
 </button>
 ```
 
-More examples and details can be found on the [`hx-sync` attribute page.](@/attributes/hx-sync.md)
+더 많은 예제와 자세한 내용은 [`hx-sync` attribute page.](@/attributes/hx-sync.md)에서 확인할 수 있습니다.
 
 ### CSS Transitions {#css_transitions}
 
-htmx makes it easy to use [CSS Transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions) without
-javascript.  Consider this HTML content:
+htmx를 사용하면 자바스크립트 없이도 [CSS 트랜지션](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions)을 쉽게 사용할 수 있습니다. 아래 HTML 콘텐츠를 살펴보세요:
 
 ```html
 <div id="div1">Original Content</div>
 ```
 
-Imagine this content is replaced by htmx via an ajax request with this new content:
+이 콘텐츠가 htmx에 의해 ajax 요청을 통해 이 새 콘텐츠로 대체된다고 상상해 보세요:
 
 ```html
 <div id="div1" class="red">New Content</div>
 ```
 
-Note two things:
+두 가지 사항에 유의하세요:
 
-* The div has the *same* id in the original and in the new content
-* The `red` class has been added to the new content
+* 원본과 새 콘텐츠에 *동일한* ID를 가진 div가 있습니다.
+* 새 콘텐츠에 `red` 클래스가 추가되었습니다.
 
-Given this situation, we can write a CSS transition from the old state to the new state:
+이 상황을 고려하여 이전 상태에서 새 상태로의 CSS 트랜지션을 작성할 수 있습니다:
 
 ```css
 .red {
@@ -576,46 +561,43 @@ Given this situation, we can write a CSS transition from the old state to the ne
 }
 ```
 
-When htmx swaps in this new content, it will do so in such a way that the CSS transition will apply to the new content,
-giving you a nice, smooth transition to the new state.
+이 새 콘텐츠에서 htmx를 교체하면 새 콘텐츠에 CSS 트랜지션이 적용되어 
+새 상태로 멋지고 부드럽게 전환됩니다.
 
-So, in summary, all you need to do to use CSS transitions for an element is keep its `id` stable across requests!
+요약하자면, 요소에 CSS 트랜지션을 사용하려면 요청에 따라 해당 `ID`를 안정적으로 유지하기만 하면 됩니다!
 
-You can see the [Animation Examples](@/examples/animations.md) for more details and live demonstrations.
+자세한 내용과 라이브 데모는 [Animation Examples](@/examples/animations.md)에서 확인할 수 있습니다.
 
 #### Details
 
-To understand how CSS transitions actually work in htmx, you must understand the underlying swap & settle model that htmx uses.
+htmx에서 CSS 트랜지션이 실제로 어떻게 작동하는지 이해하려면 htmx에서 사용하는 기본 교체 및 정리 모델을 이해해야 합니다.
 
-When new content is received from a server, before the content is swapped in, the existing
-content of the page is examined for elements that match by the `id` attribute.  If a match
-is found for an element in the new content, the attributes of the old content are copied
-onto the new element before the swap occurs.  The new content is then swapped in, but with the
-*old* attribute values.  Finally, the new attribute values are swapped in, after a "settle" delay
-(20ms by default).  A little crazy, but this is what allows CSS transitions to work without any javascript by
-the developer.
+서버에서 새 콘텐츠를 수신하면 콘텐츠가 교체되기 전에 페이지의 기존 콘텐츠에서 `ID` 속성이 일치하는 요소가 있는지 검사합니다. 
+새 콘텐츠의 요소와 일치하는 항목이 발견되면 교체가 발생하기 전에 이전 콘텐츠의 속성이 새 요소에 복사됩니다. 
+그런 다음 새 콘텐츠가 *이전* 속성 값을 사용하며 교체됩니다. 마지막으로 '정리' 지연(기본값 20밀리초) 후 새 속성 값으로 바뀝니다. 
+약간 이상하지만, 개발자가 자바스크립트를 사용하지 않고도 CSS 전환이 작동할 수 있는 이유입니다.
 
 ### Out of Band Swaps {#oob_swaps}
 
-If you want to swap content from a response directly into the DOM by using the `id` attribute you can use the
-[hx-swap-oob](@/attributes/hx-swap-oob.md) attribute in the *response* html:
+`id` 속성을 사용하여 응답의 콘텐츠를 DOM으로 직접 바꾸려면 
+*응답* HTML에서 [hx-swap-oob](@/attributes/hx-swap-oob.md) 속성을 사용하면 됩니다.
 
 ```html
 <div id="message" hx-swap-oob="true">Swap me directly!</div>
 Additional Content
 ```
 
-In this response, `div#message` would be swapped directly into the matching DOM element, while the additional content
-would be swapped into the target in the normal manner.
+이 응답에서 `div#message`는 id가 일치하는 DOM 요소로 직접 교체되고 
+추가 콘텐츠는 대상에 일반적인 방식으로 교체됩니다.
 
-You can use this technique to "piggy-back" updates on other requests.
+이 기술을 사용하여 다른 요청에 대한 업데이트를 "piggy-back"할 수 있습니다.
 
 #### Troublesome Tables
 
-Table elements can be problematic when combined with out of band swaps, because, by the HTML spec, many can't stand on
-their own in the DOM (e.g. `<tr>` or `<td>`).
+테이블 요소는 HTML 사양에 따라 DOM에서 독립적으로 존재할 수 없는 경우가 많기 때문에 
+out of band와 결합하면 문제가 될 수 있습니다(예: `<tr>` 또는 `<td>`).
 
-To avoid this issue you can use a `template` tag to encapsulate these elements:
+이 문제를 방지하려면 `template` 태그를 사용하여 이러한 요소를 캡슐화하면 됩니다:
 
 ```html
 <template>
@@ -625,59 +607,52 @@ To avoid this issue you can use a `template` tag to encapsulate these elements:
 
 #### Selecting Content To Swap
 
-If you want to select a subset of the response HTML to swap into the target, you can use the [hx-select](@/attributes/hx-select.md)
-attribute, which takes a CSS selector and selects the matching elements from the response.
+응답 HTML의 하위 집합만 선별해서 대상을 교체하려는 경우
+CSS 선택자를 사용하여 응답에서 일치하는 요소를 선택하는 [hx-select](@/attributes/hx-select.md) 속성을 사용할 수 있습니다.
 
-You can also pick out pieces of content for an out-of-band swap by using the [hx-select-oob](@/attributes/hx-select-oob.md)
-attribute, which takes a list of element IDs to pick out and swap.
+또한 out of band를 위해 선택 및 교체할 요소 ID 목록을 가져오는 
+[hx-select-oob](@/attributes/hx-select-oob.md) 속성을 사용하여 콘텐츠 조각을 선택할 수도 있습니다.
 
 #### Preserving Content During A Swap
 
-If there is content that you wish to be preserved across swaps (e.g. a video player that you wish to remain playing
-even if a swap occurs) you can use the [hx-preserve](@/attributes/hx-preserve.md)
-attribute on the elements you wish to be preserved.
+교체가 발생하더라도 계속 재생하고 싶은 동영상 플레이어와 같이, 
+교체가 발생하더라도 보존하려는 콘텐츠가 있는 경우 보존하려는 요소에는 
+[hx-preserve](@/attributes/hx-preserve.md) 속성을 사용할 수 있습니다.
 
 ### Parameters
 
-By default, an element that causes a request will include its value if it has one.  If the element is a form it
-will include the values of all inputs within it.
+기본적으로 요청을 유발하는 요소에 value가 있는 경우 해당 값이 포함됩니다. 
+요소가 form인 경우 그 안에 있는 모든 입력값이 포함됩니다. 
 
-As with HTML forms, the `name` attribute of the input is used as the parameter name in the request that htmx sends.
+HTML 양식과 마찬가지로 input의 `name` 속성은 htmx가 보내는 요청에서 매개 변수 이름으로 사용됩니다. 
 
-Additionally, if the element causes a non-`GET` request, the values of all the inputs of the nearest enclosing form
-will be included.
+또한 요소가 비-`GET` 요청을 유발하는 경우 가장 가까운 둘러싸는 양식의 모든 입력값이 포함됩니다.
 
-If you wish to include the values of other elements, you can use the [hx-include](@/attributes/hx-include.md) attribute
-with a CSS selector of all the elements whose values you want to include in the request.
+다른 요소의 값을 포함하려면 요청에 포함하려는 모든 요소의 CSS 선택자와 함께 [hx-include](@/attributes/hx-include.md) 속성을 사용하면 됩니다. 
 
-If you wish to filter out some parameters you can use the [hx-params](@/attributes/hx-params.md) attribute.
+일부 매개변수를 필터링하려면 [hx-params](@/attributes/hx-params.md) 속성을 사용하면 됩니다. 
 
-Finally, if you want to programmatically modify the parameters, you can use the [htmx:configRequest](@/events.md#htmx:configRequest)
-event.
+마지막으로 프로그래밍 방식으로 매개변수를 수정하려면 [htmx:configRequest](@/events.md#htmx:configRequest) 이벤트를 사용할 수 있습니다.
 
 #### File Upload {#files}
 
-If you wish to upload files via an htmx request, you can set the [hx-encoding](@/attributes/hx-encoding.md) attribute to
-`multipart/form-data`.  This will use a `FormData` object to submit the request, which will properly include the file
-in the request.
+htmx 요청을 통해 파일을 업로드하려는 경우 [hx-encoding](@/attributes/hx-encoding.md) 속성을 `multipart/form-data`로 설정하면 됩니다. 
+그러면 요청을 제출하는 데 `FormData` 객체가 사용되며 요청에 파일이 올바르게 포함됩니다. 
 
-Note that depending on your server-side technology, you may have to handle requests with this type of body content very
-differently.
+서버 측 기술에 따라 이러한 유형의 본문 콘텐츠가 포함된 요청을 매우 다르게 처리해야 할 수도 있습니다.
 
-Note that htmx fires a `htmx:xhr:progress` event periodically based on the standard `progress` event during upload,
-which you can hook into to show the progress of the upload.
+htmx는 업로드 중 표준 `progress` 이벤트에 따라 주기적으로 `htmx:xhr:progress` 이벤트를 실행하며, 이를 연결하여 업로드 진행률을 표시할 수 있습니다. 
 
-See the [examples section](@/examples/_index.md) for more advanced form patterns, including [progress bars](@/examples/file-upload.md) and [error handling](@/examples/file-upload-input.md).
+[progress bars](@/examples/file-upload.md) 및 [오류 처리](@/examples/file-upload-input.md) 등 고급 양식 패턴에 대한 자세한 내용은 [examples section](@/examples/_index.md)을 참고하세요.
 
 #### Extra Values
 
-You can include extra values in a request using the [hx-vals](@/attributes/hx-vals.md) (name-expression pairs in JSON format) and
-[hx-vars](@/attributes/hx-vars.md) attributes (comma-separated name-expression pairs that are dynamically computed).
+[hx-vals](@/attributes/hx-vals.md)(JSON 형식의 이름-표현식 쌍)을 사용하여 요청에 추가 값을 포함할 수 있습니다.
 
 ### Confirming Requests {#confirming}
 
-Often you will want to confirm an action before issuing a request.  htmx supports the [`hx-confirm`](@/attributes/hx-confirm.md)
-attribute, which allows you to confirm an action using a simple javascript dialog:
+요청을 발행하기 전에 작업을 확인하려는 경우가 종종 있습니다. 
+htmx는 간단한 자바스크립트 대화 상자를 사용하여 작업을 확인할 수 있는 [`hx-confirm`](@/attributes/hx-confirm.md) 속성을 지원합니다:
 
 ```html
 <button hx-delete="/account" hx-confirm="Are you sure you wish to delete your account?">
@@ -685,16 +660,16 @@ attribute, which allows you to confirm an action using a simple javascript dialo
 </button>
 ```
 
-Using events you can implement more sophisticated confirmation dialogs.  The [confirm example](@/examples/confirm.md)
-shows how to use [sweetalert2](https://sweetalert2.github.io/) library for confirmation of htmx actions.
+이벤트를 사용하면 보다 정교한 확인 대화 상자를 구현할 수 있습니다. [confirm example](@/examples/confirm.md)에서는 
+[sweetalert2](https://sweetalert2.github.io/) 라이브러리를 사용하여 htmx 작업을 확인하는 방법을 보여줍니다.
 
 #### Confirming Requests Using Events
 
-Another option to do confirmation with is via the [`htmx:confirm` event](@/events.md#htmx:confirm) event.  This event
-is fired on *every* trigger for a request (not just on elements that have a `hx-confirm` attribute) and can be used
-to implement asynchronous confirmation of the request.
+확인을 수행하는 또 다른 옵션은 [`htmx:confirm` event](@/events.md#htmx:confirm) 이벤트를 사용하는 것입니다. 
+이 이벤트는 요청에 대한 *모든* 트리거(`hx-confirm` 속성이 있는 요소뿐만 아니라)에서 
+실행되며 요청의 비동기 확인을 구현하는 데 사용할 수 있습니다.
 
-Here is an example using [sweet alert](https://sweetalert.js.org/guides/) on any element with a `confirm-with-sweet-alert='true'` attribute on it:
+다음은 `confirm-with-sweet-alert='true'` 속성이 있는 모든 요소에 [sweet alert](https://sweetalert.js.org/guides/)를 사용하는 예시입니다:
 
 ```javascript
 document.body.addEventListener('htmx:confirm', function(evt) {
@@ -718,8 +693,8 @@ document.body.addEventListener('htmx:confirm', function(evt) {
 
 ## Attribute Inheritance {#inheritance}
 
-Most attributes in htmx are inherited: they apply to the element they are on as well as any children elements.  This
-allows you to "hoist" attributes up the DOM to avoid code duplication.  Consider the following htmx:
+htmx의 대부분의 속성은 상속되며, 해당 속성이 있는 요소와 모든 하위 요소에 적용됩니다. 
+이를 통해 속성을 DOM 위로 '올리기'해서 코드 중복을 피할 수 있습니다. 다음 htmx를 고려해 보세요:
 
 ```html
 <button hx-delete="/account" hx-confirm="Are you sure?">
@@ -730,7 +705,7 @@ allows you to "hoist" attributes up the DOM to avoid code duplication.  Consider
 </button>
 ```
 
-Here we have a duplicate `hx-confirm` attribute.  We can hoist this attribute to a parent element:
+여기에는 중복된 `hx-confirm` 속성이 있습니다. 이 속성을 부모 요소로 올릴 수 있습니다:
 
 ```html
 <div hx-confirm="Are you sure?">
@@ -743,10 +718,10 @@ Here we have a duplicate `hx-confirm` attribute.  We can hoist this attribute to
 </div>
 ```
 
-This `hx-confirm` attribute will now apply to all htmx-powered elements within it.
+이 `hx-confirm` 속성은 이제 그 안의 모든 htmx 기반 요소에 적용됩니다.
 
-Sometimes you wish to undo this inheritance.  Consider if we had a cancel button to this group, but didn't want it to
-be confirmed.  We could add an `unset` directive on it like so:
+때때로 이 상속을 취소하고 싶을 때가 있습니다. 이 그룹에 취소 버튼이 있지만 확인을 원하지 않는 경우를 생각해 보세요. 
+다음과 같이 `unset` 지시문을 추가할 수 있습니다:
 
 ```html
 <div hx-confirm="Are you sure?">
@@ -762,21 +737,20 @@ be confirmed.  We could add an `unset` directive on it like so:
 </div>
 ```
 
-The top two buttons would then show a confirm dialog, but the bottom cancel button would not.
+그러면 상단 두 개의 버튼에는 확인 대화 상자가 표시되지만 하단 취소 버튼은 표시되지 않습니다.
 
-Inheritance can be disabled on a per-element and per-attribute basis using the
-[`hx-disinherit`](@/attributes/hx-disinherit.md) attribute.
+상속은 [`hx-disinherit`](@/attributes/hx-disinherit.md) 속성을 사용하여 요소별 및 속성별로 비활성화할 수 있습니다.
 
-If you wish to disable attribute inheritance entirely, you can set the `htmx.config.disableInheritance` configuration
-variable to `true`.   This will disable inheritance as a default, and allow you to specify inheritance explicitly
-with the [`hx-inherit`](@/attributes/hx-inherit.md) attribute.
+속성 상속을 완전히 비활성화하려면 `htmx.config.disableInheritance` 구성 변수를 `true`로 설정하면 됩니다. 
+이렇게 하면 기본적으로 상속이 비활성화되고 [`hx-inherit`](@/attributes/hx-inherit.md) 속성을 사용하여 
+상속을 명시적으로 지정할 수 있습니다.
 
 ## Boosting
 
-Htmx supports "boosting" regular HTML anchors and forms with the [hx-boost](@/attributes/hx-boost.md) attribute.  This
-attribute will convert all anchor tags and forms into AJAX requests that, by default, target the body of the page.
+Htmx는 [hx-boost](@/attributes/hx-boost.md) 속성을 사용하여 일반 HTML anchor 및 form의 "boosting"을 지원합니다.
+이 속성은 모든 anchor 태그와 form을 기본적으로 웹 페이지의 본문을 대상으로 하는 AJAX 요청으로 변환합니다.
 
-Here is an example:
+여기 예시가 있습니다:
 
 ```html
 <div hx-boost="true">
@@ -784,22 +758,22 @@ Here is an example:
 </div>
 ```
 
-The anchor tag in this div will issue an AJAX `GET` request to `/blog` and swap the response into the `body` tag.
+이 div 안의 앵커 태그는 `/blog`로 AJAX `GET` 요청을 보내고, 응답으로 `body` 태그 안을 교체합니다.
+
 
 ### Progressive Enhancement {#progressive_enhancement}
 
-A feature of `hx-boost` is that it degrades gracefully if javascript is not enabled: the links and forms continue
-to work, they simply don't use ajax requests.  This is known as
-[Progressive Enhancement](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement), and it allows
-a wider audience to use your site's functionality.
+`hx-boost`의 기능 중 하나는 JavaScript가 활성화되지 않은 경우에도 점진적으로 저하된다는 것입니다: 
+link와 form은 계속 작동하지만, 단지 Ajax 요청을 사용하지 않습니다. 
+이를 "[점진적 향상(Progressive Enhancement)](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement)"이라고 하며, 
+이를 통해 더 넓은 사용자층이 사이트의 기능을 이용할 수 있게 합니다.
 
-Other htmx patterns can be adapted to achieve progressive enhancement as well, but they will require more thought.
+다른 htmx 패턴들도 점진적 향상을 달성하도록 조정할 수 있지만, 이는 더 많은 고민을 필요로 합니다.
 
-Consider the [active search](@/examples/active-search.md) example.  As it is written, it will not degrade gracefully:
-someone who does not have javascript enabled will not be able to use this feature. This is done for simplicity’s sake,
-to keep the example as brief as possible.
+[active search](@/examples/active-search.md) 예시를 생각해 보세요. 자바스크립트를 활성화하지 않은 사람은 이 기능을 사용할 수 없습니다. 
+이 예제는 최대한 간략하게 작성하기 위해 그런 것입니다.
 
-However, you could wrap the htmx-enhanced input in a form element:
+그러나 htmx로 강화된 input 요소를 form 요소로 감쌀 수 있습니다:
 
 ```html
 <form action="/search" method="POST">
@@ -812,78 +786,71 @@ However, you could wrap the htmx-enhanced input in a form element:
 </form>
 ```
 
-With this in place, javascript-enabled clients would still get the nice active-search UX, but non-javascript enabled
-clients would be able to hit the enter key and still search.  Even better, you could add a "Search" button as well.
-You would then need to update the form with an `hx-post` that mirrored the `action` attribute, or perhaps use `hx-boost`
-on it.
+이렇게 하면 자바스크립트를 사용하는 클라이언트는 여전히 멋진 액티브 검색 UX를 사용할 수 있지만, 
+자바스크립트를 사용하지 않는 클라이언트도 엔터 키를 눌러 검색할 수 있습니다. 더 좋은 방법은 '검색' 버튼도 추가하는 것입니다. 
+그런 다음 `action` 속성을 미러링한 `hx-post`로 form을 업데이트하거나 `hx-boost`를 사용해야 합니다. 
 
-You would need to check on the server side for the `HX-Request` header to differentiate between an htmx-driven and a
-regular request, to determine exactly what to render to the client.
+서버 측에서 `HX-Request` 헤더를 확인하여 htmx 기반 요청과 일반 요청을 구분하여 클라이언트에 렌더링할 내용을 정확히 결정해야 합니다. 
 
-Other patterns can be adapted similarly to achieve the progressive enhancement needs of your application.
+애플리케이션의 점진적인 개선 요구를 달성하기 위해 다른 패턴도 유사하게 적용할 수 있습니다. 보시다시피, 더 많은 생각과 더 많은 작업이 필요합니다. 
+또한 일부 기능은 완전히 제한될 수도 있습니다. 이러한 절충점은 개발자가 프로젝트 목표와 대상에 따라 결정해야 합니다. 
 
-As you can see, this requires more thought and more work.  It also rules some functionality entirely out of bounds.
-These tradeoffs must be made by you, the developer, with respect to your projects goals and audience.
+[접근성](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/What_is_accessibility)은 점진적 향상과 밀접한 관련이 있는 개념입니다. 
+`hx-boost`와 같은 점진적 향상 기술을 사용하면 다양한 사용자가 htmx 애플리케이션에 더 쉽게 액세스할 수 있습니다. 
 
-[Accessibility](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/What_is_accessibility) is a concept
-closely related to progressive enhancement.  Using progressive enhancement techniques such as `hx-boost` will make your
-htmx application more accessible to a wide array of users.
+htmx 기반 애플리케이션은 HTML 지향적이기 때문에 일반적인 비AJAX 구동 웹 애플리케이션과 매우 유사합니다.
 
-htmx-based applications are very similar to normal, non-AJAX driven web applications because htmx is HTML-oriented.
+따라서 일반적인 HTML 접근성 권장 사항이 권장됩니다. 예를 들어:
 
-As such, the normal HTML accessibility recommendations apply.  For example:
-
-* Use semantic HTML as much as possible (i.e. the right tags for the right things)
-* Ensure focus state is clearly visible
-* Associate text labels with all form fields
-* Maximize the readability of your application with appropriate fonts, contrast, etc.
+* 가능한 한 시맨틱 HTML을 사용하세요(즉, 적합한 태그에 적합한 태그 사용).
+* 초점 상태가 명확하게 표시되는지 확인
+* text label을 모든 form 필드와 연결
+* 적절한 글꼴, 대비 등으로 애플리케이션의 가독성을 극대화하세요.
 
 ## Web Sockets & SSE {#websockets-and-sse}
 
-Web Sockets and Server Sent Events (SSE) are supported via extensions.  Please see
-the [SSE extension](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/sse/README.md) and [WebSocket extension](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/ws/README.md)
-pages to learn more.
+웹소켓과 서버 전송 이벤트(SSE)는 확장 프로그램을 통해 지원됩니다. 
+자세한 내용은 [SSE 확장](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/sse/README.md) 프로그램 및
+[WebSocket 확장](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/ws/README.md) 프로그램 페이지를 참조하세요.
 
 ## History Support {#history}
 
-Htmx provides a simple mechanism for interacting with the [browser history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API):
+Htmx는 [browser history API](https://developer.mozilla.org/en-US/docs/Web/API/History_API)와 상호 작용할 수 있는 간단한 메커니즘을 제공합니다:
 
-If you want a given element to push its request URL into the browser navigation bar and add the current state of the page
-to the browser's history, include the [hx-push-url](@/attributes/hx-push-url.md) attribute:
+지정된 요소가 브라우저 탐색 모음에 요청 URL을 푸시하고 페이지의 현재 상태를 
+브라우저 히스토리에 추가하려면 [hx-push-url](@/attributes/hx-push-url.md)속성을 포함하세요:
 
 ```html
 <a hx-get="/blog" hx-push-url="true">Blog</a>
 ```
 
-When a user clicks on this link, htmx will snapshot the current DOM and store it before it makes a request to /blog.
-It then does the swap and pushes a new location onto the history stack.
+사용자가 이 링크를 클릭하면, htmx는 /blog로 요청을 보내기 전에 현재 DOM을 스냅샷으로 저장합니다. 
+그런 다음 교체 작업을 수행하고 새로운 위치를 히스토리 스택에 추가합니다.
 
-When a user hits the back button, htmx will retrieve the old content from storage and swap it back into the target,
-simulating "going back" to the previous state.  If the location is not found in the cache, htmx will make an ajax
-request to the given URL, with the header `HX-History-Restore-Request` set to true, and expects back the HTML needed
-for the entire page.  Alternatively, if the `htmx.config.refreshOnHistoryMiss` config variable is set to true, it will
-issue a hard browser refresh.
+사용자가 뒤로 가기 버튼을 누르면, htmx는 저장된 이전 콘텐츠를 가져와 대상에 다시 교체하여 이전 상태로 "돌아가는" 것을 시뮬레이션합니다. 
+위치가 캐시에 없으면, htmx는 `HX-History-Restore-Request` 헤더를 true로 설정하여 
+주어진 URL로 ajax 요청을 보내며, 전체 페이지에 필요한 HTML을 기대합니다. 
+또는, `htmx.config.refreshOnHistoryMiss` 구성 변수가 true로 설정된 경우, 브라우저를 강제로 새로 고침합니다.
 
-**NOTE:** If you push a URL into the history, you **must** be able to navigate to that URL and get a full page back!
-A user could copy and paste the URL into an email, or new tab.  Additionally, htmx will need the entire page when restoring
-history if the page is not in the history cache.
+**NOTE:**: URL을 히스토리에 추가하면 해당 URL로 이동하여 전체 페이지를 **다시 볼 수 있어야 합니다**! 
+사용자가 URL을 복사하여 이메일이나 새 탭에 붙여넣을 수 있습니다. 
+또한, 페이지가 히스토리 캐시에 없으면 htmx가 히스토리를 복원할 때 전체 페이지가 필요합니다.
 
 ### Specifying History Snapshot Element
 
-By default, htmx will use the `body` to take and restore the history snapshot from.  This is usually the right thing, but
-if you want to use a narrower element for snapshotting you can use the [hx-history-elt](@/attributes/hx-history-elt.md)
-attribute to specify a different one.
+기본적으로 htmx는 본문을 사용하여 히스토리 스냅샷을 만들고 복원합니다.
+일반적으로 이 방법이 맞지만 더 좁은 요소를 스냅샷에 사용하려면 
+[hx-history-elt](@/attributes/hx-history-elt.md) 속성을 사용하여 다른 요소를 지정할 수 있습니다.
 
-Careful: this element will need to be on all pages or restoring from history won't work reliably.
+주의: 이 요소는 모든 페이지에 있어야 하며 그렇지 않으면 히스토리에서 복원하는 것이 안정적으로 작동하지 않습니다.
 
 ### Undoing DOM Mutations By 3rd Party Libraries
 
-If you are using a 3rd party library and want to use the htmx history feature, you will need to clean up the DOM before
-a snapshot is taken.  Let's consider the [Tom Select](https://tom-select.js.org/) library, which makes select elements
-a much richer user experience.  Let's set up TomSelect to turn any input element with the `.tomselect` class into a rich
-select element.
+타사 라이브러리를 사용 중이고 htmx 히스토리 기능을 사용하려는 경우 스냅샷을 찍기 전에 DOM을 정리해야 합니다. 
+선택한 요소를 훨씬 더 풍부한 사용자 경험으로 만들어주는 [Tom Select](https://tom-select.js.org/) 라이브러리를 살펴봅시다. 
+`.tomselect` 클래스가 있는 모든 입력 요소를 rich 선택 요소로 바꾸도록 TomSelect를 설정해 보겠습니다.
 
-First we need to initialize elements that have the class in new content:
+먼저 새 콘텐츠에 클래스가 있는 요소를 초기화해야 합니다:
 
 ```javascript
 htmx.onLoad(function (target) {
@@ -894,12 +861,12 @@ htmx.onLoad(function (target) {
 });
 ```
 
-This will create a rich selector for all input elements that have the `.tomselect` class on it.  However, it mutates
-the DOM and we don't want that mutation saved to the history cache, since TomSelect will be reinitialized when the
-history content is loaded back into the screen.
+이렇게 하면 `.tomselect` 클래스가 있는 모든 입력 요소에 대한 rich 선택기가 생성됩니다. 
+그러나 히스토리 콘텐츠가 화면에 다시 로드될 때 TomSelect가 다시 초기화되므로 
+DOM을 변경하고 기록 캐시에 해당 변경 사항을 저장하지 않으려는 것입니다.
 
-To deal with this, we need to catch the `htmx:beforeHistorySave` event and clean out the TomSelect mutations by calling
-`destroy()` on them:
+이 문제를 해결하려면 `htmx:beforeHistorySave` 이벤트를 포착하고 
+`destroy()`를 호출하여 TomSelect 돌연변이를 정리해야 합니다:
 
 ```javascript
 htmx.on('htmx:beforeHistorySave', function() {
@@ -909,36 +876,33 @@ htmx.on('htmx:beforeHistorySave', function() {
 })
 ```
 
-This will revert the DOM to the original HTML, thus allowing for a clean snapshot.
+이렇게 하면 DOM이 원래 HTML로 되돌아가므로 깨끗한 스냅샷을 만들 수 있습니다.
 
 ### Disabling History Snapshots
 
-History snapshotting can be disabled for a URL by setting the [hx-history](@/attributes/hx-history.md) attribute to `false`
-on any element in the current document, or any html fragment loaded into the current document by htmx. This can be used
-to prevent sensitive data entering the localStorage cache, which can be important for shared-use / public computers.
-History navigation will work as expected, but on restoration the URL will be requested from the server instead of the
-local history cache.
+기록 스냅샷은 현재 문서의 모든 요소 또는 현재 문서에 htmx로 로드된 html 조각에서 [hx-history](@/attributes/hx-history.md) 속성을 `false`로 설정하여 
+URL에 대한 히스토리 스냅샷을 비활성화할 수 있습니다. 이렇게 하면 민감한 데이터가 localStorage 캐시에 들어가는 것을 방지할 수 있으며, 
+이는 공유 사용/공용 컴퓨터에서 중요할 수 있습니다. 기록 탐색은 예상대로 작동하지만 복원 시 로컬 기록 캐시 대신 
+서버에서 URL을 요청합니다.
 
 ## Requests &amp; Responses {#requests}
 
-Htmx expects responses to the AJAX requests it makes to be HTML, typically HTML fragments (although a full HTML
-document, matched with a [hx-select](@/attributes/hx-select.md) tag can be useful too).  Htmx will then swap the returned
-HTML into the document at the target specified and with the swap strategy specified.
+Htmx는 AJAX 요청에 대한 응답이 HTML(일반적으로 HTML 조각)이 될 것으로 예상합니다
+([hx-select](@/attributes/hx-select.md) 태그와 일치하는 전체 HTML 문서도 유용할 수 있음). 그런 다음 Htmx는 
+반환된 HTML을 지정된 대상과 지정된 교체 전략을 사용하여 문서로 교체합니다.
 
-Sometimes you might want to do nothing in the swap, but still perhaps trigger a client side event ([see below](#response-headers)).
+때로는 교체 단계에서 아무것도 하지 않으면서도 클라이언트 측 이벤트를 트리거하고 싶을 수도 있습니다([아래 참조](#response-headers)).
 
-For this situation, by default, you can return a `204 - No Content` response code, and htmx will ignore the content of
-the response.
+이 상황에서는 기본적으로 `204 - No Content` 응답 코드를 반환할 수 있으며,, 이 경우 htmx는 응답의 콘텐츠를 무시합니다.
 
-In the event of an error response from the server (e.g. a 404 or a 501), htmx will trigger the [`htmx:responseError`](@/events.md#htmx:responseError)
-event, which you can handle.
+서버에서 오류 응답(예: 404 또는 501)이 발생하면 htmx는 개발자가 처리할 수 있는 [`htmx:responseError`](@/events.md#htmx:responseError) 이벤트를 트리거합니다.
 
-In the event of a connection error, the `htmx:sendError` event will be triggered.
+연결 오류가 발생하면 `htmx:sendError` 이벤트가 트리거됩니다.
 
 ### Configuring Response Handling {#response-handling}
 
-You can configure the above behavior of htmx by mutating or replacing the `htmx.config.responseHandling` array.  This
-object is a collection of JavaScript objects defined like so:
+`htmx.config.responseHandling` 배열을 변경하거나 대체하여 위의 htmx 동작을 구성할 수 있습니다. 
+이 객체는 이렇게 정의된 JavaScript 객체의 모음입니다:
 
 ```js
     responseHandling: [
@@ -948,28 +912,28 @@ object is a collection of JavaScript objects defined like so:
     ]
 ```
 
-When htmx receives a response it will iterate in order over the `htmx.config.responseHandling` array and test if the
-`code` property of a given object, when treated as a Regular Expression, matches the current response.  If an entry
-does match the current response code, it will be used to determine if and how the response will be processed.
+htmx가 응답을 받으면 `htmx.config.responseHandling` 배열을 순서대로 반복하고 
+지정된 객체의 `code` 속성이 정규식으로 처리될 때 현재 응답과 일치하는지 테스트합니다. 
+항목이 현재 응답 코드와 일치하면 응답을 처리할지 여부와 방법을 결정하는 데 사용됩니다.
 
-The fields available for response handling configuration on entries in this array are:
+이 배열의 항목에 대한 응답 처리 구성에 사용할 수 있는 필드는 다음과 같습니다:
 
-* `code` - a String representing a regular expression that will be tested against response codes.
-* `swap` - `true` if the response should be swapped into the DOM, `false` otherwise
-* `error` - `true` if htmx should treat this response as an error
-* `ignoreTitle` - `true` if htmx should ignore title tags in the response
-* `select` - A CSS selector to use to select content from the response
-* `target` - A CSS selector specifying an alternative target for the response
-* `swapOverride` - An alternative swap mechanism for the response
+* `code` - 응답 코드에 대해 테스트할 정규식을 나타내는 문자열입니다.
+* `swap` - 응답을 DOM 안에서 교체해야 하는 경우 `true`, 그렇지 않으면 `false`입니다.
+* `error` - 이 응답을 오류로 처리해야 하는 경우 `true`입니다.
+* `ignoreTitle` - 응답에서 title 태그를 무시해야 하는 경우 `true`입니다.
+* `select` - 응답에서 콘텐츠를 선택하는 데 사용할 CSS 선택자
+* `target` - 응답의 대체 대상을 지정하는 CSS 선택자
+* `swapOverride` - 응답을 위한 대체 교체 메커니즘
 
 #### Configuring Response Handling Examples {#response-handling}
 
-As an example of how to use this configuration, consider a situation when a server-side framework responds with a
-[`422 - Unprocessable Entity`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422) response when validation errors occur.  By default, htmx will ignore the response, 
-since it matches the Regular Expression `[45]..`. 
+이 구성을 사용하는 방법의 예로 유효성 검사 오류가 발생했을 때 서버 측 프레임워크가 
+[`422 - Unprocessable Entity`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/422) 응답으로 응답하는 상황을 생각해 보겠습니다. 
+기본적으로 htmx는 정규식 `[45]..`과 일치하므로 이 응답을 무시합니다.
 
-Using the [meta config](#configuration-options) mechanism for configuring responseHandling, we could add the following
-config:
+응답 처리 구성을 위한 [meta config](#configuration-options) 메커니즘을 사용하여 다음과 같은 구성을 
+추가할 수 있습니다:
 
 ```html
 <meta name="htmx-config" content='{code:"204", swap: false},   // 204 - No Content by default does nothing, but is not an error
@@ -978,105 +942,105 @@ config:
                                   {code:"[45]..", swap: false, error:true}, // 400 & 500 responses are not swapped and are errors'>
 ```
 
-If you wanted to swap everything, regardless of HTTP response code, you could use this configuration:
+HTTP 응답 코드에 관계없이 모든 것을 교체하려면 이 구성을 사용할 수 있습니다:
 
 ```html
 <meta name="htmx-config" content='{code:".*", swap: true}, // all responses are swapped'>
 ```
 
-Finally, it is worth considering using the [Response Targets](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/response-targets/README.md)
-extension, which allows you to configure the behavior of response codes declaratively via attributes.
+마지막으로 속성을 통해 응답 코드의 동작을 선언적으로 구성할 수 있는 
+[Response Targets](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/response-targets/README.md) 확장 기능을 사용하는 것도 고려해 볼 만합니다.
 
 ### CORS
 
-When using htmx in a cross origin context, remember to configure your web
-server to set Access-Control headers in order for htmx headers to be visible
-on the client side.
+cross origin context에서 htmx를 사용하는 경우 클라이언트 측에서 
+htmx 헤더를 볼 수 있도록 웹 서버에서 Access-Control 헤더를 설정하도록 
+구성하는 것을 잊지 마세요.
 
 - [Access-Control-Allow-Headers (for request headers)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Headers)
 - [Access-Control-Expose-Headers (for response headers)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Expose-Headers)
 
-[See all the request and response headers that htmx implements.](@/reference.md#request_headers)
+[htmx에 구현된 모든 요청 및 응답 헤더를 확인하세요.](@/reference.md#request_headers)
 
 ### Request Headers
 
-htmx includes a number of useful headers in requests:
+htmx에는 요청에 유용한 헤더가 많이 포함되어 있습니다:
 
 | Header | Description |
 |--------|-------------|
-| `HX-Boosted` | indicates that the request is via an element using [hx-boost](@/attributes/hx-boost.md)
-| `HX-Current-URL` | the current URL of the browser
-| `HX-History-Restore-Request` | "true" if the request is for history restoration after a miss in the local history cache
-| `HX-Prompt` | the user response to an [hx-prompt](@/attributes/hx-prompt.md)
-| `HX-Request` | always "true"
-| `HX-Target` | the `id` of the target element if it exists
-| `HX-Trigger-Name` | the `name` of the triggered element if it exists
-| `HX-Trigger` | the `id` of the triggered element if it exists
+| `HX-Boosted` | 요청이 [hx-boost](@/attributes/hx-boost.md)를 사용하는 요소를 통해 이루어졌음을 나타냅니다.
+| `HX-Current-URL` | 브라우저의 현재 URL
+| `HX-History-Restore-Request` | 로컬 히스토리 캐시 누락 후 히스토리 복원 요청인 경우 "true"입니다.
+| `HX-Prompt` | [hx-prompt](@/attributes/hx-prompt.md)에 대한 사용자 응답.
+| `HX-Request` | 항상 "true"
+| `HX-Target` | 대상 요소가 있는 경우 그것의 `id`
+| `HX-Trigger-Name` | 트리거된 요소가 존재하는 경우 그것의 `name`
+| `HX-Trigger` | 트리거된 요소가 존재하는 경우 그것의 `id`
 
 ### Response Headers
 
-htmx supports some htmx-specific response headers:
+htmx는 일부 htmx 전용 응답 헤더를 지원합니다:
 
-* [`HX-Location`](@/headers/hx-location.md) - allows you to do a client-side redirect that does not do a full page reload
-* [`HX-Push-Url`](@/headers/hx-push-url.md) - pushes a new url into the history stack
-* `HX-Redirect` - can be used to do a client-side redirect to a new location
-* `HX-Refresh` - if set to "true" the client-side will do a full refresh of the page
-* [`HX-Replace-Url`](@/headers/hx-replace-url.md) - replaces the current URL in the location bar
-* `HX-Reswap` - allows you to specify how the response will be swapped. See [hx-swap](@/attributes/hx-swap.md) for possible values
-* `HX-Retarget` - a CSS selector that updates the target of the content update to a different element on the page
-* `HX-Reselect` - a CSS selector that allows you to choose which part of the response is used to be swapped in. Overrides an existing [`hx-select`](@/attributes/hx-select.md) on the triggering element
-* [`HX-Trigger`](@/headers/hx-trigger.md) - allows you to trigger client-side events
-* [`HX-Trigger-After-Settle`](@/headers/hx-trigger.md) - allows you to trigger client-side events after the settle step
-* [`HX-Trigger-After-Swap`](@/headers/hx-trigger.md) - allows you to trigger client-side events after the swap step
+* [`HX-Location`](@/headers/hx-location.md) - 전체 페이지를 새로 고침하지 않고 클라이언트 측에서 리디렉션을 수행할 수 있습니다
+* [`HX-Push-Url`](@/headers/hx-push-url.md) - 새 URL을 히스토리 스택에 추가합니다
+* `HX-Redirect` - 클라이언트 측에서 새로운 위치로 리디렉션하는 데 사용할 수 있습니다
+* `HX-Refresh` - "true"로 설정되면 클라이언트 측에서 페이지를 전체 새로 고침합니다
+* [`HX-Replace-Url`](@/headers/hx-replace-url.md) - 위치 표시줄의 현재 URL을 대체합니다
+* `HX-Reswap` - 응답이 어떻게 교체될지를 지정할 수 있습니다. 가능한 값은 [hx-swap](@/attributes/hx-swap.md)을 참조하세요
+* `HX-Retarget` - 콘텐츠 업데이트의 대상을 페이지의 다른 요소로 업데이트하는 CSS 선택자입니다
+* `HX-Reselect` - 응답의 어느 부분을 교체할지 선택할 수 있는 CSS 선택자입니다. 트리거 요소에 존재하는 [`hx-select`](@/attributes/hx-select.md)을 재정의합니다
+* [`HX-Trigger`](@/headers/hx-trigger.md) - 클라이언트 측 이벤트를 트리거할 수 있습니다
+* [`HX-Trigger-After-Settle`](@/headers/hx-trigger.md) - 정착 단계 후에 클라이언트 측 이벤트를 트리거할 수 있습니다
+* [`HX-Trigger-After-Swap`](@/headers/hx-trigger.md) - 교체 단계 후에 클라이언트 측 이벤트를 트리거할 수 있습니다
 
-For more on the `HX-Trigger` headers, see [`HX-Trigger` Response Headers](@/headers/hx-trigger.md).
+`HX-Trigger` 헤더에 대한 자세한 내용은 [`HX-Trigger` Response Headers](@/headers/hx-trigger.md)를 참조하세요.
 
-Submitting a form via htmx has the benefit of no longer needing the [Post/Redirect/Get Pattern](https://en.wikipedia.org/wiki/Post/Redirect/Get).
-After successfully processing a POST request on the server, you don't need to return a [HTTP 302 (Redirect)](https://en.wikipedia.org/wiki/HTTP_302). You can directly return the new HTML fragment.
+htmx를 통해 양식을 제출하면 더 이상 [Post/Redirect/Get Pattern](https://en.wikipedia.org/wiki/Post/Redirect/Get)이 필요하지 않다는 이점이 있습니다. 
+서버에서 POST 요청을 성공적으로 처리한 후에는 [HTTP 302 (Redirect)](https://en.wikipedia.org/wiki/HTTP_302)를 반환할 필요가 없습니다. 새 HTML 조각을 직접 반환할 수 있습니다.
 
 ### Request Order of Operations {#request-operations}
 
-The order of operations in a htmx request are:
+htmx 요청에서 작업 순서는 다음과 같습니다:
 
-* The element is triggered and begins a request
-  * Values are gathered for the request
-  * The `htmx-request` class is applied to the appropriate elements
-  * The request is then issued asynchronously via AJAX
-    * Upon getting a response the target element is marked with the `htmx-swapping` class
-    * An optional swap delay is applied (see the [hx-swap](@/attributes/hx-swap.md) attribute)
-    * The actual content swap is done
-        * the `htmx-swapping` class is removed from the target
-        * the `htmx-added` class is added to each new piece of content
-        * the `htmx-settling` class is applied to the target
-        * A settle delay is done (default: 20ms)
-        * The DOM is settled
-        * the `htmx-settling` class is removed from the target
-        * the `htmx-added` class is removed from each new piece of content
+* 요소가 트리거되고 요청을 시작합니다
+  * 요청에 필요한 값들이 수집됩니다
+  * `htmx-request` 클래스가 적절한 요소에 적용됩니다
+  * 요청이 AJAX를 통해 비동기로 보내집니다
+    * 응답을 받으면 대상 요소에 `htmx-swapping` 클래스가 표시됩니다
+    * 선택적으로 교체 지연이 적용됩니다 (자세한 내용은 [hx-swap](@/attributes/hx-swap.md) 속성을 참조하세요)
+    * 실제 콘텐츠 교체가 이루어집니다
+        * 대상에서 `htmx-swapping` 클래스가 제거됩니다
+        * 각 새 콘텐츠 조각에 `htmx-added` 클래스가 추가됩니다
+        * 대상에 `htmx-settling` 클래스가 적용됩니다
+        * 정착 지연이 이루어집니다 (기본값: 20ms)
+        * DOM이 정착됩니다
+        * 대상에서 `htmx-settling` 클래스가 제거됩니다
+        * 각 새 콘텐츠 조각에서 `htmx-added` 클래스가 제거됩니다
 
-You can use the `htmx-swapping` and `htmx-settling` classes to create
-[CSS transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions) between pages.
+`htmx-swapping` 및 `htmx-settling` 클래스를 사용하여 페이지 간 
+[CSS transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions)을 생성할 수 있습니다.
 
 ## Validation
 
-Htmx integrates with the [HTML5 Validation API](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation)
-and will not issue a request for a form if a validatable input is invalid.  This is true for both AJAX requests as well as
-WebSocket sends.
+Htmx는 [HTML5 유효성 검사](https://developer.mozilla.org/en-US/docs/Learn/Forms/Form_validation)와 통합되어 유효성 검사 가능한 입력이 
+유효하지 않은 경우 form 요청을 보내지 않습니다. 
+이는 AJAX 요청과 WebSocket 전송 모두에 해당됩니다.
 
-Htmx fires events around validation that can be used to hook in custom validation and error handling:
+Htmx는 사용자 정의 유효성 검사 및 오류 처리를 연결하는 데 사용할 수 있는 유효성 검사 관련 이벤트를 실행합니다:
 
-* `htmx:validation:validate` - called before an element's `checkValidity()` method is called.  May be used to add in
-   custom validation logic
-* `htmx:validation:failed` - called when `checkValidity()` returns false, indicating an invalid input
-* `htmx:validation:halted` - called when a request is not issued due to validation errors.  Specific errors may be found
-  in the `event.detail.errors` object
+* `htmx:validation:validate` - 요소의 `checkValidity()` 메서드가 호출되기 전에 호출됩니다. 
+사용자 정의 유효성 검사 로직을 추가하는 데 사용할 수 있습니다.
+* `htmx:validation:failed` - `checkValidity()`가 잘못된 입력을 나타내는 false를 반환할 때 호출됩니다.
+* `htmx:validation:halted` - 유효성 검사 오류로 인해 요청이 보내지지 않을 때 호출됩니다. 
+특정 오류는 `event.detail.errors` 객체에서 찾을 수 있습니다.
 
-Non-form elements do not validate before they make requests by default, but you can enable validation by setting
-the [`hx-validate`](@/attributes/hx-validate.md) attribute to "true".
+Non-form 요소는 기본적으로 요청을 하기 전에 유효성 검사를 수행하지 않지만, 
+[`hx-validate`](@/attributes/hx-validate.md) 속성을 "true"로 설정하여 유효성 검사를 활성화할 수 있습니다.
 
 ### Validation Example
 
-Here is an example of an input that uses the [`hx-on`](/attributes/hx-on) attribute to catch the
-`htmx:validation:validate` event and require that the input have the value `foo`:
+다음은 [`hx-on`](/attributes/hx-on) 속성을 사용하여 `htmx:validation:validate` 이벤트를 포착하고 
+입력값이 `foo`여야 하는 입력의 예입니다:
 
 ```html
 <form id="example-form" hx-post="/test">
@@ -1089,20 +1053,20 @@ Here is an example of an input that uses the [`hx-on`](/attributes/hx-on) attrib
 </form>
 ```
 
-Note that all client side validations must be re-done on the server side, as they can always be bypassed.
+Note 모든 클라이언트 측 유효성 검사는 항상 우회할 수 있으므로 서버 측에서 다시 수행해야 합니다.
 
 ## Animations
 
-Htmx allows you to use [CSS transitions](#css_transitions)
-in many situations using only HTML and CSS.
+HTML과 CSS만 사용하여 다양한 상황에서 
+[CSS 전환](#css_transitions)을 사용할 수 있습니다. 
 
-Please see the [Animation Guide](@/examples/animations.md) for more details on the options available.
+사용 가능한 옵션에 대한 자세한 내용은 [Animation Guide](@/examples/animations.md) 가이드를 참조하세요.
 
 ## Extensions
 
-Htmx has an extension mechanism that allows you to customize the libraries' behavior.
-Extensions [are defined in javascript](https://github.com/bigskysoftware/htmx-extensions/tree/main?tab=readme-ov-file#defining-an-extension) and then used via
-the [`hx-ext`](@/attributes/hx-ext.md) attribute:
+Htmx에는 라이브러리의 동작을 사용자 정의할 수 있는 확장 메커니즘이 있습니다. 
+확장은 [자바스크립트에서 정의한](https://github.com/bigskysoftware/htmx-extensions/tree/main?tab=readme-ov-file#defining-an-extension) 다음 
+[`hx-ext`](@/attributes/hx-ext.md) 속성을 통해 사용합니다:
 
 ```html
 <div hx-ext="debug">
@@ -1111,13 +1075,13 @@ the [`hx-ext`](@/attributes/hx-ext.md) attribute:
 </div>
 ```
 
-If you are interested in adding your own extension to htmx, please [see the extension docs](https://github.com/bigskysoftware/htmx-extensions/tree/main?tab=readme-ov-file#defining-an-extension)
+htmx에 자신만의 확장 기능을 추가하려면 [extension docs](https://github.com/bigskysoftware/htmx-extensions/tree/main?tab=readme-ov-file#defining-an-extension)를 참조하세요.
 
 ## Events & Logging {#events}
 
-Htmx has an extensive [events mechanism](@/reference.md#events), which doubles as the logging system.
+Htmx에는 로깅 시스템을 겸하는 광범위한 [events mechanism](@/reference.md#events)이 있습니다.
 
-If you want to register for a given htmx event you can use
+특정 htmx 이벤트에 등록하려면 다음을 사용할 수 있습니다.
 
 ```js
 document.body.addEventListener('htmx:load', function(evt) {
@@ -1125,7 +1089,7 @@ document.body.addEventListener('htmx:load', function(evt) {
 });
 ```
 
-or, if you would prefer, you can use the following htmx helper:
+원하는 경우 다음 htmx 도우미를 사용할 수 있습니다:
 
 ```javascript
 htmx.on("htmx:load", function(evt) {
@@ -1133,77 +1097,77 @@ htmx.on("htmx:load", function(evt) {
 });
 ```
 
-The `htmx:load` event is fired every time an element is loaded into the DOM by htmx, and is effectively the equivalent
- to the normal `load` event.
+`htmx:load` 이벤트는 htmx에 의해 요소가 DOM에 로드될 때마다 발생하며, 
+사실상 일반 `load` 이벤트와 동일합니다. 
 
-Some common uses for htmx events are:
+htmx 이벤트의 일반적인 용도는 다음과 같습니다:
 
 ### Initialize A 3rd Party Library With Events {#init_3rd_party_with_events}
 
-Using the `htmx:load` event to initialize content is so common that htmx provides a helper function:
+콘텐츠를 초기화하기 위해 `htmx:load` 이벤트를 사용하는 것은 매우 일반적이기 때문에 htmx에서 도우미 기능을 제공합니다:
 
 ```javascript
 htmx.onLoad(function(target) {
     myJavascriptLib.init(target);
 });
 ```
-This does the same thing as the first example, but is a little cleaner.
+이것은 첫 번째 예제와 동일한 작업을 수행하지만 조금 더 깔끔합니다.
 
 ### Configure a Request With Events {#config_request_with_events}
 
-You can handle the [`htmx:configRequest`](@/events.md#htmx:configRequest) event in order to modify an AJAX request before it is issued:
+AJAX 요청이 발행되기 전에 수정하기 위해 [`htmx:configRequest`](@/events.md#htmx:configRequest) 이벤트를 처리할 수 있습니다:
 
 ```javascript
 document.body.addEventListener('htmx:configRequest', function(evt) {
-    evt.detail.parameters['auth_token'] = getAuthToken(); // add a new parameter into the request
-    evt.detail.headers['Authentication-Token'] = getAuthToken(); // add a new header into the request
+    evt.detail.parameters['auth_token'] = getAuthToken(); // 요청에 새 매개변수를 추가합니다.
+    evt.detail.headers['Authentication-Token'] = getAuthToken(); // 요청에 새 헤더를 추가합니다.
 });
 ```
 
-Here we add a parameter and header to the request before it is sent.
+여기서는 요청이 전송되기 전에 매개변수와 헤더를 요청에 추가합니다.
 
 ### Modifying Swapping Behavior With Events {#modifying_swapping_behavior_with_events}
 
-You can handle the [`htmx:beforeSwap`](@/events.md#htmx:beforeSwap) event in order to modify the swap behavior of htmx:
+htmx의 교체 동작을 수정하기 위해 [`htmx:beforeSwap`](@/events.md#htmx:beforeSwap) 이벤트를 처리할 수도 있습니다:
 
 ```javascript
 document.body.addEventListener('htmx:beforeSwap', function(evt) {
     if(evt.detail.xhr.status === 404){
-        // alert the user when a 404 occurs (maybe use a nicer mechanism than alert())
+        // 404가 발생하면 사용자에게 경고합니다(alert()보다 더 좋은 메커니즘을 사용할 수도 있습니다).
         alert("Error: Could Not Find Resource");
     } else if(evt.detail.xhr.status === 422){
-        // allow 422 responses to swap as we are using this as a signal that
-        // a form was submitted with bad data and want to rerender with the
-        // errors
+        // 잘못된 데이터로 양식이 제출되었다는 신호로 사용하므로
+        // 사용하므로 422 응답이 교체되도록 허용하고
+        // 오류를 수정하여 다시 렌더링합니다.
         //
-        // set isError to false to avoid error logging in console
+        // 콘솔에서 오류 로깅을 방지하려면 isError를 false로 설정합니다.
         evt.detail.shouldSwap = true;
         evt.detail.isError = false;
     } else if(evt.detail.xhr.status === 418){
-        // if the response code 418 (I'm a teapot) is returned, retarget the
-        // content of the response to the element with the id `teapot`
+        // 응답 코드 418(나는 찻주전자다)이 반환되면, 응답의 내용을 리타겟팅하여 
+        // 응답의 내용을 `teapot` ID를 가진 요소로 리타겟팅합니다.
         evt.detail.shouldSwap = true;
         evt.detail.target = htmx.find("#teapot");
     }
 });
 ```
 
-Here we handle a few [400-level error response codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses)
-that would normally not do a swap in htmx.
+여기서는 일반적으로 htmx에서 교체를 수행하지 않는 
+몇 가지 [400-level 에러 응답 코드](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses)를 처리합니다.
 
 ### Event Naming {#event_naming}
 
-Note that all events are fired with two different names
+모든 이벤트는 두 가지 다른 이름으로 실행됩니다.
 
 * Camel Case
 * Kebab Case
 
-So, for example, you can listen for `htmx:afterSwap` or for `htmx:after-swap`.  This facilitates interoperability
-with other libraries.  [Alpine.js](https://github.com/alpinejs/alpine/), for example, requires kebab case.
+예를 들어 `htmx:afterSwap` 또는 `htmx:after-swap`을 모두 사용할 수 있습니다. 이렇게 하면 다른 라이브러리와의 
+상호 운용성이 용이해집니다. 예를 들어 [Alpine.js](https://github.com/alpinejs/alpine/)에는 Kebab Case가 필요합니다.
 
 ### Logging
 
-If you set a logger at `htmx.logger`, every event will be logged.  This can be very useful for troubleshooting:
+`htmx.logger`에서 logger를 설정하면 모든 이벤트가 기록됩니다. 이는 문제 해결에 매우 유용할 수 있습니다:
 
 ```javascript
 htmx.logger = function(elt, event, data) {
@@ -1215,69 +1179,63 @@ htmx.logger = function(elt, event, data) {
 
 ## Debugging
 
-Declarative and event driven programming with htmx (or any other declarative language) can be a wonderful and highly productive
-activity, but one disadvantage when compared with imperative approaches is that it can be trickier to debug.
+htmx(또는 다른 선언적 언어)를 사용한 선언적 및 이벤트 중심 프로그래밍은 매우 생산적이고 멋진 활동이 될 수 있지만, 
+명령형 접근 방식과 비교했을 때 한 가지 단점은 디버깅이 더 까다로울 수 있다는 점입니다.
 
-Figuring out why something *isn't* happening, for example, can be difficult if you don't know the tricks.
+예를 들어, 어떤 일이 발생하지 *않는* 이유를 알아내는 것은 트릭을 모르면 어려울 수 있습니다.
 
-Well, here are the tricks:
+여기 그 트릭들이 있습니다:
 
-The first debugging tool you can use is the `htmx.logAll()` method.  This will log every event that htmx triggers and
-will allow you to see exactly what the library is doing.
+사용할 수 있는 첫 번째 디버깅 도구는 `htmx.logAll()` 메서드입니다. 이 메서드는 htmx가 트리거하는 모든 이벤트를 기록하며, 
+라이브러리가 정확히 무엇을 하고 있는지 볼 수 있게 해줍니다.
 
 ```javascript
 htmx.logAll();
 ```
 
-Of course, that won't tell you why htmx *isn't* doing something.  You might also not know *what* events a DOM
-element is firing to use as a trigger.  To address this, you can use the
-[`monitorEvents()`](https://developers.google.com/web/updates/2015/05/quickly-monitor-events-from-the-console-panel) method available in the
-browser console:
+물론 그렇다고 해서 htmx가 무언가를 수행하지 않는 이유를 알 수는 없습니다. 
+또한 DOM 요소가 트리거로 사용하기 위해 어떤 이벤트를 발생시키는지 모를 수도 있습니다. 
+이 문제를 해결하려면 브라우저 콘솔에서 [`monitorEvents()`](https://developers.google.com/web/updates/2015/05/quickly-monitor-events-from-the-console-panel) 메서드를 사용할 수 있습니다:
 
 ```javascript
 monitorEvents(htmx.find("#theElement"));
 ```
 
-This will spit out all events that are occurring on the element with the id `theElement` to the console, and allow you
-to see exactly what is going on with it.
+이렇게 하면 id가 `theElement`인 요소에서 발생하는 모든 이벤트가 콘솔로 뱉어져 어떤 일이 일어나고 있는지 정확히 확인할 수 있습니다. 
 
-Note that this *only* works from the console, you cannot embed it in a script tag on your page.
+이 기능은 `오직` 콘솔에서만 작동하며 페이지의 script 태그에 삽입할 수는 없습니다. 
 
-Finally, push come shove, you might want to just debug `htmx.js` by loading up the unminimized version.  It's
-about 2500 lines of javascript, so not an insurmountable amount of code.  You would most likely want to set a break
-point in the `issueAjaxRequest()` and `handleAjaxResponse()` methods to see what's going on.
-
-And always feel free to jump on the [Discord](https://htmx.org/discord) if you need help.
+마지막으로, 최소화되지 않은 버전을 로드하여 `htmx.js`를 디버그할 수 있습니다. 
+약 2500줄의 자바스크립트이므로 극복할 수 없는 양의 코드는 아닙니다. 
+`issueAjaxRequest()` 및 `handleAjaxResponse()` 메서드에 중단점을 설정하여 무슨 일이 일어나고 있는지 
+확인하는 것이 가장 좋습니다. 도움이 필요하면 언제든지 [Discord](https://htmx.org/discord)로 문의해 주세요.
 
 ### Creating Demos
 
-Sometimes, in order to demonstrate a bug or clarify a usage, it is nice to be able to use a javascript snippet
-site like [jsfiddle](https://jsfiddle.net/).  To facilitate easy demo creation, htmx hosts a demo script
-site that will install:
+때로는 버그를 시연하거나 사용법을 명확히 설명하기 위해 [jsfiddle](https://jsfiddle.net/)과 같은 자바스크립트 스니펫 사이트를 사용할 수 있으면 좋습니다.
+데모를 쉽게 생성할 수 있도록 htmx는 다음을 설치할 데모 스크립트 사이트를 호스팅합니다.
 
 * htmx
 * hyperscript
 * a request mocking library
 
-Simply add the following script tag to your demo/fiddle/whatever:
+demo/fiddle/whatever 등에 다음 스크립트 태그를 추가하기만 하면 됩니다::
 
 ```html
 <script src="https://demo.htmx.org"></script>
 ```
 
-This helper allows you to add mock responses by adding `template` tags with a `url` attribute to indicate which URL.
-The response for that url will be the innerHTML of the template, making it easy to construct mock responses. You can
-add a delay to the response with a `delay` attribute, which should be an integer indicating the number of milliseconds
-to delay
+이 도우미를 사용하면 URL 속성이 있는 `template` 태그를 추가하여 어떤 `URL`을 나타내는 모의 응답을 추가할 수 있습니다. 
+해당 URL에 대한 응답은 템플릿의 내부 HTML이 되므로 모의 응답을 쉽게 구성할 수 있습니다.
+`delay` 속성을 사용하여 응답에 지연을 추가할 수 있으며, 지연할 밀리초 수를 나타내는 정수여야 합니다. 
 
-You may embed simple expressions in the template with the `${}` syntax.
+템플릿에 `${}` 구문을 사용하여 간단한 표현식을 포함할 수 있습니다. 
 
-Note that this should only be used for demos and is in no way guaranteed to work for long periods of time
-as it will always be grabbing the latest versions htmx and hyperscript!
+이는 데모용으로만 사용해야 하며 항상 최신 버전인 htmx 및 하이퍼스크립트를 가져오므로 안정적인 작동이 보장되지 않는다는 점에 유의하세요!
 
 #### Demo Example
 
-Here is an example of the code in action:
+다음은 실제로 작동하는 코드의 예입니다:
 
 ```html
 <!-- load demo environment -->
@@ -1301,38 +1259,36 @@ Here is an example of the code in action:
 
 ## Scripting {#scripting}
 
-While htmx encourages a hypermedia approach to building web applications, it offers many options for client scripting. Scripting is included in the REST-ful description of web architecture, see: [Code-On-Demand](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7). As much as is feasible, we recommend a [hypermedia-friendly](/essays/hypermedia-friendly-scripting) approach to scripting in your web application:
+htmx는 웹 애플리케이션 구축에 하이퍼미디어 접근 방식을 권장하지만 클라이언트 스크립팅을 위한 다양한 옵션을 제공합니다. 
+스크립팅은 웹 아키텍처에 대한 REST 풀 설명에 포함되어 있습니다: [Code-On-Demand](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7)를 보세요. 가능한 한 웹 애플리케이션에서 스크립팅에 [하이퍼미디어 친화적인](/essays/hypermedia-friendly-scripting) 접근 방식을 사용하는 것이 좋습니다:
 
 * [Respect HATEOAS](/essays/hypermedia-friendly-scripting#prime_directive)
-* [Use events to communicate between components](/essays/hypermedia-friendly-scripting#events)
-* [Use islands to isolate non-hypermedia components from the rest of your application](/essays/hypermedia-friendly-scripting#islands)
+* [이벤트를 사용하여 컴포넌트 간 통신](/essays/hypermedia-friendly-scripting#events)
+* [islands를 사용하여 애플리케이션의 나머지 부분에서 하이퍼미디어가 아닌 컴포넌트를 분리하기](/essays/hypermedia-friendly-scripting#islands)
 * [Consider inline scripting](/essays/hypermedia-friendly-scripting#inline)
 
-The primary integration point between htmx and scripting solutions is the [events](#events) that htmx sends and can
-respond to.  See the SortableJS example in the [3rd Party Javascript](#3rd-party) section for a good template for
-integrating a JavaScript library with htmx via events.
+htmx와 스크립팅 솔루션 간의 주요 통합 지점은 htmx가 전송하고 응답할 수 있는 [events](#events)입니다. 
+이벤트를 통해 JavaScript 라이브러리를 htmx와 통합하기 위한 좋은 템플릿은
+[3rd Party Javascript](#3rd-party) 섹션의 SortableJS 예제를 참조하세요.
 
-Scripting solutions that pair well with htmx include:
+htmx와 잘 어울리는 스크립팅 솔루션은 다음과 같습니다:
 
-* [VanillaJS](http://vanilla-js.com/) - Simply using the built-in abilities of JavaScript to hook in event handlers to
-  respond to the events htmx emits can work very well for scripting.  This is an extremely lightweight and increasingly
-  popular approach.
-* [AlpineJS](https://alpinejs.dev/) - Alpine.js provides a rich set of tools for creating sophisticated front end scripts,
-  including reactive programming support, while still remaining extremely lightweight.  Alpine encourages the "inline scripting"
-  approach that we feel pairs well with htmx.
-* [jQuery](https://jquery.com/) - Despite its age and reputation in some circles, jQuery pairs very well with htmx, particularly
-  in older code-bases that already have a lot of jQuery in them.
-* [hyperscript](https://hyperscript.org) - Hyperscript is an experimental front-end scripting language created by the same
-  team that created htmx.  It is designed to embed well in HTML and both respond to and create events, and pairs very well
-  with htmx.
+* [VanillaJS](http://vanilla-js.com/) - JavaScript에 내장된 기능을 사용하여 이벤트 핸들러를 연결하여 htmx가 내보내는 이벤트에 응답하는 것만으로도 
+스크립팅에 매우 효과적일 수 있습니다. 이는 매우 가볍고 점점 더 많이 사용되는 접근 방식입니다.
+* [AlpineJS](https://alpinejs.dev/) - Alpine.js는 반응형 프로그래밍 지원을 포함하여 정교한 프런트엔드 스크립트를 작성할 수 있는 다양한 도구를 제공하면서도 
+매우 가벼운 무게를 유지합니다. Alpine은 "inline scripting" 접근 방식을 권장하며, 이는 htmx와 잘 어울린다고 생각합니다.
+* [jQuery](https://jquery.com/) - 일부 분야에서의 오랜 세월과 명성에도 불구하고 jQuery는 htmx와 매우 잘 어울립니다.
+특히 이미 jQuery가 많이 포함된 오래된 코드베이스에서는 htmx와 매우 잘 어울립니다.
+* [hyperscript](https://hyperscript.org) - hyperscript는 htmx를 만든 팀이 만든 실험적인 프런트엔드 스크립팅 언어입니다. 
+HTML에 잘 삽입되고 이벤트에 응답하고 이벤트를 생성하도록 설계되었으며 htmx와 매우 잘 어울립니다.
 
-We have an entire chapter entitled ["Client-Side Scripting"](https://hypermedia.systems/client-side-scripting/) in [our
-book](https://hypermedia.systems) that looks at how scripting can be integrated into your htmx-based application.
+[우리의 책](https://hypermedia.systems)에는 ["Client-Side Scripting"](https://hypermedia.systems/client-side-scripting/)이라는 제목의 전체 챕터가 있으며, 
+스크립팅을 htmx 기반 애플리케이션에 통합하는 방법을 살펴봅니다.
 
 ### <a name="hx-on"></a>[The `hx-on*` Attributes](#hx-on)
 
-HTML allows the embedding of inline scripts via the [`onevent` properties](https://developer.mozilla.org/en-US/docs/Web/Events/Event_handlers#using_onevent_properties),
-such as `onClick`:
+HTML에서는 `onClick`과 같은 [`onevent` properties](https://developer.mozilla.org/en-US/docs/Web/Events/Event_handlers#using_onevent_properties)을 통해 
+인라인 스크립트를 삽입할 수 있습니다:
 
 ```html
 <button onclick="alert('You clicked me!')">
@@ -1340,15 +1296,14 @@ such as `onClick`:
 </button>
 ```
 
-This feature allows scripting logic to be co-located with the HTML elements the logic applies to, giving good
-[Locality of Behaviour (LoB)](/essays/locality-of-behaviour).  Unfortunately, HTML only allows `on*` attributes for a fixed
-number of [specific DOM events](https://www.w3schools.com/tags/ref_eventattributes.asp) (e.g. `onclick`) and
-doesn't provide a generalized mechanism for responding to arbitrary events on elements.
+이 기능을 사용하면 스크립팅 로직을 해당 로직이 적용되는 HTML 요소와 함께 배치할 수 있어 우수한 [Locality of Behaviour (LoB)](/essays/locality-of-behaviour)을 제공합니다. 
+안타깝게도 HTML은 정해진 수의 [특정 DOM 이벤트](https://www.w3schools.com/tags/ref_eventattributes.asp)(예: `onclick`)에 대해서만 `on*` 속성을 허용하고 요소의 임의 이벤트에 응답하는 
+일반화된 메커니즘을 제공하지 않습니다. 
 
-In order to address this shortcoming, htmx offers [`hx-on*`](/attributes/hx-on) attributes.  These attributes allow
-you to respond to any event in a manner that preserves the LoB of the standard `on*` properties.
+이 단점을 해결하기 위해 htmx는 [`hx-on*`](/attributes/hx-on) 속성을 제공합니다. 이러한 속성을 사용하면 표준 `on*` 속성의 LoB를 
+보존하는 방식으로 모든 이벤트에 응답할 수 있습니다. 
 
-If we wanted to respond to the `click` event using an `hx-on` attribute, we would write this:
+`hx-on` 속성을 사용하여 `click` 이벤트에 응답하려면 다음과 같이 작성하면 됩니다:
 
 ```html
 <button hx-on:click="alert('You clicked me!')">
@@ -1356,11 +1311,11 @@ If we wanted to respond to the `click` event using an `hx-on` attribute, we woul
 </button>
 ```
 
-So, the string `hx-on`, followed by a colon (or a dash), then by the name of the event.
+즉, 문자열 `hx-on` 다음에 콜론(또는 대시)을 붙인 다음 이벤트 이름을 붙이면 됩니다.
 
-For a `click` event, of course, we would recommend sticking with the standard `onclick` attribute.  However, consider an
-htmx-powered button that wishes to add a parameter to a request using the `htmx:config-request` event.  This would not
-be possible using a standard `on*` property, but it can be done using the `hx-on:htmx:config-request` attribute:
+물론 `click` 이벤트의 경우 표준 `onclick` 속성을 사용하는 것이 좋습니다. 그러나 `htmx:config-request` 이벤트를 
+사용하여 요청에 매개 변수를 추가하려는 htmx 기반 버튼을 생각해 보세요. 이 작업은 표준 `on*` 속성을 사용하면 불가능하지만 
+`hx-on:htmx:config-request` 속성을 사용하면 가능합니다:
 
 ```html
 <button hx-post="/example"
@@ -1369,23 +1324,23 @@ be possible using a standard `on*` property, but it can be done using the `hx-on
 </button>
 ```
 
-Here the `example` parameter is added to the `POST` request before it is issued, with the value 'Hello Scripting!'.
+여기서 `example` 매개변수는 'Hello Scripting!' 값과 함께 `POST` 요청이 보내지기 전에 추가됩니다. 
 
-The `hx-on*` attributes are a very simple mechanism for generalized embedded scripting.  It is _not_ a replacement for more
-fully developed front-end scripting solutions such as AlpineJS or hyperscript.  It can, however, augment a VanillaJS-based
-approach to scripting in your htmx-powered application.
+`hx-on*` 속성은 일반화된 임베디드 스크립팅을 위한 매우 간단한 메커니즘입니다. AlpineJS나 hyperscript 같은 보다 완벽하게 개발된 
+프런트엔드 스크립팅 솔루션을 _대체할_ 수는 없습니다. 그러나 htmx 기반 애플리케이션의 스크립팅에 대한 VanillaJS 기반 접근 방식을 
+보강할 수는 있습니다. 
 
-Note that HTML attributes are *case insensitive*.  This means that, unfortunately, events that rely on capitalization/
-camel casing, cannot be responded to.  If you need to support camel case events we recommend using a more fully
-functional scripting solution such as AlpineJS or hyperscript.  htmx dispatches all its events in both camelCase and in
-kebab-case for this very reason.
+HTML 속성은 대소문자를 *구분하지 않는다는* 점에 유의하세요. 즉, 안타깝게도 capitalization/camel casing에 의존하는 이벤트는 
+응답할 수 없습니다. camel 케이스 이벤트를 지원해야 하는 경우 AlpineJS 또는 hyperscript와 같은 보다 완전한 기능을 갖춘 
+스크립팅 솔루션을 사용하는 것이 좋습니다. htmx는 바로 이러한 이유로 모든 이벤트를
+camelCase와 kebab-case 모두로 전송합니다.
 
 ### 3rd Party Javascript {#3rd-party}
 
-Htmx integrates fairly well with third party libraries.  If the library fires events on the DOM, you can use those events to
-trigger requests from htmx.
+Htmx는 타사 라이브러리와 상당히 잘 통합됩니다. 라이브러리가 DOM에서 이벤트를 발생시키면 
+해당 이벤트를 사용하여 htmx의 요청을 트리거할 수 있습니다.
 
-A good example of this is the [SortableJS demo](@/examples/sortable.md):
+이에 대한 좋은 예로 [SortableJS demo](@/examples/sortable.md)를 들 수 있습니다:
 
 ```html
 <form class="sortable" hx-post="/items" hx-trigger="end">
@@ -1396,9 +1351,9 @@ A good example of this is the [SortableJS demo](@/examples/sortable.md):
 </form>
 ```
 
-With Sortable, as with most javascript libraries, you need to initialize content at some point.
+대부분의 자바스크립트 라이브러리와 마찬가지로 Sortable을 사용하면 어느 시점에서 콘텐츠를 초기화해야 합니다. 
 
-In jquery you might do this like so:
+jquery에서는 다음과 같이 초기화할 수 있습니다:
 
 ```javascript
 $(document).ready(function() {
@@ -1413,8 +1368,8 @@ $(document).ready(function() {
 });
 ```
 
-In htmx, you would instead use the `htmx.onLoad` function, and you would select only from the newly loaded content,
-rather than the entire document:
+htmx에서는 대신 `htmx.onLoad` 함수를 사용하며 전체 문서가 아닌 
+새로 로드된 콘텐츠 중에서만 선택하게 됩니다:
 
 ```js
 htmx.onLoad(function(content) {
@@ -1429,13 +1384,13 @@ htmx.onLoad(function(content) {
 })
 ```
 
-This will ensure that as new content is added to the DOM by htmx, sortable elements are properly initialized.
+이렇게 하면 htmx로 새 콘텐츠가 DOM에 추가될 때 정렬 가능한 요소가 제대로 초기화됩니다. 
 
-If javascript adds content to the DOM that has htmx attributes on it, you need to make sure that this content
-is initialized with the `htmx.process()` function.
+자바스크립트가 htmx 속성이 있는 콘텐츠를 DOM에 추가하는 경우 이 콘텐츠가 
+`htmx.process()` 함수를 사용하여 초기화되는지 확인해야 합니다. 
 
-For example, if you were to fetch some data and put it into a div using the `fetch` API, and that HTML had
-htmx attributes in it, you would need to add a call to `htmx.process()` like this:
+예를 들어 `fetch` API를 사용하여 일부 데이터를 가져와서 div에 넣고 HTML에 
+htmx 속성이 있는 경우 다음과 같이 `htmx.process()` 호출을 추가하면 됩니다:
 
 ```js
 let myDiv = document.getElementById('my-div')
@@ -1444,10 +1399,10 @@ fetch('http://example.com/movies.json')
     .then(data => { myDiv.innerHTML = data; htmx.process(myDiv); } );
 ```
 
-Some 3rd party libraries create content from HTML template elements. For instance, Alpine JS uses the `x-if`
-attribute on templates to add content conditionally. Such templates are not initially part of the DOM and,
-if they contain htmx attributes, will need a call to `htmx.process()` after they are loaded. The following
-example uses Alpine's `$watch` function to look for a change of value that would trigger conditional content:
+일부 타사 라이브러리는 HTML 템플릿 요소에서 콘텐츠를 생성합니다. 예를 들어, Alpine JS는 템플릿에서 
+`x-if` 속성을 사용하여 조건부로 콘텐츠를 추가합니다. 이러한 템플릿은 처음에 DOM의 일부가 아니며, 
+htmx 속성이 포함된 경우 로드된 후 `htmx.process()`를 호출해야 합니다. 
+다음 예제는 조건부 콘텐츠를 트리거하는 값의 변경을 찾기 위해 Alpine의 `$watch` 함수를 사용합니다:
 
 ```html
 <div x-data="{show_new: false}"
@@ -1467,81 +1422,68 @@ example uses Alpine's `$watch` function to look for a change of value that would
 
 #### Web Components {#web-components}
 
-Please see the [Web Components Examples](@/examples/web-components.md) page for examples on how to integrate htmx
-with web components.
+htmx를 웹 컴포넌트와 통합하는 방법에 대한 예제는 
+[Web Components Examples](@/examples/web-components.md) 페이지를 참조하세요.
 
 ## Caching
 
-htmx works with standard [HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)
-mechanisms out of the box.
+htmx는 기본적으로 표준 [HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching) 메커니즘과 
+함께 작동합니다. 
 
-If your server adds the
-[`Last-Modified`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified)
-HTTP response header to the response for a given URL, the browser will automatically add the
-[`If-Modified-Since`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since)
-request HTTP header to the next requests to the same URL. Be mindful that if
-your server can render different content for the same URL depending on some other
-headers, you need to use the [`Vary`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#vary)
-response HTTP header. For example, if your server renders the full HTML when the
-`HX-Request` header is missing or `false`, and it renders a fragment of that HTML
-when `HX-Request: true`, you need to add `Vary: HX-Request`. That causes the cache to be
-keyed based on a composite of the response URL and the `HX-Request` request header —
-rather than being based just on the response URL.
+서버가 특정 URL에 대한 응답에 [`Last-Modified`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Last-Modified) HTTP 응답 헤더를 추가하면 브라우저는 
+동일한 URL에 대한 다음 요청에 [`If-Modified-Since`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/If-Modified-Since) 요청 HTTP 헤더를 자동으로 추가합니다. 
+서버가 다른 헤더에 따라 동일한 URL에 대해 다른 콘텐츠를 렌더링할 수 있는 경우 [`Vary`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#vary) 응답 HTTP 헤더를 
+사용해야 한다는 점에 유의하세요. 예를 들어, 서버에서 `HX-Request` 헤더가 없거나 `false`일 때는 
+전체 HTML을 렌더링하고 `HX-Request: true`일 때는 해당 HTML의 일부를 렌더링하는 경우, `Vary: HX-Request`를 
+추가해야 합니다. 이렇게 하면 캐시가 응답 URL만을 기반으로 하는 것이 아니라 응답 URL과 HX-Request 요청 헤더의 
+조합을 기반으로 키가 지정됩니다.
 
-If you are unable (or unwilling) to use the `Vary` header, you can alternatively set the configuration parameter
-`getCacheBusterParam` to `true`.  If this configuration variable is set, htmx will include a cache-busting parameter
-in `GET` requests that it makes, which will prevent browsers from caching htmx-based and non-htmx based responses
-in the same cache slot.
+`Vary` 헤더를 사용할 수 없거나 원하지 않는 경우 구성 매개변수 `getCacheBusterParam`을 `true`로 설정할 수 있습니다. 
+이 구성 변수를 설정하면 htmx가 생성하는 `GET` 요청에 cache-busting 매개 변수가 포함되어 브라우저가 동일한 캐시 슬롯에서 
+htmx 기반 응답과 비-htmx 기반 응답을 캐싱하지 못하게 됩니다. 
 
-htmx also works with [`ETag`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag)
-as expected.  Be mindful that if your server can render different content for the same
-URL (for example, depending on the value of the `HX-Request` header), the server needs
-to generate a different `ETag` for each content.
+htmx는 예상대로 [`ETag`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag)와도 작동합니다. 서버가 동일한 URL에 대해 다른 콘텐츠를 렌더링할 수 있는 경우(예: `HX-Request` 헤더의 값에 따라) 
+서버는 각 콘텐츠에 대해 다른 `ETag`를 생성해야 한다는 점에 유의하세요.
 
 ## Security
 
-htmx allows you to define logic directly in your DOM.  This has a number of advantages, the largest being
-[Locality of Behavior](@/essays/locality-of-behaviour.md), which makes your system easier to understand and
-maintain.
+htmx를 사용하면 DOM에서 직접 로직을 정의할 수 있습니다. 이 방식에는 여러 가지 장점이 있지만, 
+가장 큰 장점은 시스템을 더 쉽게 이해하고 유지 관리할 수 있는 [행동의 지역성](@/essays/locality-of-behaviour.md)입니다. 
 
-A concern with this approach, however, is security: since htmx increases the expressiveness of HTML, if a malicious
-user is able to inject HTML into your application, they can leverage this expressiveness of htmx to malicious
-ends.
+그러나 이 접근 방식에서 우려되는 점은 보안입니다. htmx는 HTML의 표현력을 높이기 때문에 악의적인 사용자가 애플리케이션에 HTML을 삽입할 수 있다면 
+악의적인 목적으로 htmx의 이러한 표현력을 활용할 수 있다는 점입니다.
 
 ### Rule 1: Escape All User Content
 
-The first rule of HTML-based web development has always been: *do not trust input from the user*.  You should escape all
-3rd party, untrusted content that is injected into your site.  This is to prevent, among other issues,
-[XSS attacks](https://en.wikipedia.org/wiki/Cross-site_scripting).
+HTML 기반 웹 개발의 첫 번째 규칙은 항상 *사용자의 입력을 신뢰하지 말라는 것*입니다. 사이트에 삽입되는 
+신뢰할 수 없는 타사 콘텐츠를 모두 제거해야 합니다. 이는 다른 문제 중에서도 [XSS attacks](https://en.wikipedia.org/wiki/Cross-site_scripting)을 방지하기 위한 것입니다. 
 
-There is extensive documentation on XSS and how to prevent it on the excellent [OWASP Website](https://owasp.org/www-community/attacks/xss/),
-including a [Cross Site Scripting Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html).
+[Cross Site Scripting Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)를 포함하여 훌륭한 [OWASP Website](https://owasp.org/www-community/attacks/xss/)에 XSS와 
+이를 방지하는 방법에 대한 광범위한 문서가 있습니다. 
 
-The good news is that this is a very old and well understood topic, and the vast majority of server-side templating languages
-support [automatic escaping](https://docs.djangoproject.com/en/4.2/ref/templates/language/#automatic-html-escaping) of
-content to prevent just such an issue.
+좋은 소식은 이 문제는 매우 오래되고 잘 알려진 주제이며 대부분의 서버 측 템플릿 언어는 
+이러한 문제를 방지하기 위해 콘텐츠의 [automatic escaping](https://docs.djangoproject.com/en/4.2/ref/templates/language/#automatic-html-escaping)를 지원합니다. 
 
-That being said, there are times people choose to inject HTML more dangerously, often via some sort of `raw()`
-mechanism in their templating language.  This can be done for good reasons, but if the content being injected is coming
-from a 3rd party then it _must_ be scrubbed, including removing attributes starting with `hx-` and `data-hx`, as well as
-inline `<script>` tags, etc.
+그렇지만 사람들이 종종 템플릿 언어의 일종의 `raw()` 메커니즘을 통해 더 위험한 HTML 삽입을 
+선택하는 경우가 있다는 점입니다. 이는 정당한 이유가 있을 수 있지만, 삽입되는 콘텐츠가 타사에서 제공된 것이라면 
+`hx-` 및 `data-hx`로 시작하는 속성, 인라인 `<script>` 태그 등을 제거하는 등 스크러빙해야 합니다. 
 
-If you are injecting raw HTML and doing your own escaping, a best practice is to *whitelist* the attributes and tags you
-allow, rather than to blacklist the ones you disallow.
+원시 HTML을 삽입하고 자체 이스케이프를 수행하는 경우 허용하는 속성 및 태그를 
+블랙리스트에 올리는 대신 *화이트리스트*에 올리는 것이 모범 사례에 해당합니다.
 
 ### htmx Security Tools
 
-Of course, bugs happen and developers are not perfect, so it is good to have a layered approach to security for
-your web application, and htmx provides tools to help secure your application as well.
+물론 버그가 발생하고 개발자는 완벽하지 않으므로 웹 애플리케이션의 보안을 위해 
+계층화된 접근 방식을 취하는 것이 좋으며, htmx는 애플리케이션 보안에 도움이 되는 도구도 제공합니다. 
 
-Let's take a look at them.
+이를 살펴보도록 하겠습니다.
 
 #### `hx-disable`
 
-The first tool htmx provides to help further secure your application is the [`hx-disable`](/attributes/hx-disable)
-attribute.  This attribute will prevent processing of all htmx attributes on a given element, and on all elements within
-it.  So, for example, if you were including raw HTML content in a template (again, this is not recommended!) then you
-could place a div around the content with the `hx-disable` attribute on it:
+애플리케이션의 보안을 강화하기 위해 htmx가 제공하는 첫 번째 도구는 [`hx-disable`](/attributes/hx-disable) 속성입니다. 
+이 속성은 지정된 요소와 그 안의 모든 요소에 대한 모든 htmx 속성의 처리를 방지합니다. 예를 들어 템플릿에 
+원시 HTML 콘텐츠를 포함하는 경우(다시 말하지만 권장하지 않습니다!) 
+콘텐츠 주위에 `hx-disable` 속성이 있는 div를 배치할 수 있습니다:
 
 ```html
 <div hx-disable>
@@ -1549,45 +1491,43 @@ could place a div around the content with the `hx-disable` attribute on it:
 </div>
 ```
 
-And htmx will not process any htmx-related attributes or features found in that content.  This attribute cannot be
-disabled by injecting further content: if an `hx-disable` attribute is found anywhere in the parent hierarchy of an
-element, it will not be processed by htmx.
+또한 htmx는 해당 콘텐츠에서 발견된 htmx 관련 속성이나 기능을 처리하지 않습니다. 
+이 속성은 추가 콘텐츠를 삽입하여 비활성화할 수 없습니다. 요소의 상위 계층 구조에서 
+`hx-disable` 속성이 발견되면 htmx에서 처리되지 않습니다.
 
 #### `hx-history`
 
-Another security consideration is htmx history cache.  You may have pages that have sensitive data that you do not
-want stored in the users `localStorage` cache.  You can omit a given page from the history cache by including the
-[`hx-history`](/attributes/hx-history) attribute anywhere on the page, and setting its value to `false`.
+또 다른 보안 고려 사항은 htmx 히스토리 캐시입니다. 사용자의 `localStorage` 캐시에 저장하지 않아야 하는 
+민감한 데이터가 있는 페이지가 있을 수 있습니다. 페이지의 아무 곳에나 [`hx-history`](/attributes/hx-history) 속성을 포함시키고 
+해당 값을 `false`로 설정하여 히스토리 캐시에서 특정 페이지를 생략할 수 있습니다.
 
 #### Configuration Options
 
-htmx also provides configuration options related to security:
+htmx는 보안과 관련된 구성 옵션도 제공합니다:
 
-* `htmx.config.selfRequestsOnly` - if set to `true`, only requests to the same domain as the current document will be allowed
-* `htmx.config.allowScriptTags` - htmx will process `<script>` tags found in new content it loads.  If you wish to disable
-   this behavior you can set this configuration variable to `false`
-* `htmx.config.historyCacheSize` - can be set to `0` to avoid storing any HTML in the `localStorage` cache
-* `htmx.config.allowEval` - can be set to `false` to disable all features of htmx that rely on eval:
+* `htmx.config.selfRequestsOnly` - `true`로 설정하면 현재 문서와 동일한 도메인에 대한 요청만 허용됩니다.
+* `htmx.config.allowScriptTags` - htmx는 로드되는 새 콘텐츠에서 발견된 `<script>` 태그를 처리합니다. 
+이 태그 허용을 비활성화하려면 이 구성 변수를 `false`로 설정하면 됩니다.
+* `htmx.config.historyCacheSize` - `0`으로 설정하여 `localStorage` 캐시에 HTML을 저장하지 않도록 할 수 있습니다.
+* `htmx.config.allowEval` - eval에 의존하는 htmx의 모든 기능을 비활성화하려면 `false`로 설정할 수 있습니다.
   * event filters
-  * `hx-on:` attributes
-  * `hx-vals` with the `js:` prefix
-  * `hx-headers` with the `js:` prefix
+  * `hx-on:` 속성
+  * 접두사가 `js:`인 `hx-vals` 
+  * 접두사가 `js:`인 `hx-headers`
 
-Note that all features removed by disabling `eval()` can be reimplemented using your own custom javascript and the
-htmx event model.
+`eval()`을 비활성화하여 제거된 모든 기능은 사용자 정의 자바스크립트 및 htmx 이벤트 모델을 사용하여 
+다시 구현할 수 있습니다.
 
 #### Events
 
-If you want to allow requests to some domains beyond the current host, but not leave things totally open, you can
-use the `htmx:validateUrl` event.  This event will have the request URL available in the `detail.url` slot, as well
-as a `sameHost` property.
+현재 호스트 이외의 일부 도메인에 대한 요청을 허용하되 완전히 열어두지 않으려면 `htmx:validateUrl` 이벤트를 사용할 수 있습니다. 
+이 이벤트에는 `detail.url` 슬롯에서 사용할 수 있는 요청 URL과 `sameHost` 속성이 있습니다.
 
-You can inspect these values and, if the request is not valid, invoke `preventDefault()` on the event to prevent the
-request from being issued.
+이러한 값을 검사하고 요청이 유효하지 않은 경우 이벤트에서 `preventDefault()`를 호출하여 요청이 보내지지 않도록 할 수 있습니다.
 
 ```javascript
 document.body.addEventListener('htmx:validateUrl', function (evt) {
-  // only allow requests to the current server as well as myserver.com
+  // 현재 서버와 myserver.com에 대한 요청만 허용합니다.
   if (!evt.detail.sameHost && evt.detail.url.hostname !== "myserver.com") {
     evt.preventDefault();
   }
@@ -1596,70 +1536,66 @@ document.body.addEventListener('htmx:validateUrl', function (evt) {
 
 ### CSP Options
 
-Browsers also provide tools for further securing your web application.  The most powerful tool available is a
-[Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP).  Using a CSP you can tell the
-browser to, for example, not issue requests to non-origin hosts, to not evaluate inline script tags, etc.
+브라우저는 웹 애플리케이션을 더욱 안전하게 보호할 수 있는 도구도 제공합니다. 가장 강력한 도구는 
+[Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)입니다. 예를 들어 CSP를 사용하면 브라우저에 
+원본이 아닌 호스트에 요청을 발행하지 않거나 인라인 스크립트 태그를 평가하지 않도록 지시할 수 있습니다.
 
-Here is an example CSP in a `meta` tag:
+다음은 `meta` 태그의 CSP 예시입니다:
 
 ```html
     <meta http-equiv="Content-Security-Policy" content="default-src 'self';">
 ```
 
-This tells the browser "Only allow connections to the original (source) domain".  This would be redundant with the
-`htmx.config.selfRequestsOnly`, but a layered approach to security is warranted and, in fact, ideal, when dealing
-with application security.
+이는 브라우저에 "원본(소스) 도메인에 대한 연결만 허용"이라고 알려줍니다. 이는 `htmx.config.selfRequestsOnly`와 중복될 수 있지만 
+애플리케이션 보안을 다룰 때는 보안에 대한 계층화된 접근 방식이 필요하며, 이런 방식이 실제로 이상적입니다.
 
-A full discussion of CSPs is beyond the scope of this document, but the [MDN Article](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP) provide a good jumping off point
-for exploring this topic.
+CSP에 대한 자세한 논의는 이 문서의 범위를 벗어납니다.
+[MDN 문서](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)를 보면 이 주제를 살펴보는 데 좋은 출발점이 될 수 있습니다.
 
 ## Configuring htmx {#config}
 
-Htmx has some configuration options that can be accessed either programmatically or declaratively.  They are
-listed below:
+Htmx에는 프로그래밍 방식으로 또는 선언적으로 액세스할 수 있는 몇 가지 구성 옵션이 있습니다. 아래에 나열되어 있습니다:
 
 <div class="info-table">
 
-| Config Variable                       | Info                                                                                                                                                                                                                                                                                                                                              |
-|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `htmx.config.historyEnabled`          | defaults to `true`, really only useful for testing                                                                                                                                                                                                                                                                                                |
-| `htmx.config.historyCacheSize`        | defaults to 10                                                                                                                                                                                                                                                                                                                                    |
-| `htmx.config.refreshOnHistoryMiss`    | defaults to `false`, if set to `true` htmx will issue a full page refresh on history misses rather than use an AJAX request                                                                                                                                                                                                                       |
-| `htmx.config.defaultSwapStyle`        | defaults to `innerHTML`                                                                                                                                                                                                                                                                                                                           |
-| `htmx.config.defaultSwapDelay`        | defaults to 0                                                                                                                                                                                                                                                                                                                                     |
-| `htmx.config.defaultSettleDelay`      | defaults to 20                                                                                                                                                                                                                                                                                                                                    |
-| `htmx.config.includeIndicatorStyles`  | defaults to `true` (determines if the indicator styles are loaded)                                                                                                                                                                                                                                                                                |
-| `htmx.config.indicatorClass`          | defaults to `htmx-indicator`                                                                                                                                                                                                                                                                                                                      |
-| `htmx.config.requestClass`            | defaults to `htmx-request`                                                                                                                                                                                                                                                                                                                        |
-| `htmx.config.addedClass`              | defaults to `htmx-added`                                                                                                                                                                                                                                                                                                                          |
-| `htmx.config.settlingClass`           | defaults to `htmx-settling`                                                                                                                                                                                                                                                                                                                       |
-| `htmx.config.swappingClass`           | defaults to `htmx-swapping`                                                                                                                                                                                                                                                                                                                       |
-| `htmx.config.allowEval`               | defaults to `true`, can be used to disable htmx's use of eval for certain features (e.g. trigger filters)                                                                                                                                                                                                                                         |
-| `htmx.config.allowScriptTags`         | defaults to `true`, determines if htmx will process script tags found in new content                                                                                                                                                                                                                                                              |
-| `htmx.config.inlineScriptNonce`       | defaults to `''`, meaning that no nonce will be added to inline scripts                                                                                                                                                                                                                                                                           |
-| `htmx.config.attributesToSettle`      | defaults to `["class", "style", "width", "height"]`, the attributes to settle during the settling phase                                                                                                                                                                                                                                           |
-| `htmx.config.inlineStyleNonce`        | defaults to `''`, meaning that no nonce will be added to inline styles                                                                                                                                                                                                                                                                            |
-| `htmx.config.useTemplateFragments`    | defaults to `false`, HTML template tags for parsing content from the server (not IE11 compatible!)                                                                                                                                                                                                                                                |
-| `htmx.config.wsReconnectDelay`        | defaults to `full-jitter`                                                                                                                                                                                                                                                                                                                         |
-| `htmx.config.wsBinaryType`            | defaults to `blob`, the [type of binary data](https://developer.mozilla.org/docs/Web/API/WebSocket/binaryType) being received over the WebSocket connection                                                                                                                                                                                       |
-| `htmx.config.disableSelector`         | defaults to `[hx-disable], [data-hx-disable]`, htmx will not process elements with this attribute on it or a parent                                                                                                                                                                                                                               |
-| `htmx.config.withCredentials`         | defaults to `false`, allow cross-site Access-Control requests using credentials such as cookies, authorization headers or TLS client certificates                                                                                                                                                                                                 |
-| `htmx.config.timeout`                 | defaults to 0, the number of milliseconds a request can take before automatically being terminated                                                                                                                                                                                                                                                |
-| `htmx.config.scrollBehavior`          | defaults to 'smooth', the behavior for a boosted link on page transitions. The allowed values are `auto` and `smooth`. Smooth will smoothscroll to the top of the page while auto will behave like a vanilla link.                                                                                                                                |
-| `htmx.config.defaultFocusScroll`      | if the focused element should be scrolled into view, defaults to false and can be overridden using the [focus-scroll](@/attributes/hx-swap.md#focus-scroll) swap modifier.                                                                                                                                                                        |
-| `htmx.config.getCacheBusterParam`     | defaults to false, if set to true htmx will append the target element to the `GET` request in the format `org.htmx.cache-buster=targetElementId`                                                                                                                                                                                                  |
-| `htmx.config.globalViewTransitions`   | if set to `true`, htmx will use the [View Transition](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API) API when swapping in new content.                                                                                                                                                                                    |
-| `htmx.config.methodsThatUseUrlParams` | defaults to `["get"]`, htmx will format requests with these methods by encoding their parameters in the URL, not the request body                                                                                                                                                                                                                 |
-| `htmx.config.selfRequestsOnly`        | defaults to `false`, if set to `true` will only allow AJAX requests to the same domain as the current document                                                                                                                                                                                                                                    |
-| `htmx.config.ignoreTitle`             | defaults to `false`, if set to `true` htmx will not update the title of the document when a `title` tag is found in new content                                                                                                                                                                                                                   |
-| `htmx.config.disableInheritance`      | disables attribute inheritance in htmx, which can then be overridden by the [`hx-inherit`](@/attributes/hx-inherit.md) attribute                                                                                                                                                                                                                  |
-| `htmx.config.scrollIntoViewOnBoost`   | defaults to `true`, whether or not the target of a boosted element is scrolled into the viewport. If `hx-target` is omitted on a boosted element, the target defaults to `body`, causing the page to scroll to the top.                                                                                                                           |
-| `htmx.config.triggerSpecsCache`       | defaults to `null`, the cache to store evaluated trigger specifications into, improving parsing performance at the cost of more memory usage. You may define a simple object to use a never-clearing cache, or implement your own system using a [proxy object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy) |
-| `htmx.config.allowNestedOobSwaps`     | defaults to `true`, whether to process OOB swaps on elements that are nested within the main response element. See [Nested OOB Swaps](@/attributes/hx-swap-oob.md#nested-oob-swaps).                                                                                                                                                              |
+| Config Variable                       | Info                                                                                                                                                                                                                                    |
+|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `htmx.config.historyEnabled`          | defaults to `true`, 테스트에만 유용합니다                                                                                                                                                                                                         |
+| `htmx.config.historyCacheSize`        | defaults to 10                                                                                                                                                                                                                          |
+| `htmx.config.refreshOnHistoryMiss`    | defaults to `false`, `true`로 설정하면 htmx는 히스토리 누락 시 AJAX 요청을 사용하는 대신 전체 페이지 새로 고침을 실행합니다                                                                                                                                                  |
+| `htmx.config.defaultSwapStyle`        | defaults to `innerHTML`                                                                                                                                                                                                                 |
+| `htmx.config.defaultSwapDelay`        | defaults to 0                                                                                                                                                                                                                           |
+| `htmx.config.defaultSettleDelay`      | defaults to 20                                                                                                                                                                                                                          |
+| `htmx.config.includeIndicatorStyles`  | defaults to `true` (indicator 스타일이 로드되는지 여부를 결정합니다)                                                                                                                                                                                     |
+| `htmx.config.indicatorClass`          | defaults to `htmx-indicator`                                                                                                                                                                                                            |
+| `htmx.config.requestClass`            | defaults to `htmx-request`                                                                                                                                                                                                              |
+| `htmx.config.addedClass`              | defaults to `htmx-added`                                                                                                                                                                                                                |
+| `htmx.config.settlingClass`           | defaults to `htmx-settling`                                                                                                                                                                                                             |
+| `htmx.config.swappingClass`           | defaults to `htmx-swapping`                                                                                                                                                                                                             |
+| `htmx.config.allowEval`               | defaults to `true`, 특정 기능(예: 트리거 필터)에 대한 htmx의 eval 사용을 비활성화하는 데 사용할 수 있습니다                                                                                                                                                             |
+| `htmx.config.allowScriptTags`         | defaults to `true`, 새 콘텐츠에서 발견된 스크립트 태그를 htmx가 처리할지 여부를 결정합니다                                                                                                                                                                           |
+| `htmx.config.inlineScriptNonce`       | defaults to `''`, 이것의 의미는 인라인 스크립트에 nonce가 추가되지 않는 것입니다                                                                                                                                                                                 |
+| `htmx.config.inlineSlyeNonce`         | defaults to `''`, 이것의 의미는 인라인 스타일에 nonce가 추가되지 않는 것입니다                                                                                                                                                                                  |
+| `htmx.config.attributesToSettle`      | defaults to `["class", "style", "width", "height"]`, 정리 단계에서 정리할 속성                                                                                                                                                                     |
+| `htmx.config.wsReconnectDelay`        | defaults to `full-jitter`                                                                                                                                                                                                               |
+| `htmx.config.wsBinaryType`            | defaults to `blob`, WebSocket 연결을 통해 수신되는 [binary 데이터 유형](https://developer.mozilla.org/docs/Web/API/WebSocket/binaryType)                                                                                                              |
+| `htmx.config.disableSelector`         | defaults to `[hx-disable], [data-hx-disable]`, htmx는 이 속성이 있는 요소나 상위 요소를 처리하지 않습니다                                                                                                                                                      |
+| `htmx.config.withCredentials`         | defaults to `false`, 쿠키, 인증 헤더 또는 TLS 클라이언트 인증서와 같은 자격 증명을 사용하여 크로스-사이트 액세스 제어 요청을 허용합니다                                                                                                                                                |
+| `htmx.config.timeout`                 | defaults to 0, 요청이 자동으로 종료되기까지 걸릴 수 있는 시간(milliseconds)                                                                                                                                                                                 |
+| `htmx.config.scrollBehavior`          | defaults to 'smooth', 페이지 전환 시 부스트 링크의 동작을 설정합니다. 허용되는 값은 `auto` 및 `Smooth`입니다. Smooth는 페이지 상단으로 부드럽게 스크롤되는 반면 Auto는 바닐라 링크처럼 작동합니다.                                                                                                    |
+| `htmx.config.defaultFocusScroll`      | focused 요소를 스크롤하여 뷰에 표시해야 하는 경우 기본값은 false이며 [focus-scroll](@/attributes/hx-swap.md#focus-scroll) 교체 수정자를 사용하여 재정의할 수 있습니다.                                                                                                             |
+| `htmx.config.getCacheBusterParam`     | defaults to false, true로 설정하면 htmx는 `org.htmx.cache-buster=targetElementId` 형식으로 `GET` 요청에 대상 요소를 추가합니다.                                                                                                                                |
+| `htmx.config.globalViewTransitions`   | `true`로 설정하면 htmx는 새 콘텐츠를 교체할 때 [View Transition](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API) API를 사용합니다.                                                                                                    |
+| `htmx.config.methodsThatUseUrlParams` | defaults to `["get"]`, htmx는 요청 본문이 아닌 URL에서 매개 변수를 인코딩하여 이러한 메서드를 사용하는 요청의 형식을 지정합니다.                                                                                                                                                  |
+| `htmx.config.selfRequestsOnly`        | 기본값은 현재 문서와 동일한 도메인에 대한 AJAX 요청만 허용할지 여부를 나타내는 true입니다.                                                                                                                                                                                 |
+| `htmx.config.ignoreTitle`             | defaults to `false`, `true`로 설정하면 htmx는 새 콘텐츠에서 `title` 태그가 발견될 때 문서 제목을 업데이트하지 않습니다.                                                                                                                                                   |
+| `htmx.config.scrollIntoViewOnBoost`   | 부스트된 요소의 대상이 뷰포트로 스크롤되는지 여부에 관계없이 기본값이 true로 설정됩니다. 부스트된 요소에서 `hx-target`을 생략하면 대상은 기본적으로 `body`로 설정되어 페이지가 맨 위로 스크롤됩니다.                                                                                                                |
+| `htmx.config.triggerSpecsCache`       | 기본값은 평가된 트리거 사양을 저장할 캐시인 `null`이므로 메모리 사용량을 늘리는 대신 구문 분석 성능을 향상시킬 수 있습니다. 절대 지워지지 않는 캐시를 사용하도록 간단한 객체를 정의하거나 [proxy object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Proxy)를 사용하여 자체 시스템을 구현할 수 있습니다. |
+| `htmx.config.allowNestedOobSwaps`     | 기본 응답 요소 내에 중첩된 요소에 대해 OOB 교체를 처리할지 여부, 기본값은 `true`입니다. [Nested OOB Swaps](@/attributes/hx-swap-oob.md#nested-oob-swaps)를 참조하세요.                                                                                                        |
 
 </div>
 
-You can set them directly in javascript, or you can use a `meta` tag:
+자바스크립트에서 직접 설정하거나 `meta` 태그를 사용할 수 있습니다:
 
 ```html
 <meta name="htmx-config" content='{"defaultSwapStyle":"outerHTML"}'>
@@ -1667,9 +1603,9 @@ You can set them directly in javascript, or you can use a `meta` tag:
 
 ## Conclusion
 
-And that's it!
+여기까지입니다!
 
-Have fun with htmx! You can accomplish [quite a bit](@/examples/_index.md) without writing a lot of code!
+htmx를 즐겨보세요! 많은 코드를 작성하지 않고도 [꽤 많은](@/examples/_index.md) 것을 성취할 수 있습니다!
 
 </div>
 </div>
