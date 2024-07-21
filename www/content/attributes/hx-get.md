@@ -3,7 +3,7 @@ title = "hx-get"
 +++
 
 `hx-get` 속성은 요소가 지정된 URL로 `GET` 요청을 보내고, 
-교체 전략을 사용하여 HTML을 DOM에 교체하게 만듭니다:
+교체 전략을 사용하여 HTML을 DOM에서 교체되게 만듭니다:
 
 ```html
   <div hx-get="/example">Get Some HTML</div>
