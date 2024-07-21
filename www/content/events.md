@@ -2,14 +2,14 @@
 title = "Events"
 +++
 
-Htmx provides an extensive events system that can be used to modify and enhance behavior.  Events
-are listed below.
+Htmx는 동작을 수정하고 개선하는 데 사용할 수 있는 광범위한 이벤트 시스템을 제공합니다. 
+이벤트는 다음과 같습니다.
 
 ### Event - `htmx:abort` {#htmx:abort}
 
-This event is different than other events: htmx does not *trigger* it, but rather *listens* for it.
+이 이벤트는 다른 이벤트와 달리 htmx가 *트리거*하지 않고 *대기*한다는 점에서 다릅니다. 
 
-If you send an `htmx:abort` event to an element making a request, it will abort the request:
+요청을 하는 요소에 `htmx:abort` 이벤트를 보내면 요청을 중단합니다:
 
 ```html
 <button id="request-button" hx-post="/example">Issue Request</button>
@@ -18,173 +18,170 @@ If you send an `htmx:abort` event to an element making a request, it will abort 
 
 ### Event - `htmx:afterOnLoad` {#htmx:afterOnLoad}
 
-This event is triggered after an AJAX `onload` has finished.  Note that this does not mean that the content
-has been swapped or settled yet, only that the request has finished.
+이 이벤트는 AJAX `onload`가 완료된 후에 트리거됩니다. 
+이는 콘텐츠가 아직 교체되거나 정리되었음을 의미하는 것이 아니라 요청이 완료되었음을 의미한다는 점에 유의하세요.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 * `detail.xhr` - the `XMLHttpRequest`
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.target` - 요청 대상
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:afterProcessNode` {#htmx:afterProcessNode}
 
-This event is triggered after htmx has initialized a DOM node.  It can be useful for extensions to build additional features onto a node.
+이 이벤트는 htmx가 DOM 노드를 초기화한 후에 트리거됩니다. 확장 프로그램이 노드에 추가 기능을 빌드하려 할 때 유용할 수 있습니다.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 
 ### Event - `htmx:afterRequest` {#htmx:afterRequest}
 
-This event is triggered after an AJAX request has finished either in the case of a successful request (although
-one that may have returned a remote error code such as a `404`) or in a network error situation.  This event
-can be paired with [`htmx:beforeRequest`](#htmx:beforeRequest) to wrap behavior around a request cycle.
+이 이벤트는 요청이 성공한 경우(`404`와 같은 원격 오류 코드를 반환했을 수 있음) 또는 
+네트워크 오류 상황에서 AJAX 요청이 완료된 후에 트리거됩니다. 이 이벤트는 요청 주기에 따라 
+동작을 wrap하기 위해 [`htmx:beforeRequest`](#htmx:beforeRequest)와 함께 사용할 수 있습니다.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 * `detail.xhr` - the `XMLHttpRequest`
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
-* `detail.successful` - true if the response has a 20x status code or is marked `detail.isError = false` in the
+* `detail.target` - 요청 대상
+* `detail.requestConfig` - AJAX 요청의 구성
+* `detail.successful` - 응답에 20x 상태 코드가 있거나 `htmx:beforeSwap` 이벤트에서 `detail.isError = false`로 표시되면 true이고, 그렇지 않으면 false입니다.
   `htmx:beforeSwap` event, else false
-* `detail.failed` - true if the response does not have a 20x status code or is marked `detail.isError = true` in the
-  `htmx:beforeSwap` event, else false
+* `detail.failed` - 응답에 20x 상태 코드가 없거나 `htmx:beforeSwap` 이벤트에서 `detail.isError = true`로 표시된 경우 true, 그렇지 않으면 false입니다.
 
 ### Event - `htmx:afterSettle` {#htmx:afterSettle}
 
-This event is triggered after the DOM has [settled](@/docs.md#request-operations).
+이 이벤트는 [DOM이 정리](@/docs.md#swapping)된 후에 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 * `detail.xhr` - the `XMLHttpRequest`
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.target` - 요청 대상
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:afterSwap` {#htmx:afterSwap}
 
-This event is triggered after new content has been [swapped into the DOM](@/docs.md#swapping).
+이 이벤트는 [DOM안에서 교체가 일어난](@/docs.md#swapping) 후에 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 * `detail.xhr` - the `XMLHttpRequest`
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.target` - 요청 대상
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:beforeCleanupElement` {#htmx:beforeCleanupElement}
 
-This event is triggered before htmx [disables](@/attributes/hx-disable.md) an element or removes it from the DOM.
+이 이벤트는 htmx가 요소를 [비활성화](@/attributes/hx-disable.md)하거나 DOM에서 제거하기 전에 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the cleaned up element
+* `detail.elt` - 정리된 요소
 
 ### Event - `htmx:beforeOnLoad` {#htmx:beforeOnLoad}
 
-This event is triggered before any response processing occurs.  If the event is cancelled, no swap will occur.
+이 이벤트는 응답 처리가 발생하기 전에 트리거됩니다. 이벤트가 취소되면 교체가 발생하지 않습니다.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 * `detail.xhr` - the `XMLHttpRequest`
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.target` - 요청 대상
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:beforeProcessNode` {#htmx:beforeProcessNode}
 
-This event is triggered before htmx initializes a DOM node and has processed all of its `hx-` attributes.  This gives extensions and other external code the ability to modify the contents of a DOM node before it is processed.
+이 이벤트는 htmx가 DOM 노드를 초기화하고 모든 `hx-` 속성을 처리하기 전에 트리거됩니다. 이를 통해 확장 프로그램 및 기타 외부 코드가 처리되기 전에 DOM 노드의 내용을 수정할 수 있습니다.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 
 ### Event - `htmx:beforeRequest` {#htmx:beforeRequest}
 
-This event is triggered before an AJAX request is issued.  If the event is cancelled, no request will occur.
+이 이벤트는 AJAX 요청이 보내지기 전에 트리거됩니다. 이벤트가 취소되면 요청이 발생하지 않습니다.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 * `detail.xhr` - the `XMLHttpRequest`
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.target` - 요청 대상
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:beforeSend` {#htmx:beforeSend}
 
-This event is triggered right before a request is sent.  You may not cancel the request with this event.
+이 이벤트는 요청이 전송되기 직전에 트리거됩니다. 이 이벤트가 발생하면 요청을 취소할 수 없습니다.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 * `detail.xhr` - the `XMLHttpRequest`
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.target` - 요청 대상
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:beforeSwap` {#htmx:beforeSwap}
 
-This event is triggered before any new content has been [swapped into the DOM](@/docs.md#swapping).  If the event is cancelled, no swap will occur.
+이 이벤트는 새 콘텐츠가 [DOM 안에서 교체가 이루지기](@/docs.md#swapping) 전에 트리거됩니다. 이벤트가 취소되면 교체가 발생하지 않습니다. 
 
-You can modify the default swap behavior by modifying the `shouldSwap` and `target` properties of the event detail. See
-the documentation on [configuring swapping](@/docs.md#modifying_swapping_behavior_with_events) for more details.
+이벤트 세부정보의 `shouldSwap` 및 `target` property를 수정하여 기본 교체 동작을 수정할 수 있습니다. 
+자세한 내용은 [교체 작업 구성](@/docs.md#modifying_swapping_behavior_with_events)에 대한 문서를 참조하세요.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 * `detail.xhr` - the `XMLHttpRequest`
-* `detail.requestConfig` - the configuration of the AJAX request
-* `detail.shouldSwap` - if the content will be swapped (defaults to `false` for non-200 response codes)
-* `detail.ignoreTitle` - if `true` any title tag in the response will be ignored
-* `detail.target` - the target of the swap
+* `detail.requestConfig` - AJAX 요청의 구성
+* `detail.shouldSwap` - 교체될 콘텐츠(200이 아닌 응답 코드의 경우 기본값은 `false`)
+* `detail.ignoreTitle` - `true`인 경우 응답의 제목 태그가 무시됩니다.
+* `detail.target` - 교체 대상
 
 ### Event - `htmx:beforeTransition` {#htmx:beforeTransition}
 
-This event is triggered before a [View Transition](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API) 
-wrapped swap occurs.  If the event is cancelled, the View Transition will not occur and the normal swapping logic will
-happen instead.
+이 이벤트는 [View Transition](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API)으로 wrap된 교체가 발생하기 전에 트리거됩니다. 
+이벤트가 취소되면 View Transition이 발생하지 않고 대신 일반 교체 로직이 발생합니다.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 * `detail.xhr` - the `XMLHttpRequest`
-* `detail.requestConfig` - the configuration of the AJAX request
-* `detail.shouldSwap` - if the content will be swapped (defaults to `false` for non-200 response codes)
-* `detail.target` - the target of the swap
+* `detail.requestConfig` - AJAX 요청의 구성
+* `detail.shouldSwap` - 교체될 콘텐츠(200이 아닌 응답 코드의 경우 기본값은 `false`)
+* `detail.target` - 교체 대상
 
 ### Event - `htmx:configRequest` {#htmx:configRequest}
 
-This event is triggered after htmx has collected parameters for inclusion in the request.  It can be
-used to include or update the parameters that htmx will send:
+이 이벤트는 htmx가 요청에 포함할 매개변수를 수집한 후에 트리거됩니다. 
+이 이벤트는 htmx가 전송할 매개 변수를 포함하거나 업데이트하는 데 사용할 수 있습니다:
 
 ```javascript
 document.body.addEventListener('htmx:configRequest', function(evt) {
-    evt.detail.parameters['auth_token'] = getAuthToken(); // add a new parameter into the mix
+    evt.detail.parameters['auth_token'] = getAuthToken(); // 새 매개변수 추가
 });
 ```
 
-Note that if an input value appears more than once the value in the `parameters` object will be an array, rather
-than a single value.
+입력 값이 두 번 이상 표시되는 경우 `parameters` 객체의 값은 단일 값이 아닌 배열이 됩니다.
 
 ##### Details
 
-* `detail.parameters` - the parameters that will be submitted in the request
-* `detail.unfilteredParameters` - the parameters that were found before filtering by [`hx-select`](@/attributes/hx-select.md)
-* `detail.headers` - the request headers
-* `detail.elt` - the element that triggered the request
-* `detail.target` - the target of the request
-* `detail.verb` - the HTTP verb in use
+* `detail.parameters` - 요청 작업에 제출될 매개변수
+* `detail.unfilteredParameters` - [`hx-select`](@/attributes/hx-select.md)로 필터링하기 전에 발견된 매개변수
+* `detail.headers` - 요청 헤더
+* `detail.elt` - 요청을 트리거한 요소
+* `detail.target` - 요청 대상
+* `detail.verb` - 사용된 HTTP 메소드
 
 ### Event - `htmx:confirm` {#htmx:confirm}
 
-This event is triggered immediately after a trigger occurs on an element.  It allows you to cancel (or delay) issuing
-the AJAX request.  If you call `preventDefault()` on the event, it will not issue the given request.  The `detail`
-object contains a function, `evt.detail.issueRequest()`, that can be used to issue the actual AJAX request at a
-later point.  Combining these two features allows you to create an asynchronous confirmation dialog.
+이 이벤트는 요소에서 트리거가 발생한 직후에 트리거됩니다. 이를 통해 AJAX 요청을 취소(또는 지연)할 수 있습니다. 
+이벤트에서 `preventDefault()`를 호출하면 지정된 요청을 보내지 않습니다. 
+`detail` 객체에는 나중에 실제 AJAX 요청을 발행하는 데 사용할 수 있는 함수인 `evt.detail.issueRequest()`가 포함되어 있습니다. 
+이 두 기능을 결합하면 비동기 confirmation 대화 상자를 만들 수 있습니다.
 
-Here is an example using [sweet alert](https://sweetalert.js.org/guides/) on any element with a `confirm-with-sweet-alert='true'` attribute on it:
+다음은 `confirm-with-sweet-alert='true'` 속성이 있는 모든 요소에 [sweet alert](https://sweetalert.js.org/guides/)를 사용하는 예시입니다:
 
 ```javascript
 document.body.addEventListener('htmx:confirm', function(evt) {
@@ -209,255 +206,246 @@ document.body.addEventListener('htmx:confirm', function(evt) {
 
 {target: target, elt: elt, path: path, verb: verb, triggeringEvent: event, etc: etc, issueRequest: issueRequest}
 
-* `detail.elt` - the element in question
-* `detail.etc` - additional request information (mostly unused)
-* `detail.issueRequest` - a no argument function that can be invoked to issue the request (should be paired with `evt.preventDefault()`!)
-* `detail.path` - the path of the request
-* `detail.target` - the target of the request
-* `detail.triggeringEvent` - the original event that triggered this request
-* `detail.verb` - the verb of the request (e.g. `GET`)
+* `detail.elt` - 해당 요소
+* `detail.etc` - 추가적인 요청의 정보 (대부분 미사용)
+* `detail.issueRequest` - 요청을 보내기 위해 호출할 수 있는 인수 없는 함수(`evt.preventDefault()`와 쌍을 이루어야 함!)
+* `detail.path` - 요청의 경로
+* `detail.target` - 요청의 대상
+* `detail.triggeringEvent` - 이 요청을 트리거한 원래 이벤트
+* `detail.verb` - 요청 메소드 (예를 들어 `GET`)
 
 ### Event - `htmx:historyCacheError` {#htmx:historyCacheError}
 
-This event is triggered when an attempt to save the cache to `localStorage` fails
+이 이벤트는 `localStorage`에 캐시를 저장하려는 시도가 실패할 때 트리거됩니다.
 
 ##### Details
 
-* `detail.cause` - the `Exception` that was thrown when attempting to save history to `localStorage`
+* `detail.cause` - 히스토리를 `localStorage`에 저장하려는 시도 중에 발생한 `Exception`
 
 ### Event - `htmx:historyCacheMiss` {#htmx:historyCacheMiss}
 
-This event is triggered when a cache miss occurs when restoring history
+이 이벤트는 히스토리를 복원하는 동안 캐시 미스가 발생할 때 트리거됩니다.
 
 ##### Details
 
-* `detail.xhr` - the `XMLHttpRequest` that will retrieve the remote content for restoration
-* `detail.path` - the path and query of the page being restored
+* `detail.xhr` - 복원을 위해 원격 콘텐츠를 가져올 `XMLHttpRequest`
+* `detail.path` - 복원 중인 페이지의 경로와 쿼리
 
 ### Event - `htmx:historyCacheMissError` {#htmx:historyCacheMissError}
 
-This event is triggered when a cache miss occurs and a response has been retrieved from the server
-for the content to restore, but the response is an error (e.g. `404`)
+이 이벤트는 캐시 미스가 발생하고 복원을 위한 콘텐츠가 서버에서 응답되었지만, 응답이 오류인 경우(예: `404`) 트리거됩니다.
 
 ##### Details
 
-* `detail.xhr` - the `XMLHttpRequest`
-* `detail.path` - the path and query of the page being restored
+* `detail.xhr` - `XMLHttpRequest`
+* `detail.path` - 복원 중인 페이지의 경로와 쿼리
 
 ### Event - `htmx:historyCacheMissLoad` {#htmx:historyCacheMissLoad}
 
-This event is triggered when a cache miss occurs and a response has been retrieved successfully from the server
-for the content to restore
+이 이벤트는 캐시 미스가 발생하고 복원을 위한 콘텐츠가 서버에서 성공적으로 응답되었을 때 트리거됩니다.
 
 ##### Details
 
-* `detail.xhr` - the `XMLHttpRequest`
-* `detail.path` - the path and query of the page being restored
+* `detail.xhr` - `XMLHttpRequest`
+* `detail.path` - 복원 중인 페이지의 경로와 쿼리
 
 ### Event - `htmx:historyRestore` {#htmx:historyRestore}
 
-This event is triggered when htmx handles a history restoration action
+이 이벤트는 htmx가 히스토리 복원 작업을 처리할 때 트리거됩니다.
 
 ##### Details
 
-* `detail.path` - the path and query of the page being restored
+* `detail.path` - 복원 중인 페이지의 경로와 쿼리
 
 ### Event - `htmx:beforeHistorySave` {#htmx:beforeHistorySave}
 
-This event is triggered when htmx handles a history restoration action
+이 이벤트는 htmx가 히스토리 복원 작업을 처리할 때 트리거됩니다.
 
 ##### Details
 
-* `detail.path` - the path and query of the page being restored
-* `detail.historyElt` - the history element being restored into
-
-##### Details
-
-* `detail.config` - the config that will be passed to the `EventSource` constructor
+* `detail.path` - 복원 중인 페이지의 경로와 쿼리
+* `detail.historyElt` - 복원될 히스토리 요소
 
 ### Event - `htmx:load` {#htmx:load}
 
-This event is triggered when a new node is loaded into the DOM by htmx.
+이 이벤트는 htmx가 새로운 노드를 DOM에 로드할 때 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the newly added element
+* `detail.elt` - 새로 추가된 요소
 
 ### Event - `htmx:noSSESourceError` {#htmx:noSSESourceError}
 
-This event is triggered when an element refers to an SSE event in its trigger, but no parent SSE source has been defined
+이 이벤트는 요소가 트리거에서 SSE 이벤트를 참조하지만, 상위 SSE 소스가 정의되지 않은 경우 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the element with the bad SSE trigger
+* `detail.elt` - 잘못된 SSE 트리거가 있는 요소
 
 ### Event - `htmx:oobAfterSwap` {#htmx:oobAfterSwap}
 
-This event is triggered as part of an [out of band swap](@/docs.md#oob_swaps) and behaves identically to an [after swap event](#htmx:afterSwap)
+이 이벤트는 [out of band 교체 작업](@/docs.md#oob_swaps)의 일부로 트리거되며 [교체 작업 이후 이벤트](#htmx:afterSwap)와 동일하게 작동합니다.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
-* `detail.shouldSwap` - if the content will be swapped (defaults to `true`)
-* `detail.target` - the target of the swap
-* `detail.fragment` - the response fragment
+* `detail.elt` - 요청을 보낸 요소
+* `detail.shouldSwap` -  콘텐츠가 교체되었는 가(기본값은 `true`)
+* `detail.target` - 교체 대상
+* `detail.fragment` - 응답 조각
 
 ### Event - `htmx:oobBeforeSwap` {#htmx:oobBeforeSwap}
 
-This event is triggered as part of an [out of band swap](@/docs.md#oob_swaps) and behaves identically to a [before swap event](#htmx:beforeSwap)
+이 이벤트는 [out of band 교체 작업](@/docs.md#oob_swaps)의 일부로 트리거되며 [교체 작업 이전 이벤트](#htmx:beforeSwap)와 동일하게 작동합니다.
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
-* `detail.shouldSwap` - if the content will be swapped (defaults to `true`)
-* `detail.target` - the target of the swap
-* `detail.fragment` - the response fragment
+* `detail.elt` - 요청을 보낸 요소
+* `detail.shouldSwap` - 콘텐츠가 교체되었는 가(기본값은 `true`)
+* `detail.target` - 교체 대상
+* `detail.fragment` - 응답 조각
 
 ### Event - `htmx:oobErrorNoTarget` {#htmx:oobErrorNoTarget}
 
-This event is triggered when an [out of band swap](@/docs.md#oob_swaps) does not have a corresponding element
-in the DOM to switch with.
+이 이벤트는 [out of band swap](@/docs.md#oob_swaps)이 DOM에 전환할 대응하는 요소가 없을 때 트리거됩니다.
 
 ##### Details
 
-* `detail.content` - the element with the bad oob `id`
+* `detail.content` - 잘못된 OOB `ID`를 가진 요소
 
 ### Event - `htmx:onLoadError` {#htmx:onLoadError}
 
-This event is triggered when an error occurs during the `load` handling of an AJAX call
+이 이벤트는 AJAX 호출의 `load` 처리 중에 오류가 발생하면 트리거됩니다.
 
 ##### Details
 
 * `detail.xhr` - the `XMLHttpRequest`
-* `detail.elt` - the element that triggered the request
-* `detail.target` - the target of the request
-* `detail.exception` - the exception that occurred
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.elt` - 요청을 트리거한 요소
+* `detail.target` - 요청 대상
+* `detail.exception` - 발생한 예외
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:prompt` {#htmx:prompt}
 
-This event is triggered after a prompt has been shown to the user with the [`hx-prompt`](@/attributes/hx-prompt.md)
-attribute.  If this event is cancelled, the AJAX request will not occur.
+이 이벤트는 [`hx-prompt`](@/attributes/hx-prompt.md) 속성을 사용하여 사용자에게 프롬프트가 표시된 후에 트리거됩니다. 
+이 이벤트가 취소되면 AJAX 요청이 발생하지 않습니다.
 
 ##### Details
 
-* `detail.elt` - the element that triggered the request
-* `detail.target` - the target of the request
-* `detail.prompt` - the user response to the prompt
+* `detail.elt` - 요청을 트리거한 요소
+* `detail.target` - 요청 대상
+* `detail.prompt` - 프롬프트에 대한 사용자 응답
 
 ### Event - `htmx:beforeHistoryUpdate` {#htmx:beforeHistoryUpdate}
 
-This event is triggered before a history update is performed. It can be
-used to modify the `path` or `type` used to update the history.
+이 이벤트는 히스토리 업데이트가 수행되기 전에 트리거됩니다. 히스토리 업데이트에 사용되는 `path` 또는 `type`을 수정하는 데 사용할 수 있습니다.
 
 ##### Details
 
-* `detail.history` - the `path` and `type` (push, replace) for the history update
-* `detail.elt` - the element that dispatched the request
-* `detail.xhr` - the `XMLHttpRequest`
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.history` - 히스토리 업데이트를 위한 `path`와 `type` (push, replace)
+* `detail.elt` - 요청을 보낸 요소
+* `detail.xhr` - `XMLHttpRequest`
+* `detail.target` - 요청의 대상
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:pushedIntoHistory` {#htmx:pushedIntoHistory}
 
-This event is triggered after a URL has been pushed into history.
+이 이벤트는 URL이 히스토리에 추가된 후에 트리거됩니다.
 
 ##### Details
 
-* `detail.path` - the path and query of the URL that has been pushed into history
+* `detail.path` - 히스토리에 추가된 URL의 경로와 쿼리
 
 ### Event - `htmx:replacedInHistory` {#htmx:replacedInHistory}
 
-This event is triggered after a URL has been replaced in history.
+이 이벤트는 URL이 히스토리에서 교체된 후에 트리거됩니다.
 
 ##### Details
 
-* `detail.path` - the path and query of the URL that has been replaced in history
+* `detail.path` - 히스토리에서 교체된 URL의 경로와 쿼리
 
 ### Event - `htmx:responseError` {#htmx:responseError}
 
-This event is triggered when an HTTP error response occurs
+이 이벤트는 HTTP 오류 응답이 발생했을 때 트리거됩니다.
 
 ##### Details
 
-* `detail.xhr` - the `XMLHttpRequest`
-* `detail.elt` - the element that triggered the request
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.xhr` - `XMLHttpRequest`
+* `detail.elt` - 요청을 트리거한 요소
+* `detail.target` - 요청의 대상
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:sendError` {#htmx:sendError}
 
-This event is triggered when a network error prevents an HTTP request from occurring
+이 이벤트는 네트워크 오류로 인해 HTTP 요청이 발생하지 못할 때 트리거됩니다.
 
 ##### Details
 
-* `detail.xhr` - the `XMLHttpRequest`
-* `detail.elt` - the element that triggered the request
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.xhr` - `XMLHttpRequest`
+* `detail.elt` - 요청을 트리거한 요소
+* `detail.target` - 요청의 대상
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:sseError` {#htmx:sseError}
 
-This event is triggered when an error occurs with an SSE source
+이 이벤트는 SSE 소스에서 오류가 발생했을 때 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the element with the bad SSE source
-* `detail.error` - the error
-* `detail.source` - the SSE source
+* `detail.elt` - 잘못된 SSE 소스가 있는 요소
+* `detail.error` - 오류
+* `detail.source` - SSE 소스
 
 ### Event - `htmx:swapError` {#htmx:swapError}
 
-This event is triggered when an error occurs during the swap phase
+이 이벤트는 교체 단계에서 오류가 발생했을 때 트리거됩니다.
 
 ##### Details
 
-* `detail.xhr` - the `XMLHttpRequest`
-* `detail.elt` - the element that triggered the request
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.xhr` - `XMLHttpRequest`
+* `detail.elt` - 요청을 트리거한 요소
+* `detail.target` - 요청의 대상
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:targetError` {#htmx:targetError}
 
-This event is triggered when a bad selector is used for a [`hx-target`](@/attributes/hx-target.md) attribute (e.g. an
-element ID without a preceding `#`)
+이 이벤트는 [`hx-target`](@/attributes/hx-target.md) 속성에 잘못된 선택자(예: 앞에 `#`가 없는 요소 ID)가 사용될 때 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the element that triggered the request
-* `detail.target` - the bad CSS selector
+* `detail.elt` - 요청을 트리거한 요소
+* `detail.target` - 잘못된 CSS 선택자
 
 ### Event - `htmx:timeout` {#htmx:timeout}
 
-This event is triggered when a request timeout occurs.  This wraps the typical `timeout` event of XMLHttpRequest.
+이 이벤트는 요청 시간 초과가 발생하면 트리거됩니다. 이 이벤트는 XMLHttpRequest의 일반적인 `timeout` 이벤트를 wrap합니다.
 
-Timeout time can be set using `htmx.config.timeout` or per element using [`hx-request`](@/attributes/hx-request.md)
+timeout 시간은 `htmx.config.timeout`을 사용하여 설정하거나 [`hx-request`](@/attributes/hx-request.md)를 사용하여 요소별로 설정할 수 있습니다. 
 
 ##### Details
 
-* `detail.elt` - the element that dispatched the request
+* `detail.elt` - 요청을 보낸 요소
 * `detail.xhr` - the `XMLHttpRequest`
-* `detail.target` - the target of the request
-* `detail.requestConfig` - the configuration of the AJAX request
+* `detail.target` - 요청의 대상
+* `detail.requestConfig` - AJAX 요청의 구성
 
 ### Event - `htmx:trigger` {#htmx:trigger}
 
-This event is triggered whenever an AJAX request would be, even if no AJAX request is specified. It
-is primarily intended to allow `hx-trigger` to execute client-side scripts; AJAX requests have more
-granular events available, like [`htmx:beforeRequest`](#htmx:beforeRequest) or [`htmx:afterRequest`](#htmx:afterRequest).
+이 이벤트는 AJAX 요청이 지정되지 않은 경우에도 AJAX 요청이 있을 때마다 트리거됩니다. 이 이벤트는 주로 `hx-trigger`가 
+클라이언트 측 스크립트를 실행할 수 있도록 하기 위한 것으로, AJAX 요청에는 
+[`htmx:beforeRequest`](#htmx:beforeRequest) 또는 [`htmx:afterRequest`](#htmx:afterRequest)와 같은 더 세분화된 이벤트를 사용할 수 있습니다.
 
 ##### Details
 
-* `detail.elt` - the element that triggered the request
+* `detail.elt` - 요청을 트리거한 요소
 
 ### Event - `htmx:validateUrl` {#htmx:validateUrl}
 
-This event is triggered before a request is made, allowing you to validate the URL that htmx is going to request.  If
-`preventDefault()` is invoked on the event, the request will not be made.
+이 이벤트는 요청이 이루어지기 전에 트리거되어 htmx가 요청할 URL의 유효성을 검사할 수 있습니다. 
+이벤트에서 `preventDefault()`가 호출되면 요청이 이루어지지 않습니다.
 
 ```javascript
 document.body.addEventListener('htmx:validateUrl', function (evt) {
-  // only allow requests to the current server as well as myserver.com
+  // 현재 서버와 myserver.com에 대한 요청만 허용합니다.
   if (!evt.detail.sameHost && evt.detail.url.hostname !== "myserver.com") {
     evt.preventDefault();
   }
@@ -466,14 +454,14 @@ document.body.addEventListener('htmx:validateUrl', function (evt) {
 
 ##### Details
 
-* `detail.elt` - the element that triggered the request
-* `detail.url` - the URL Object representing the URL that a request will be sent to.
-* `detail.sameHost` - will be `true` if the request is to the same host as the document
+* `detail.elt` - 요청을 트리거한 요소
+* `detail.url` - 요청이 전송될 URL을 나타내는 URL 객체입니다.
+* `detail.sameHost` - 요청이 document와 동일한 호스트에 대한 경우 `true`입니다.
 
 ### Event - `htmx:validation:validate` {#htmx:validation:validate}
 
-This event is triggered before an element is validated.  It can be used with the `elt.setCustomValidity()` method
-to implement custom validation rules.
+이 이벤트는 요소의 유효성을 검사하기 전에 트리거됩니다. 이 이벤트는 
+사용자 정의 유효성 검사 규칙을 구현하기 위해 `elt.setCustomValidity()` 메서드와 함께 사용할 수 있습니다.
 
 ```html
 <form hx-post="/test">
@@ -488,55 +476,55 @@ to implement custom validation rules.
 
 ##### Details
 
-* `detail.elt` - the element that triggered the request
+* `detail.elt` - 요청을 트리거한 요소
 
 ### Event - `htmx:validation:failed` {#htmx:validation:failed}
 
-This event is triggered when an element fails validation.
+이 이벤트는 요소가 유효성 검사에 실패할 때 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the element that triggered the request
-* `detail.message` - the validation error message
-* `detail.validity` - the validity object, which contains properties specifying how validation failed
+* `detail.elt` - 요청을 트리거한 요소
+* `detail.message` - 유효성 검사 오류 메시지
+* `detail.validity` - 유효성 검사 실패 방법을 지정하는 속성을 포함하는 유효성 객체
 
 ### Event - `htmx:validation:halted` {#htmx:validation:halted}
 
-This event is triggered when a request is halted due to validation errors.
+이 이벤트는 유효성 검사 오류로 인해 요청이 중단될 때 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the element that triggered the request
-* `detail.errors` - an array of error objects with the invalid elements and errors associated with them
+* `detail.elt` - 요청을 트리거한 요소
+* `detail.errors` - 유효하지 않은 요소 및 이와 관련된 오류가 있는 오류 객체 배열입니다.
 
 ### Event - `htmx:xhr:abort` {#htmx:xhr:abort}
 
-This event is triggered when an ajax request aborts
+이 이벤트는 ajax 요청이 중단될 때 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the element that triggered the request
+* `detail.elt` - 요청을 트리거한 요소
 
 ### Event - `htmx:xhr:loadstart` {#htmx:xhr:loadstart}
 
-This event is triggered when an ajax request starts
+이 이벤트는 ajax 요청이 시작될 때 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the element that triggered the request
+* `detail.elt` - 요청을 트리거한 요소
 
 ### Event - `htmx:xhr:loadend` {#htmx:xhr:loadend}
 
-This event is triggered when an ajax request finishes
+이 이벤트는 ajax 요청이 완료될 때 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the element that triggered the request
+* `detail.elt` - 요청을 트리거한 요소
 
 ### Event - `htmx:xhr:progress` {#htmx:xhr:progress}
 
-This event is triggered periodically when an ajax request that supports progress is in flight
+이 이벤트는 진행 상태를 지원하는 ajax 요청이 진행 중일 때 주기적으로 트리거됩니다.
 
 ##### Details
 
-* `detail.elt` - the element that triggered the request
+* `detail.elt` - 요청을 트리거한 요소
