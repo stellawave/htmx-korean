@@ -2,10 +2,10 @@
 title = "hx-swap-oob"
 +++
 
-The `hx-swap-oob` attribute allows you to specify that some content in a response should be
-swapped into the DOM somewhere other than the target, that is "Out of Band".  This allows you to piggy back updates to other element updates on a response.
+`hx-swap-oob` 속성은 응답의 일부 콘텐츠를 대상 외부의 DOM 어딘가에 교체하도록 지정할 수 있게 합니다. 
+이는 "Out of Band"를 의미합니다. 이를 통해 다른 요소 업데이트에 대한 응답에 편승하여 업데이트를 수행할 수 있습니다.
 
-Consider the following response HTML:
+다음 응답 HTML을 보세요:
 
 ```html
 <div>
@@ -17,26 +17,26 @@ Consider the following response HTML:
 
 ```
 
-The first div will be swapped into the target the usual manner.  The second div, however, will be swapped in as a replacement for the element with the id `alerts`, and will not end up in the target.
+첫 번째 div는 일반적인 방식으로 목표 대상을 교체합니다. 그러나 두 번째 div는 ID가 `alerts`인 있는 요소를 교체하며, 기존 교체 목표 대상에 포함되지 않습니다.
 
-The value of the `hx-swap-oob` can be:
+`hx-swap-oob`의 값은 다음과 같을 수 있습니다:
 
 * `true`
-* any valid [`hx-swap`](@/attributes/hx-swap.md) value
-* any valid [`hx-swap`](@/attributes/hx-swap.md) value, followed by a colon, followed by a CSS selector
+* 유효한 모든 [`hx-swap`](@/attributes/hx-swap.md) 값
+* 유효한 콜론, CSS 선택자가 뒤에 오는 모든 [`hx-swap`](@/attributes/hx-swap.md) 값
 
-If the value is `true` or `outerHTML` (which are equivalent) the element will be swapped inline.
+값이 `true` 또는 `outerHTML`(이와 동등한 값)이면 요소는 인라인으로 바뀝니다.
 
-If a swap value is given, that swap strategy will be used.
+swap 값이 지정되면 해당 교체 전략이 사용됩니다.
 
-If a selector is given, all elements matched by that selector will be swapped.  If not, the element with an ID matching the new content will be swapped.
+선택자가 지정되면 해당 선택자와 일치하는 모든 요소가 교체됩니다. 그렇지 않은 경우 새 콘텐츠와 일치하는 ID를 가진 요소가 바뀝니다.
 
 ### Troublesome Tables
 
-Note that you can use a `template` tag to encapsulate types of elements that, by the HTML spec, can't stand on their own in the
-DOM (`<tr>`, `<td>`, `<th>`, `<thead>`, `<tbody>`, `<tfoot>`, `<colgroup>`, `<caption>` & `<col>`).
+`template` 태그를 사용하여 HTML 사양에 따라 DOM에서 독립적으로 존재할 수 없는 요소 유형
+(`<tr>`, `<td>`, `<th>`, `<thead>`, `<tbody>`, `<tfoot>`, `<colgroup>`, `<caption>` 및 `<col>`)을 캡슐화할 수 있다는 점을 참고하세요.
 
-Here is an example with an out of band swap of a table row being encapsulated in this way:
+다음은 이러한 방식으로 테이블 행의 out of band가 캡슐화된 예제입니다:
 
 ```html
 <div>
@@ -49,15 +49,15 @@ Here is an example with an out of band swap of a table row being encapsulated in
 </template>
 ```
 
-Note that these template tags will be removed from the final content of the page.
+이러한 template 태그는 페이지의 최종 콘텐츠에서 제거된다는 점에 유의하세요.
 
 ## Nested OOB Swaps
 
-By default, any element with `hx-swap-oob=` attribute anywhere in the response is processed for oob swap behavior, including when an element is nested within the main response element.
-This can be problematic when using [template fragments](https://htmx.org/essays/template-fragments/) where a fragment may be reused as a oob-swap target and also as part of a bigger fragment. When the bigger fragment is the main response the inner fragment will still be processed as an oob swap, removing it from the dom.
+기본적으로, 응답 내 어디에든 `hx-swap-oob=` 속성이 있는 모든 요소는 out of band 교체 동작으로 처리됩니다. 이는 요소가 주요 응답 요소 내에 중첩된 경우도 포함됩니다. 이는 조각(fragment)을 
+oob-swap 대상 및 더 큰 조각의 일부로 재사용할 수 있는 [template fragments](https://htmx.org/essays/template-fragments/)을 사용할 때 문제가 될 수 있습니다. 더 큰 조각이 주요 응답인 경우 내부 조각도 여전히 oob swap으로 처리되어서 DOM에서 제거됩니다.
 
-This behavior can be changed by setting the config `htmx.config.allowNestedOobSwaps` to `false`. If this config option is `false`, OOB swaps are only processed when the element is *adjacent to* the main response element, OOB swaps elsewhere will be ignored and oob-swap-related attributes stripped.
+이 동작은 `htmx.config.allowNestedOobSwaps`를 `false`로 설정하여 변경할 수 있습니다. 이 구성 옵션이 `false`이면 요소가 기본 응답 요소에 *인접한* 경우에만 OOB 교체가 처리되고, 다른 곳의 OOB 교체은 무시되고 OOB 교체 관련 속성이 제거됩니다.
 
 ## Notes
 
-* `hx-swap-oob` is not inherited
+* `hx-swap-oob`은 상속되지 않습니다.

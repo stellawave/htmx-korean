@@ -2,11 +2,10 @@
 title = "hx-select-oob"
 +++
 
-The `hx-select-oob` attribute allows you to select content from a response to be swapped in via an out-of-band swap.  
-The value of this attribute is comma separated list of elements to be swapped out of band.  This attribute is almost
-always paired with [hx-select](@/attributes/hx-select.md).
+`hx-select-oob` 속성은 응답에서 콘텐츠를 선택하여 out of band 방식으로 교체할 수 있게 합니다. 
+이 속성의 값은 쉼표로 구분된 요소 목록이며, 거의 항상 [hx-select](@/attributes/hx-select.md)와 함께 사용됩니다.
 
-Here is an example that selects a subset of the response content:
+다음은 응답 콘텐츠의 일부를 선택하는 예제입니다:
 
 ```html
 <div>
@@ -20,14 +19,11 @@ Here is an example that selects a subset of the response content:
 </div>
 ```
 
-This button will issue a `GET` to `/info` and then select the element with the id `info-details`,
-which will replace the entire button in the DOM, and, in addition, pick out an element with the id `alert` 
-in the response and swap it in for div in the DOM with the same ID.
+이 버튼은 `/info`에 `GET` 요청을 보내고, id가 `info-details`인 요소를 선택하여 DOM에서 버튼 전체를 교체합니다. 추가로 응답에서 id가 `alert`인 요소를 선택하여 동일한 ID를 가진 DOM의 div와 교체합니다.
 
-Each value in the comma separated list of values can specify any valid [`hx-swap`](@/attributes/hx-swap.md)
-strategy by separating the selector and the swap strategy with a `:`.
+쉼표로 구분된 목록의 각 값은 선택자와 교체 전략을 `:`로 구분하여 유효한 [`hx-swap`](@/attributes/hx-swap.md) 전략을 지정할 수 있습니다.
 
-For example, to prepend the alert content instead of replacing it:
+예를 들어, alert 콘텐츠를 교체하는 대신 prepend하려면:
 
 ```html
 <div>
@@ -43,4 +39,4 @@ For example, to prepend the alert content instead of replacing it:
 
 ## Notes
 
-* `hx-select-oob` is inherited and can be placed on a parent element
+* `hx-select-oob`는 상속되며 부모 요소에 배치할 수 있습니다.
