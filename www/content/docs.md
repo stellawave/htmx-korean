@@ -401,8 +401,8 @@ CSS 선택자와 함께 [hx-indicator](@/attributes/hx-indicator.md) 속성을 �
 * `this` 키워드를 사용할 수 있으며, 이는 `hx-target` 속성이 있는 요소 자체가 대상임을 나타냅니다.
 * `closest <CSS 선택자>` 구문은 주어진 CSS 선택자와 일치하는 가장 [가까운](https://developer.mozilla.org/docs/Web/API/Element/closest) 상위 요소 또는 자기 자신을 찾습니다.
   (예: `closest tr`은 요소에서 가장 가까운 테이블 행을 대상으로 합니다)
-* `next <CSS 선택자>` 구문은 DOM에서 주어진 CSS 선택자와 일치하는 다음 요소를 찾습니다.
-* `previous <CSS 선택자>` 구문은 DOM에서 주어진 CSS 선택자와 일치하는 이전 요소를 찾습니다.
+* `next <CSS 선택자>` 구문은 DOM에서 주어진 CSS 선택자와 일치하는 요소의 다음 요소를 찾습니다.
+* `previous <CSS 선택자>` 구문은 DOM에서 주어진 CSS 선택자와 일치하는 요소의 이전 요소를 찾습니다.
 * `find <CSS 선택자>` 구문은 주어진 CSS 선택자와 일치하는 첫 번째 하위 자손 요소를 찾습니다.
   (예: `find tr`은 요소의 첫 번째 하위 자손 행을 대상으로 합니다)
 

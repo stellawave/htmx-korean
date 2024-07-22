@@ -2,10 +2,9 @@
 title = "hx-select"
 +++
 
-The `hx-select` attribute allows you to select the content you want swapped from a response.  The value of
-this attribute is a CSS query selector of the element or elements to select from the response.
+`hx-select` 속성은 응답에서 교체할 콘텐츠를 선택할 수 있게 해줍니다. 이 속성의 값은 응답에서 선택할 요소 또는 요소들을 나타내는 CSS 쿼리 선택자입니다.
 
-Here is an example that selects a subset of the response content:
+다음은 응답 콘텐츠의 일부를 선택하는 예제입니다:
 
 ```html
 <div>
@@ -15,9 +14,8 @@ Here is an example that selects a subset of the response content:
 </div>
 ```
 
-So this button will issue a `GET` to `/info` and then select the element with the id `info-detail`,
-which will replace the entire button in the DOM.
+이 버튼은 `/info`에 `GET` 요청을 보낸 후, id가 `info-details`인 요소를 선택하여, 해당 요소가 DOM에서 버튼 전체를 교체하도록 합니다.
 
 ## Notes
 
-* `hx-select` is inherited and can be placed on a parent element
+* `hx-select`는 상속되며, 부모 요소에 배치할 수 있습니다.
