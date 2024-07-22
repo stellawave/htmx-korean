@@ -2,10 +2,9 @@
 title = "hx-confirm"
 +++
 
-The `hx-confirm` attribute allows you to confirm an action before issuing a request.  This can be useful
-in cases where the action is destructive and you want to ensure that the user really wants to do it.
+`hx-confirm` 속성은 요청을 발행하기 전에 동작을 확인할 수 있게 합니다. 이 속성은 파괴적인 동작을 수행할 때 사용자가 정말로 이를 수행하고자 하는지 확인하는 데 유용합니다.
 
-Here is an example:
+다음은 예제입니다:
 
 ```html
 <button hx-delete="/account" hx-confirm="Are you sure you wish to delete your account?">
@@ -15,14 +14,14 @@ Here is an example:
 
 ## Event details
 
-The event triggered by `hx-confirm` contains additional properties in its `detail`:
+`hx-confirm`에 의해 트리거된 이벤트는 `detail`에 추가 속성을 포함합니다:
 
-* triggeringEvent: the event that triggered the original request
-* issueRequest(skipConfirmation=false): a callback which can be used to confirm the AJAX request
-* question: the value of the `hx-confirm` attribute on the HTML element
+* triggeringEvent: 원래 요청을 트리거한 이벤트
+* issueRequest(skipConfirmation=false): AJAX 요청을 확인하는 데 사용할 수 있는 callback
+* question: HTML 요소의 `hx-confirm` 속성 값
 
 ## Notes
 
-* `hx-confirm` is inherited and can be placed on a parent element
-* `hx-confirm` uses the browser's `window.confirm` by default. You can customize this behavior as shown [in this example](@/examples/confirm.md).
-* a boolean `skipConfirmation` can be passed to the `issueRequest` callback; if true (defaults to false), the `window.confirm` will not be called and the AJAX request is issued directly
+* `hx-confirm`은 상속되며 부모 요소에 배치할 수 있습니다.
+* `hx-confirm`은 기본적으로 브라우저의 `window.confirm`을 사용합니다. 이 동작을 사용자 지정하는 방법은 [이 예제](@/examples/confirm.md)에서 볼 수 있습니다.
+* boolean 값 `skipConfirmation`을 `issueRequest` callback에 전달할 수 있습니다. true로 설정하면 (기본값은 false) `window.confirm`이 호출되지 않고 AJAX 요청이 직접 발행됩니다.
