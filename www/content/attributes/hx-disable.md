@@ -2,12 +2,12 @@
 title = "hx-disable"
 +++
 
-The `hx-disable` attribute will disable htmx processing for a given element and all its children.  This can be 
-useful as a backup for HTML escaping, when you include user generated content in your site, and you want to 
-prevent malicious scripting attacks.
+`hx-disable` 속성은 지정된 요소와 그 모든 하위 요소에 대한 htmx 처리를 비활성화합니다. 
+이는 사이트에 사용자 생성 콘텐츠를 포함하면서 악성 스크립팅 공격을 방지하려는 경우 
+HTML 이스케이프에 대한 백업으로 유용할 수 있습니다.
 
-The value of the tag is ignored, and it cannot be reversed by any content beneath it.
+태그의 값은 무시되며 그 자식들도 되돌릴 수 없습니다.
  
 ## Notes
 
-* `hx-disable` is inherited
+* `hx-disable`은 상속됩니다.

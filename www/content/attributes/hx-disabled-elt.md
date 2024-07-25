@@ -2,23 +2,18 @@
 title = "hx-disabled-elt"
 +++
 
-The `hx-disabled-elt` attribute allows you to specify elements that will have the `disabled` attribute
-added to them for the duration of the request. The value of this attribute can be:
+`hx-disabled-elt` 속성은 요청이 진행되는 동안 `disabled` 속성이 추가될 요소를 지정할 수 있게 합니다. 이 속성의 값은 다음과 같습니다:
 
-* A CSS query selector of the element to disable.
-* `this` to disable the element itself
-* `closest <CSS selector>` which will find the [closest](https://developer.mozilla.org/docs/Web/API/Element/closest)
-  ancestor element or itself, that matches the given CSS selector
-  (e.g. `closest fieldset` will disable the closest to the element `fieldset`).
-* `find <CSS selector>` which will find the first child descendant element that matches the given CSS selector
-* `next` which resolves to [element.nextElementSibling](https://developer.mozilla.org/docs/Web/API/Element/nextElementSibling)
-* `next <CSS selector>` which will scan the DOM forward for the first element that matches the given CSS selector
-  (e.g. `next button` will disable the closest following sibling `button` element)
-* `previous` which resolves to [element.previousElementSibling](https://developer.mozilla.org/docs/Web/API/Element/previousElementSibling)
-* `previous <CSS selector>` which will scan the DOM backwards for the first element that matches the given CSS selector.
-  (e.g `previous input` will disable the closest previous sibling `input` element)
+* 비활성화할 요소의 CSS 쿼리 선택자.
+* `this`는 요소 본인을 비활성화.
+* `closest <CSS selector>`는 주어진 CSS 선택자와 일치하는 [가장 가까운](https://developer.mozilla.org/docs/Web/API/Element/closest) 상위 요소나 자기 자신을 찾습니다 (예: `closest fieldset`은 요소에 가장 가까운 `fieldset`을 비활성화).
+* `find <CSS selector>`는 주어진 CSS 선택자와 일치하는 첫 번째 하위 자식 요소를 찾습니다.
+* `next`는 [element.nextElementSibling](https://developer.mozilla.org/docs/Web/API/Element/nextElementSibling)으로 해석됩니다.
+* `next <CSS selector>`는 주어진 CSS 선택자와 일치하는 첫 번째 요소를 찾아 DOM을 앞으로 스캔합니다 (예: `next button`은 가장 가까운 다음 `button` 형제 요소를 비활성화).
+* `previous`는 [element.previousElementSibling](https://developer.mozilla.org/docs/Web/API/Element/previousElementSibling)으로 해석됩니다.
+* `previous <CSS selector>`는 주어진 CSS 선택자와 일치하는 첫 번째 요소를 찾아 DOM을 뒤로 스캔합니다 (예: `previous input`은 가장 가까운 이전 `input` 형제 요소를 비활성화).
 
-Here is an example with a button that will disable itself during a request:
+다음은 요청 동안 자신을 비활성화하는 버튼의 예제입니다:
 
 ```html
 <button hx-post="/example" hx-disabled-elt="this">
@@ -26,10 +21,9 @@ Here is an example with a button that will disable itself during a request:
 </button>
 ```
 
-When a request is in flight, this will cause the button to be marked with [the `disabled` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled), 
-which will prevent further clicks from occurring.  
+요청이 진행 중일 때, 이는 버튼에 [`disabled` 속성](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/disabled)을 추가하여 추가 클릭을 방지합니다.
 
-The `hx-disabled-elt` attribute also supports specifying multiple CSS selectors separated by commas to disable multiple elements during the request. Here is an example that disables buttons and text input fields of a particular form during the request:
+`hx-disabled-elt` 속성은 요청 동안 여러 요소를 비활성화하기 위해 쉼표로 구분된 여러 CSS 선택자를 지정하는 것도 지원합니다. 다음은 요청 동안 특정 폼의 버튼과 텍스트 입력 필드를 비활성화하는 예제입니다:
 
 ```html
 <form hx-post="/example" hx-disabled-elt="find input[type='text'], find button">
@@ -40,6 +34,6 @@ The `hx-disabled-elt` attribute also supports specifying multiple CSS selectors 
 
 ## Notes
 
-* `hx-disabled-elt` is inherited and can be placed on a parent element
+* `hx-disabled-elt`는 상속되며 부모 요소에 배치할 수 있습니다.
 
 [hx-trigger]: https://htmx.org/attributes/hx-trigger/
