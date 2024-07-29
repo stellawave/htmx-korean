@@ -2,4 +2,4 @@
 title = "HX-Push Response Header (Deprecated)"
 +++
 
-The `HX-Push` header has been replaced by [`HX-Push-Url`](@/headers/hx-push-url.md)
+`HX-Push` 헤더는 [`HX-Push-Url`](@/headers/hx-push-url.md)로 대체되었습니다.
