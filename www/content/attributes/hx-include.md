@@ -2,21 +2,19 @@
 title = "hx-include"
 +++
 
-The `hx-include` attribute allows you to include additional element values in an AJAX request. The value of this
-attribute can be:
+`hx-include` 속성은 AJAX 요청에 추가 요소 값을 포함할 수 있게 합니다. 이 속성의 값은 다음과 같습니다:
 
-* A CSS query selector of the elements to include.
-* `this` which will include the descendants of the element.
-* `closest <CSS selector>` which will find the [closest](https://developer.mozilla.org/docs/Web/API/Element/closest)
-  ancestor element or itself, that matches the given CSS selector
-  (e.g. `closest tr` will target the closest table row to the element).
-* `find <CSS selector>` which will find the first child descendant element that matches the given CSS selector.
-* `next <CSS selector>` which will scan the DOM forward for the first element that matches the given CSS selector.
-  (e.g. `next .error` will target the closest following sibling element with `error` class)
-* `previous <CSS selector>` which will scan the DOM backwards for the first element that matches the given CSS selector.
-  (e.g `previous .error` will target the closest previous sibling with `error` class)
+* 포함할 요소들의 CSS 쿼리 선택자.
+* `this`는 요소의 자손을 포함합니다.
+* `closest <CSS selector>`는 주어진 CSS 선택자와 일치하는 [가장 가까운](https://developer.mozilla.org/docs/Web/API/Element/closest) 상위 요소나 자기 자신을 찾습니다
+  (예: `closest tr`은 요소에 가장 가까운 테이블 행을 대상으로 합니다).
+* `find <CSS selector>`는 주어진 CSS 선택자와 일치하는 첫 번째 하위 자손 요소를 찾습니다.
+* `next <CSS selector>`는 주어진 CSS 선택자와 일치하는 첫 번째 요소를 찾아 DOM을 앞으로 스캔합니다
+  (예: `next .error`는 `error` 클래스를 가진 가장 가까운 다음 형제 요소를 대상으로 합니다).
+* `previous <CSS selector>`는 주어진 CSS 선택자와 일치하는 첫 번째 요소를 찾아 DOM을 뒤로 스캔합니다
+  (예: `previous .error`는 `error` 클래스를 가진 가장 가까운 이전 형제 요소를 대상으로 합니다).
 
-Here is an example that includes a separate input value:
+다음은 별도의 입력 값을 포함하는 예제입니다:
 
 ```html
 <div>
@@ -27,16 +25,14 @@ Here is an example that includes a separate input value:
 </div>
 ```
 
-This is a little contrived as you would typically enclose both of these elements in a `form` and submit
-the value automatically, but it demonstrates the concept.
+이 예제는 일반적으로 두 요소를 `form`에 포함하여 자동으로 값을 제출하는 경우가 많지만, 개념을 설명하기 위해 사용되었습니다.
 
-Note that if you include a non-input element, all input elements enclosed in that element will be included.
+비입력 요소를 포함하는 경우, 해당 요소에 포함된 모든 입력 요소가 포함된다는 점에 유의하십시오.
 
 ## Notes
 
-* `hx-include` is inherited and can be placed on a parent element
-* While `hx-include` is inherited, it is evaluated from the element triggering the request. It is easy to get confused
-  when working with the extended selectors such as `find` and `closest`.
+* `hx-include`는 상속되며 부모 요소에 배치할 수 있습니다.
+* `hx-include`는 상속되지만, 요청을 트리거하는 요소에서 평가됩니다. `find`와 `closest` 같은 확장 선택자를 사용할 때 혼동하기 쉽습니다.
   ```html
   <div hx-include="find input">
       <button hx-post="/register">
@@ -45,9 +41,6 @@ Note that if you include a non-input element, all input elements enclosed in tha
       Enter email: <input name="email" type="email"/>
   </div>
   ```
-  In the above example, when clicking on the button, the `find input` selector is resolved from the button itself, which
-  does not return any element here, since the button doesn't have any `input` child, thus in this case, raises an error.
-* A standard CSS selector resolves
-  to [document.querySelectorAll](https://developer.mozilla.org/docs/Web/API/Document/querySelectorAll) and will include
-  multiple elements, while the extended selectors such as `find` or `next` only return a single element at most to
-  include
+  위 예제에서 버튼을 클릭하면, `find input` 선택자는 button 자체에서 해결됩니다. 여기서 button은 `input` 자식을 포함하지 않으므로 요소를 반환하지 않으며, 따라서 오류를 발생시킵니다.
+* 표준 CSS 선택자는 [document.querySelectorAll](https://developer.mozilla.org/docs/Web/API/Document/querySelectorAll)로 
+해결되며 여러 요소를 포함할 수 있는 반면, `find` 또는 `next`와 같은 확장 선택자는 최대 한 개의 요소만 반환하여 포함됩니다.

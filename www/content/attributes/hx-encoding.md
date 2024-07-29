@@ -2,13 +2,13 @@
 title = "hx-encoding"
 +++
 
-The `hx-encoding` attribute allows you to switch the request encoding from the usual `application/x-www-form-urlencoded`
-encoding to `multipart/form-data`, usually to support file uploads in an ajax request.
+`hx-encoding` 속성은 일반적인 `application/x-www-form-urlencoded` 인코딩에서 `multipart/form-data` 인코딩으로 요청 인코딩을 변경할 수 있게 합니다. 
+주로 AJAX 요청에서 파일 업로드를 지원하기 위해 사용됩니다.
 
-The value of this attribute should be `multipart/form-data`.
+이 속성의 값은 `multipart/form-data`여야 합니다.
 
-The `hx-encoding` tag may be placed on parent elements.
+`hx-encoding` 태그는 부모 요소에 배치될 수 있습니다.
 
 ## Notes
 
-* `hx-encoding` is inherited and can be placed on a parent element
+* `hx-encoding`은 상속되며 부모 요소에 배치할 수 있습니다.

@@ -2,23 +2,23 @@
 title = "hx-inherit"
 +++
 
-The default behavior for htmx is to "inherit" many attributes automatically: that is, an attribute such as
-[hx-target](@/attributes/hx-target.md) may be placed on a parent element, and all child elements will inherit
-that target.  Some people do not like this feature and instead prefer to explicitly specify inheritance for attributes.
+htmx의 기본 동작은 많은 속성을 자동으로 "상속"하는 것입니다. 
+즉, [hx-target](@/attributes/hx-target.md)과 같은 속성은 부모 요소에 배치될 수 있으며, 
+모든 자식 요소는 해당 대상을 상속받습니다. 
+일부 사람들은 이 기능을 좋아하지 않으며 속성에 대한 상속을 명시적으로 지정하는 것을 선호합니다.
 
-To support this mode of development, htmx offers the `htmx.config.disableInheritance` setting, which can be set to
-`false` to prevent inheritance from being the default behavior for any of the htmx attributes.
+이 개발 모드를 지원하기 위해, htmx는 `htmx.config.disableInheritance` 설정을 제공합니다. 
+이 설정을 `false`로 설정하면 htmx 속성에 대해 상속이 기본 동작이 되지 않습니다.
 
-The `hx-inherit` attribute allows you to control the inheritance of attributes manually.
+`hx-inherit` 속성은 속성 상속을 수동으로 제어할 수 있게 합니다.
 
-htmx evaluates attribute inheritance as follows:
+htmx는 속성 상속을 다음과 같이 평가합니다:
 
-* when `hx-inherit` is set on a parent node
-  * `inherit="*"` all attribute inheritance for this element will be enabled
-  * `hx-inherit="hx-select hx-get hx-target"` enable inheritance for only one or multiple specified attributes
+* `hx-inherit`가 부모 노드에 설정된 경우
+  * `inherit="*"`는 이 요소에 대한 모든 속성 상속을 활성화합니다.
+  * `hx-inherit="hx-select hx-get hx-target"`는 하나 이상의 지정된 속성에 대한 상속만 활성화합니다.
 
-Here is an example of a div that shares an `hx-target` attribute for a set of anchor tags when `htmx.config.disableInheritance`
-is set to false:
+다음은 `htmx.config.disableInheritance`가 false로 설정된 경우, anchor 태그 집합에 대해 `hx-target` 속성을 공유하는 div의 예입니다:
 
 ```html
 <div hx-target="#tab-container" hx-inherit="hx-target">
@@ -30,4 +30,4 @@ is set to false:
 
 ## Notes
 
-* Read more about [Attribute Inheritance](@/docs.md#inheritance)
+* [속성 상속](https://htmx.org/docs/#inheritance)에 대해 더 읽어보세요.

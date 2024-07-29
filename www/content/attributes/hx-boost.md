@@ -39,6 +39,6 @@ form의 경우 요청은 `method` 속성에 따라 `GET` 또는 `POST`로 변환
 * `hx-boost`는 상속되며 부모 요소에 배치할 수 있습니다.
 * 동일 도메인에 대한 링크만 부스트되며 로컬 anchor는 부스트되지 않습니다.
 * 모든 요청은 AJAX를 통해 수행되므로 리디렉션과 같은 작업을 할 때 이를 염두에 두십시오.
-* 요청이 부스트된 앵커나 폼에서 발생했는지 확인하려면 요청 헤더에서 [`HX-Boosted`](@/reference.md#request_headers)를 찾으십시오.
-* 자식 요소에서 선택적으로 부스트를 비활성화하려면 `hx-boost="false"`를 사용하십시오.
-* [`hx-preserve="true"`](@/attributes/hx-preserve.md)를 사용하여 부스트된 요소와 그 자식 요소의 교체를 비활성화하십시오.
+* 요청이 부스트된 anchor나 form에서 발생했는지 확인하려면 요청 헤더에서 [`HX-Boosted`](@/reference.md#request_headers)를 찾으면 됩니다.
+* 자식 요소에서 선택적으로 부스트를 비활성화하려면 `hx-boost="false"`를 사용할 수 있습니다.
+* [`hx-preserve="true"`](@/attributes/hx-preserve.md)를 사용하여 부스트된 요소와 그 자식 요소의 교체를 비활성화할 수 있습니다.

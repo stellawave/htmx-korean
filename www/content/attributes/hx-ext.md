@@ -2,19 +2,16 @@
 title = "hx-ext"
 +++
 
-The `hx-ext` attribute enables an htmx [extension](https://extensions.htmx.org) for an element and all its children.
+`hx-ext` 속성은 요소와 그 모든 자식 요소에 대해 htmx [확장](https://extensions.htmx.org)을 활성화합니다.
 
-The value can be a single extension name or a comma separated list of extensions to apply.
+값은 단일 확장 이름이거나 적용할 확장의 쉼표로 구분된 목록일 수 있습니다.
 
-The `hx-ext` tag may be placed on parent elements if you want a plugin to apply to an entire swath of the DOM,
-and on the `body` tag for it to apply to all htmx requests.
+플러그인을 DOM의 전체 범위에 적용하려면 `hx-ext` 태그를 부모 요소에 배치할 수 있으며, 모든 htmx 요청에 적용하려면 `body` 태그에 배치할 수 있습니다.
 
 ## Notes
 
-* `hx-ext` is both inherited and merged with parent elements, so you can specify extensions on any element in the DOM 
-hierarchy and it will apply to all child elements. 
-
-* You can ignore an extension that is defined by a parent node using `hx-ext="ignore:extensionName"` 
+* `hx-ext`는 부모 요소와 상속 및 병합되므로, DOM 계층 구조의 어떤 요소에 확장을 지정해도 모든 자식 요소에 적용됩니다.
+* `hx-ext="ignore:extensionName"`을 사용하여 부모 노드에 정의된 확장을 무시할 수 있습니다.
 
 
 ```html
