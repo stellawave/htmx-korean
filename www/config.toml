@@ -1,5 +1,5 @@
-base_url = "https://htmx.org"
-title = "</> htmx - high power tools for html"
+base_url = "https://htmx.pinstella.com"
+title = "</> htmx - HTML을 위한 고성능 도구"
 theme = "htmx-theme"
 
 compile_sass = false
