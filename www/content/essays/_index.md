@@ -24,10 +24,10 @@ page_template = "essay.html"
 * [The API Churn/Security Trade-off](https://intercoolerjs.org/2016/02/17/api-churn-vs-security.html)
 * [Does Hypermedia Scale?](@/essays/does-hypermedia-scale.md)
 * [SPA Alternative](@/essays/spa-alternative.md)
-* [htmx sucks](@/essays/htmx-sucks.md)
+* [htmx는 역겹다](@/essays/htmx-sucks.md)
 
 ### Building Hypermedia Applications
-* [A Real World React to htmx Port](@/essays/a-real-world-react-to-htmx-port.md)
+* [React에서 htmx 전환 실제 반응](@/essays/a-real-world-react-to-htmx-port.md)
 * [Another Real World React to htmx Port](@/essays/another-real-world-react-to-htmx-port.md)
 * [Web Security Basics (with htmx)](@/essays/web-security-basics-with-htmx.md)
 * [Hypermedia-Driven Applications (HDAs)](@/essays/hypermedia-driven-applications.md)
@@ -45,7 +45,7 @@ page_template = "essay.html"
 * [Locality of Behavior (LoB)](@/essays/locality-of-behaviour.md)
 * [Complexity Budget](@/essays/complexity-budget.md)
 * [Why htmx Does Not Have a Build Step](@/essays/no-build-step.md)
-* [Is htmx Just Another JavaScript Framework?](@/essays/is-htmx-another-javascript-framework.md)
+* [htmx는 또 하나의 자바스크립트 프레임워크일 뿐인가요?](@/essays/is-htmx-another-javascript-framework.md)
 * [htmx Implementation Deep Dive (Video)](https://www.youtube.com/watch?v=javGxN-h9VQ)
 
 ### Hypermedia History

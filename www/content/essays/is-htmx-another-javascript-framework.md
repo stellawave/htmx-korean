@@ -6,78 +6,90 @@ author = ["Alexander Petros"]
 tag = ["posts"]
 +++
 
-One of the most common criticisms of htmx, usually from people hearing about it for the first time, goes like this:
+## 컴포넌트가 없음
 
->You're complaining about the complexity of modern frontend frameworks, but your solution is just another complex frontend framework.
+htmx를 처음 듣는 사람들에게서 흔히 나오는 비판 중 하나는 다음과 같습니다:
 
-This is an excellent objection! It's the right question to ask about *any* third-party (3P) code that you introduce into your project. Even though you aren't writing the 3P code yourself, by including it in your project you are committed to understanding it—and refreshing that understanding if you want to upgrade it. That's a big commitment.
+> 현대 프론트엔드 프레임워크의 복잡성에 대해 불평하고 있지만, 당신의 해결책도 또 다른 복잡한 프론트엔드 프레임워크일 뿐입니다.
 
-Let's break this criticism down into its constituent parts, and determine exactly how much htmx indulges in the harms it claims to solve.
+이것은 훌륭한 반론입니다! 프로젝트에 새로운 서드파티(3P) 코드를 도입할 때 반드시 물어봐야 할 중요한 질문입니다. 
+직접 3P 코드를 작성하지 않더라도, 프로젝트에 포함시키면 그 코드를 이해해야 하고, 업그레이드하고 싶을 때 이해를 새로 고쳐야 합니다. 이는 큰 책임입니다.
 
-## The difference between a library and a framework
+이 비판을 구성 요소로 나누어, htmx가 해결하려는 문제를 얼마나 자주 방치하는지 정확히 알아봅시다.
 
-Some htmx defenders jump to our aid with: "htmx isn't a framework, it's a library." This is probably incorrect.
+## 라이브러리와 프레임워크의 차이
 
-"Framework" is a colloquial term—there's no hard rule for the point at which some third-party code evolves from a "library" into a "framework"—but we should still try to define it. In this context:
+일부 htmx 옹호자들은 "htmx는 프레임워크가 아니라 라이브러리다"라고 말합니다. 이는 아마도 정확하지 않습니다.
 
-* **Library** - 3P code whose API does not significantly influence the rest of the application
-* **Framework** - 3P code whose API dictates the overall structure of the application
+"프레임워크"는 일반적인 용어입니다—어떤 3P 코드가 "라이브러리"에서 "프레임워크"로 진화하는 시점에 대한 엄격한 규칙은 없지만, 그래도 정의하려고 노력해야 합니다. 이 문맥에서:
 
-If you prefer metaphors: a library is a cog that you add to your machine, a framework is a pre-built machine that you control by customizing its cogs.
+* **라이브러리** - API가 애플리케이션의 나머지 부분에 크게 영향을 미치지 않는 3P 코드
+* **프레임워크** - API가 애플리케이션의 전체 구조를 지시하는 3P 코드
 
-This distinction, fuzzy though it may be, is important because it describes how easily some third-party code can be replaced. For example, a JavaScript service that uses a CSV parsing library can probably swap in a different CSV parsing library without too much trouble; a JavaScript service that uses the NextJS framework, however, is probably going to depend on NextJS for its entire useful life, since an enormous chunk of the code is written with the assumption that it is interacting with NextJS constructs.
+비유를 좋아한다면: 라이브러리는 기계에 추가하는 톱니바퀴이고, 프레임워크는 사용자가 톱니바퀴를 커스터마이징하여 제어하는 사전 제작된 기계입니다.
 
-Therefore, if your service is built atop a framework, its useful lifespan is tied to the useful lifespan of that framework. If that framework is abandoned, or despised, or otherwise undesirable to work on, the difficulty of modifying your project will steadily increase until you give up modifying it, and eventually, mothball it altogether.
+이 구분은 모호하긴 하지만, 일부 3P 코드를 얼마나 쉽게 대체할 수 있는지 설명하는 데 중요합니다. 
+예를 들어, CSV 파싱 라이브러리를 사용하는 JavaScript 서비스는 아마도 다른 CSV 파싱 라이브러리로 쉽게 교체할 수 있지만, 
+NextJS 프레임워크를 사용하는 JavaScript 서비스는 NextJS에 대한 의존성이 매우 커질 것입니다. 코드의 상당 부분이 NextJS 구성 요소와 상호작용하는 것을 전제로 작성되기 때문입니다.
 
-That's what people are worried about when they ask is "is htmx just another JavaScript framework?" They want to be sure that they're not committing to a system that will be obsolete soon, like so many of the past web development frameworks.
+따라서 서비스가 프레임워크를 기반으로 구축된 경우, 해당 프레임워크의 유용한 수명은 서비스의 유용한 수명과 밀접하게 연결됩니다. 
+만약 그 프레임워크가 버려지거나, 경멸당하거나, 작업하기에 바람직하지 않게 되면, 프로젝트를 수정하는 것이 점점 더 어려워지다가 결국 포기하고, 프로젝트를 완전히 폐기하게 될 것입니다.
 
-So: is htmx a framework? And is it going to be fast made obsolete, leaving a trail of un-maintainable websites in the wake of its meteoric demise?
+사람들이 "htmx가 또 다른 JavaScript 프레임워크인가?"라고 물을 때 걱정하는 것은 바로 이러한 점입니다. 
+그들은 과거의 많은 웹 개발 프레임워크처럼 금방 쓸모없게 될 시스템에 투자하고 싶지 않은 것입니다.
 
-## htmx is (usually) a framework
+그래서: htmx는 프레임워크입니까? 그리고 빠르게 사라져서 유지 관리할 수 없는 웹사이트들만 남기고 갈 운명일까요?
 
-With apologies to our community's ongoing debate about this question—I think htmx is pretty clearly a framework, at least in the majority use-case. But it does depend on how you use it.
+## htmx는 (보통) 프레임워크입니다
 
-Wherever you make use of htmx in your project, you're including htmx attributes in your HTML (i.e. `hx-post`, `hx-target`), writing endpoints that are called with htmx-formatted data (with certain request headers), and returning data from those endpoints that is formatted in ways that htmx expects (HTML with `hx-*` controls). All of these attributes and headers and endpoints interact with each other to create a system by which elements enter and exit the DOM via network request.
+이 질문에 대한 우리 커뮤니티의 지속적인 논쟁에 사과드리며—저는 htmx가 대부분의 경우에 명백히 프레임워크라고 생각합니다. 하지만 이는 사용 방법에 따라 다릅니다.
 
-If you use htmx to handle a non-trivial number of your website's network requests, then the inclusion of htmx in your application has significant implications for the project's structure, from the way you structure your frontend markup, to the database queries your endpoints make. That is framework-like behavior, and in that scenario, htmx cannot be trivially replaced.
+프로젝트에서 htmx를 사용하는 곳마다, HTML에 htmx 속성(i.e. `hx-post`, `hx-target`)을 포함하고, 
+htmx 형식의 데이터를 사용하여 호출되는 엔드포인트를 작성하며, 그 엔드포인트에서 htmx가 예상하는 형식으로 데이터를 반환합니다(예: `hx-*` 컨트롤이 포함된 HTML). 
+이러한 속성, 헤더 및 엔드포인트는 네트워크 요청을 통해 요소가 DOM에 들어오고 나가는 시스템을 만듭니다.
 
-You can definitely use htmx in a library-like manner, to add dynamic functionality to just a few sections of your web page. But you can write [React in this library-like manner too](https://www.patterns.dev/vanilla/islands-architecture) and nobody argues that React isn't a framework. Suffice to say that many people who use htmx in their applications are doing so in a way that bends to the demands of htmx, as a framework for building hypermedia applications.
+웹사이트의 네트워크 요청 중 상당 부분을 처리하기 위해 htmx를 사용한다면, 애플리케이션에 htmx를 포함하는 것은 프로젝트 구조에 중요한 영향을 미칩니다. 
+이는 프론트엔드 마크업의 구조부터 엔드포인트가 수행하는 데이터베이스 쿼리에 이르기까지 모든 것이 해당됩니다. 
+이것은 프레임워크와 같은 동작이며, 그런 상황에서는 htmx를 쉽게 대체할 수 없습니다.
 
-As they should! Building with htmx works a lot better if you play to its strengths. You can send JSON-formatted form bodies, [if you really insist](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/json-enc/README.md). But you shouldn't! It's simpler to just use `application/x-www-form-urlencoded` bodies, and write an endpoint that accepts them. You can write an endpoint that is re-used across multiple different clients, [if you really insist](@/essays/why-tend-not-to-use-content-negotiation.md). But you shouldn't!  It's simpler to [split your data and your hypermedia APIs into separate URLs](@/essays/splitting-your-apis.md). Yes, htmx can be used as a library, but maybe let it be your framework too.
+htmx를 라이브러리처럼 사용하여 웹 페이지의 몇 가지 섹션에 동적 기능을 추가할 수는 있습니다. 
+하지만 [React를 라이브러리처럼 사용](https://www.patterns.dev/vanilla/islands-architecture)할 수도 있으며, React가 프레임워크가 아니라는 주장은 아무도 하지 않습니다. 
+많은 사람들이 htmx를 애플리케이션에 사용하면서 htmx의 요구에 맞게 사용하는 것은 당연합니다. 이는 하이퍼미디어 애플리케이션을 구축하기 위한 프레임워크로서 htmx를 사용하는 것입니다.
 
-That does not mean, however, that htmx is Just Another JavaScript Framework, because htmx has a huge advantage that the other frameworks do not: HTML.
+그들이 그렇게 해야 합니다! htmx의 강점에 맞춰 작업하는 것이 훨씬 더 효과적입니다. 
+Form 본문을 JSON 형식으로 보내는 것은 [정말로 고집한다면](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/json-enc/README.md) 할 수 있지만, 
+그렇게 하지 않는 것이 좋습니다! `application/x-www-form-urlencoded` 본문을 사용하고 이를 수락하는 엔드포인트를 작성하는 것이 더 간단합니다. 
+여러 다른 클라이언트에서 재사용할 수 있는 엔드포인트를 작성할 수도 있지만, [정말로 고집한다면](@/essays/why-tend-not-to-use-content-negotiation.md) 그렇게 할 수 있지만, 
+그렇게 하지 않는 것이 좋습니다! 데이터를 하이퍼미디어 API와 분리된 URL로 [분리하는 것이 더 간단합니다](@/essays/splitting-your-apis.md). 
+네, htmx를 라이브러리처럼 사용할 수는 있지만, 프레임워크로도 사용해 보세요.
 
-## htmx is for writing HTML
+그러나 그렇다고 해서 htmx가 또 다른 JavaScript 프레임워크라고는 할 수 없습니다. htmx는 다른 프레임워크가 가지지 못한 엄청난 장점을 가지고 있기 때문입니다: 바로 HTML입니다.
 
-Let's say you're using htmx as a framework—is it a *JavaScript* framework? In one obvious sense, yes: htmx is implemented with ~4k lines of JS. But in another, much more important sense, it is not: React, Svelte, Solid, and so on have you write JS(X) that the framework converts into HTML; htmx just has you write HTML. This removes entire categories of maintenance that might make you abandon other frameworks with time.
+## htmx는 HTML을 작성하기 위한 도구입니다
 
-Codebases tend to get stuck when you want to upgrade or change some dependency, but the framework you use is incompatible with that change. Java is the most notorious offender here—there are untold millions of lines of Java in production that will never leave Java 8 because upgrading Spring is too hard—but the npm package ecosystem is a close second. When you use the htmx "framework" you will never have this problem, because htmx is a [zero-dependency, client-loaded JavaScript file](@/essays/no-build-step.md), so it is guaranteed to never conflict with whatever build process or dependency chain your server *does* depend on.
+htmx를 프레임워크로 사용한다고 가정해봅시다—그렇다면 이것이 *JavaScript* 프레임워크일까요? 한 가지 분명한 의미에서는 그렇습니다: 
+htmx는 약 4,000줄의 JS로 구현되어 있습니다. 그러나 훨씬 더 중요한 의미에서는 그렇지 않습니다: 
+React, Svelte, Solid 등은 JS(X)를 작성하게 한 후 그 프레임워크가 이를 HTML로 변환하는 반면, htmx는 단지 HTML을 작성하게 합니다. 
+이는 다른 프레임워크를 사용하면서 시간이 지나면서 포기하게 만드는 유지 관리의 범주를 완전히 없애줍니다.
 
-Browsers render HTML, so no compiler or transpiler is ever necessary to work with htmx. While many htmx users happily render API responses with JSX, htmx works very well with [classic](https://jinja.palletsprojects.com) [template](https://ejs.co/) [engines](https://docs.ruby-lang.org/en/2.3.0/ERB.html), making it portable to [whatever language you like](@/essays/hypermedia-on-whatever-youd-like.md). Say what you will about Django and Rails, but they were relevant in 2008 and they're relevant today—htmx integrates seamlessly with them both. This is a recurring theme with htmx-driven development: htmx works well with development tools old and new, because the common denominator in all these tools is HTML, and htmx is for writing HTML.
+코드베이스는 종종 어떤 의존성을 업그레이드하거나 변경하고 싶을 때, 사용하는 프레임워크가 해당 변경과 호환되지 않는 경우에 막히게 됩니다. 
+Java는 이 문제의 가장 악명 높은 예입니다—생산 환경에서 Java 8을 절대 벗어나지 않을 수백만 줄의 Java 코드가 있으며, 
+이는 Spring을 업그레이드하는 것이 너무 어렵기 때문입니다 —하지만 npm 패키지 생태계도 그에 못지않게 문제가 있습니다. 
+htmx "프레임워크"를 사용하는 경우에는 이런 문제가 절대 발생하지 않습니다. 
+왜냐하면 htmx는 [서드파티 의존성이 없는, 클라이언트에서 로드되는 JavaScript 파일](@/essays/no-build-step.md)이기 때문에, 
+서버가 의존하는 빌드 프로세스나 의존성 체인과 절대 충돌하지 않을 것이 보장되기 때문입니다.
 
-<div style="text-align:center; width:100%">
-  <img width=500
-       src="/img/memes/htmxanddjango.png"
-       alt="A monkey labeled 'HTMX' protecting a cute dog named 'Django' from 'all that compilated JS noise'"
-      >
-</div>
+브라우저는 HTML을 렌더링하므로 htmx와 작업할 때 컴파일러나 트랜스파일러가 필요하지 않습니다. 
+많은 htmx 사용자들이 JSX로 API 응답을 렌더링하지만, 
+htmx는 [고전적인](https://jinja.palletsprojects.com) [템플릿](https://ejs.co/) [엔진](https://docs.ruby-lang.org/en/2.3.0/ERB.html)과도 매우 잘 작동하며, 
+이를 통해 [원하는 언어와 함께 사용할 수 있습니다](@/essays/hypermedia-on-whatever-youd-like.md). Django와 Rails에 대해 뭐라고 하든 간에, 
+그들은 2008년에 중요했고 오늘날에도 여전히 중요합니다—htmx는 이 둘과도 원활하게 통합됩니다. 이는 htmx 기반 개발의 반복적인 주제입니다: 
+htmx는 오래된 개발 도구와 새로운 개발 도구 모두와 잘 작동합니다. 왜냐하면 이 모든 도구의 공통 분모는 HTML이며, htmx는 HTML을 작성하기 위한 도구이기 때문입니다.
 
-Pushing the user to define the behavior of their application primarily in HTML, rather than JS, has too many advantages to cover in this essay, so I'll stick to the one people hate most about JavaScript fameworks: churn. Depending on when you wrote your React application, you might have written your form with [controlled class components](https://legacy.reactjs.org/docs/forms.html), or [react hooks](https://blog.logrocket.com/react-hook-form-complete-guide/), or this [experimental `<form>` extension](https://react.dev/reference/react-dom/components/form). This is genuinely maddening, especially if you—like me—first learned how to make a web form with class components.
+중요한 점은, htmx는 웹의 의미론에서 훨씬 덜 벗어난 프레임워크라는 점입니다. 
+JavaScript 프레임워크와는 달리, htmx는 웹의 [뛰어난 하위 호환성 보장]으로 사용자로부터 추가 작업 없이 이점이 계속 유지됩니다. 
+오래 지속되는 웹사이트를 만들고자 한다면, 이러한 특성들은 htmx를 많은 동시대 프레임워크보다 훨씬 더 나은 선택으로 만듭니다.
 
-No matter when you wrote your htmx application, however, the behavior of an htmx form has always been defined in largely the same way a regular HTML form is: with `<form>`. With htmx adding additional network functionality, you can finally use `PUT` requests and control where the response goes, but in all other respects—validation, inputs, labels, autocomplete—you have default `<form>` element behavior.
+*NOTE: 이 분석에 동의하며 논리적 결함을 찾지 못했음에도 불구하고, Carson은 htmx가 라이브러리라는 주장에 여전히 고집하고 있습니다.*
 
-Finally, because htmx simply extends HTML in a very narrow domain (network requests and DOM replacements), most of the "htmx" you write is just plain old HTML. When you have access to complex state management mechanisms, it's incredibly easy to implement a custom collapsible div; when you don't, you might stop long enough to search up the [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) element. Whenever a problem can be solved by native HTML elements, the longevity of the code improves tremendously as a result. This is a much less alienating way to learn web development, because the bulk of your knowledge will remain relevant as long as HTML does.
-
-In this respect, htmx is much more like JQuery than React (htmx's predecessor, [intercooler.js](https://intercoolerjs.org/), was a JQuery extension), but it improves on JQuery by using a declarative, HTML-based interface: where JQuery made you go to the `<script>` tag to specify AJAX behavior, htmx requires only a simple `hx-post` attribute.
-
-In short, while htmx can be used as a framework, it's a framework that [deviates far less from the web's semantics](https://unplannedobsolescence.com/blog/custom-html-has-levels) than the JavaScript frameworks do, and will benefit from improvements in those semantics with no additional work from the user, thanks to the web's [excellent backwards compatibility guarantees](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/The_web_and_web_standards#dont_break_the_web). If you want to build a website that lasts for a long time, these qualities make htmx a substantially better bet than many of its contemporaries.
-
-*NOTE: Despite agreeing with this analysis, finding no logical flaws in the essay, and allowing me to publish it on his website, Carson continues to insist that htmx is a library.*
-
-<div style="text-align:center; width:100%">
-  <img width=500
-       src="/img/memes/istudiedhtml.png"
-       alt="A man holding a sword. He says: 'When you wrote class components, I studied HTML. When you were converting classes to hooks, I mastered the HTML. While you wasted time moving all your client-side logic to server components, I cultivated inner HTML. And now that the browser won't hydrate your thick client JSON API you have the audactiy to come to me for help?'"
-      >
-</div>
 
