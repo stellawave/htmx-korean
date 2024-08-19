@@ -6,157 +6,136 @@ author = ["Carson Gross"]
 tag = ["posts"]
 +++
 
-> The one big remaining (advantage of MPAs) is (server side programming) language choice. If you're already part of the 
-> anti-JavaScript resistance, then nothing I say in the rest of this talk is going to matter that much. 
-> 
-> But, I'm going to get into this later: that ship might have sailed...
-> 
-> Rich Harris - [Have SPA's Ruined The Web?](https://youtubetranscript.com/?v=860d8usGC0o&t=440)
+> MPA의 (남아 있는) 큰 장점 중 하나는 (서버 사이드 프로그래밍) 언어 선택입니다. 만약 이미 반(反) 자바스크립트 저항군의 일원이라면, 이 발표의 나머지 내용은 별로 중요하지 않을 겁니다.
+>
+> 하지만, 이 부분은 나중에 다룰 건데, 그 배는 이미 떠난 것일 수도 있습니다...
+>
+> Rich Harris - [SPAs가 웹을 망쳤는가?](https://youtubetranscript.com/?v=860d8usGC0o&t=440)
 
-A concept we like to talk about is "The HOWL Stack".  HOWL stands for _Hypermedia On Whatever you'd Like_.
+우리가 자주 이야기하는 개념 중 하나는 "HOWL 스택"입니다. HOWL은 _Hypermedia On Whatever you'd Like_의 약자입니다.
 
-This is a joke-but-not-really [software stack](https://en.wikipedia.org/wiki/Solution_stack), and a reference to more
-well known stacks like [The LAMP Stack](https://en.wikipedia.org/wiki/LAMP_%28software_bundle%29)
-or [The MEAN Stack](https://en.wikipedia.org/wiki/MEAN_(solution_stack)).
+이는 농담 같지만 결코 농담이 아닌 [소프트웨어 스택](https://en.wikipedia.org/wiki/Solution_stack)을 의미하며, 
+잘 알려진 [LAMP 스택](https://en.wikipedia.org/wiki/LAMP_%28software_bundle%29)이나 [MEAN 스택](https://en.wikipedia.org/wiki/MEAN_(solution_stack))을 참조한 것입니다.
 
-The TLDR of The HOWL Stack is this: when you use a [hypermedia-driven approach](/essays/hypermedia-driven-applications) 
-for your web application, you free yourself up to choose _whatever_ server-side technology best fits your problem and 
-your own technical tastes.
+HOWL 스택의 요점은 다음과 같습니다: [하이퍼미디어 기반 접근 방식](/essays/hypermedia-driven-applications)을 웹 애플리케이션에 사용할 때, 
+문제 해결과 자신의 기술적 취향에 가장 적합한 서버 사이드 기술을 _무엇이든_ 자유롭게 선택할 수 있다는 것입니다.
 
-## Feeling The JavaScript Pressure
+## 자바스크립트 압박감
 
-If you decide to use an SPA framework for your web application you will, naturally, have a large front-end codebase 
-that is written in JavaScript. 
+웹 애플리케이션에 SPA 프레임워크를 사용하기로 결정하면, 자연스럽게 큰 프론트엔드 코드베이스가 자바스크립트로 작성될 것입니다.
 
-Given that, the following question inevitably will come up:
+이 상황에서 다음과 같은 질문이 필연적으로 떠오를 것입니다:
 
-> "Well, why aren't we doing the back-end in JavaScript too?"  
+> "그렇다면, 왜 백엔드도 자바스크립트로 하지 않죠?"
 
-This is a reasonable question to ask and there are a lot of advantages to adopting the same programming language on both
-sides of the wire:
+이 질문은 합리적이며, 양측에서 동일한 프로그래밍 언어를 채택하는 데에는 여러 가지 장점이 있습니다:
 
-* You can share application logic between the two code-bases.  A good example here is validation logic.
-* You can share data structures between the two code-bases. 
-* You can build up expertise in a single language, JavaScript, making it easier for developers to work in various parts 
-  of your application.
-* You can reuse the build system & dependency management knowledge you've acquired for the front end
+* 두 코드베이스 간의 애플리케이션 로직을 공유할 수 있습니다. 예를 들어, 유효성 검사 로직을 공유할 수 있습니다.
+* 두 코드베이스 간의 데이터 구조를 공유할 수 있습니다.
+* 하나의 언어인 자바스크립트에 대한 전문 지식을 쌓아 개발자들이 애플리케이션의 다양한 부분에서 더 쉽게 작업할 수 있습니다.
+* 프론트엔드에서 습득한 빌드 시스템 및 의존성 관리 지식을 재사용할 수 있습니다.
 
-This _pressure_ to adopt JavaScript will only grow as your investment in the JavaScript front end ecosystem grows.
+프론트엔드 자바스크립트 생태계에 대한 투자가 커질수록 이러한 _자바스크립트 압박감_은 점점 더 커질 것입니다.
 
-Furthermore, JavaScript has improved dramatically in the last five years and there are now multiple excellent
-server-side runtimes for executing it.  Many of the older arguments about the messiness of the language can be
-waved off as preventable via linting, developer discipline, and so forth.  
+게다가, 자바스크립트는 지난 5년 동안 크게 개선되었으며, 이제는 자바스크립트를 실행할 수 있는 여러 훌륭한 서버 사이드 런타임도 존재합니다. 
+언어의 복잡성에 대한 이전의 비판은 이제 린팅, 개발자의 규율 등을 통해 예방할 수 있다고 할 수 있습니다.
 
-JavaScript is the dominant language among the web development thought leaders and there are massive numbers of tutorials,
-code camps, etc. that strongly emphasize the language.  Nothing succeeds like success, and JavaScript (as well as React)
-have succeeded.
+자바스크립트는 웹 개발의 사상 리더들 사이에서 지배적인 언어이며, 수많은 튜토리얼, 코드 캠프 등이 이 언어를 강력하게 강조하고 있습니다. 
+성공이 성공을 부른다고, 자바스크립트(와 React)는 성공을 거두었습니다.
 
-Let's call the result of this _The JavaScript Pressure_ and acknowledge that nearly every developer working with the 
-web feels it at least to some extent.
+이러한 결과를 _자바스크립트 압박감_이라고 부르며, 거의 모든 웹 개발자가 어느 정도는 이 압박감을 느낀다고 인정해야 합니다.
 
-## Hypermedia: Our Only Hope
+## 하이퍼미디어: 우리의 유일한 희망
 
-What hope do non-JavaScript developers have in web development?
+자바스크립트가 아닌 개발자들이 웹 개발에서 어떤 희망을 가질 수 있을까요?
 
-Well, there is one older technology sitting there in the browser alongside JavaScript: _hypermedia_.  
+음, 자바스크립트와 나란히 브라우저에 있는 하나의 오래된 기술이 있습니다: _하이퍼미디어_입니다.
 
-Browsers offer excellent HTML support (and the related Document Object Model, or DOM).  In fact, even if you are using an 
-SPA framework, you will be working with that hypermedia infrastructure in some form (via JSX templates, for example) if 
-only to create UIs that a browser can understand.
+브라우저는 훌륭한 HTML 지원을 제공합니다(관련 문서 객체 모델, 또는 DOM도 포함). 
+사실, SPA 프레임워크를 사용하는 경우에도, JSX 템플릿을 통해 브라우저가 이해할 수 있는 UI를 생성하기 위해 어떤 형태로든 하이퍼미디어 인프라를 사용하게 될 것입니다.
 
-So you are going to be using HTML or the related DOM APIs in some manner in your web application.
+따라서 웹 애플리케이션에서 HTML 또는 관련 DOM API를 어떤 방식으로든 사용하게 될 것입니다.
 
-Well, what if we made HTML a more powerful hypermedia?  
+그렇다면 HTML을 더 강력한 하이퍼미디어로 만들면 어떨까요?
 
-That's the idea of [htmx](/), which makes it possible to implement [common modern web application patterns](/examples) 
-using the hypermedia approach.  This closes the UX gap between traditional MPAs and SPAs, making taking the hypermedia
-route feasible for a much larger set of web applications.
+이것이 바로 [htmx](/)의 아이디어로, [현대 웹 애플리케이션 패턴](/examples)을 하이퍼미디어 접근 방식을 사용하여 구현할 수 있게 해줍니다. 
+이를 통해 전통적인 MPA와 SPA 간의 UX 격차가 좁아지면서, 하이퍼미디어 경로를 선택하는 것이 더 넓은 범위의 웹 애플리케이션에 대해 현실적으로 가능해집니다.
 
-Once you adopt this hypermedia approach (and remember, you are going to be using hypermedia infrastructure _anyway_,
-so why not leverage it as much as possible?) a surprising side effect occurs:
+하이퍼미디어 접근 방식을 채택하면(기억하세요, 어쨌든 하이퍼미디어 인프라를 사용하게 될 것이므로 가능한 한 최대한 활용하는 것이 좋습니다), 놀라운 부작용이 발생합니다:
 
-Suddenly, the advantage of server-side language choice that Harris attributed to MPAs is _back on the table_.
+Harris가 MPA에 귀속시켰던 서버 사이드 언어 선택의 이점이 _다시 테이블 위로 올라오게 됩니다_.
 
-If your application's front end is mainly written in terms of HTML, maybe with a bit of client-side scripting,
-and with no large JavaScript code-base, you've suddenly dramatically diminished (or entirely eliminated) The JavaScript 
-Pressure on the back end.
+애플리케이션의 프론트엔드가 주로 HTML로 작성되고, 약간의 클라이언트 사이드 스크립팅이 포함되며, 대규모 자바스크립트 코드베이스가 없는 경우, 
+백엔드에서 자바스크립트 압박감을 극적으로 줄이거나 완전히 제거하게 됩니다.
 
-You can now make your server-side language (and framework) choice based on other considerations: technical, aesthetic or
-otherwise:
+이제 서버 사이드 언어(및 프레임워크)를 선택할 때 기술적, 미학적 또는 기타 고려 사항을 기반으로 선택할 수 있습니다:
 
-* Perhaps you are working in AI and want to use a Lisp variant for your project
-* Perhaps you are working in big data and want to use Python
-* Perhaps you know Django really well and love the batteries-included approach it takes
-* Perhaps you prefer Flask and the stripped-down approach it takes
-* Perhaps you like the raw, close-to-the-HTML feel of PHP 
-* Perhaps you have an existing Java codebase that needs some sprucing up
-* Perhaps you are learning Cobol, [and want to use htmx to make a nice front end for it](https://twitter.com/htmx_org/status/1656381761188954113).
-* Perhaps you just really like Rust, Ocaml, Kotlin, Haskell, .NET, Clojure, Ada, ColdFusion, Ruby... whatever!
+* AI 작업을 하고 있다면, 프로젝트에 Lisp 변형을 사용하고 싶을 수도 있습니다.
+* 빅데이터 작업을 하고 있다면, Python을 사용하고 싶을 수도 있습니다.
+* Django를 잘 알고 있으며, 풀 배터리 포함 접근 방식을 좋아할 수도 있습니다.
+* Flask의 간결한 접근 방식을 선호할 수도 있습니다.
+* HTML에 가까운 느낌의 PHP를 좋아할 수도 있습니다.
+* 기존의 Java 코드베이스가 필요하고 그것을 개선하고 싶을 수도 있습니다.
+* Cobol을 배우고 있으며, [htmx를 사용해 멋진 프론트엔드를 만들고 싶을 수도 있습니다](https://twitter.com/htmx_org/status/1656381761188954113).
+* Rust, Ocaml, Kotlin, Haskell, .NET, Clojure, Ada, ColdFusion, Ruby 등을 정말 좋아할 수도 있습니다.
 
-These are all perfectly reasonable technical, philosophical and aesthetic perspectives.
+이러한 것들은 모두 완전히 합리적인 기술적, 철학적, 미학적 관점입니다.
 
-And, by adopting hypermedia as your primary front-end technology, you pursue any of these goals without a bicameral 
-code-base. Hypermedia doesn't care what you use to produce it: you can use hypermedia on whatever you'd like.
+그리고 하이퍼미디어를 주된 프론트엔드 기술로 채택하면, 이 목표들을 이중 코드베이스 없이 추구할 수 있습니다. 
+하이퍼미디어는 무엇을 사용하든지 신경 쓰지 않습니다: 무엇이든 사용하여 하이퍼미디어를 사용할 수 있습니다.
 
-## An Open Web for Everyone
+## 모두를 위한 열린 웹
 
-And when we say "whatever", we really mean it.
+그리고 우리가 "무엇이든"이라고 말할 때, 우리는 정말로 그것을 의미합니다.
 
-Here is a screenshot of the [htmx discord](/discord)'s HOWL subsection recently.  Note that these are just the channels
-that happen to have active traffic, there are many more.
+아래는 최근 [htmx 디스코드 서버](/discord)의 HOWL 하위 섹션 스크린샷입니다. 여기에는 활성화된 채널들만 나와 있지만, 더 많은 채널이 존재합니다.
 
 <div style="text-align: center; padding: 16px">
 <img src="/img/howl-channels.png">
 </div>
 
-You can see we have ongoing conversations in a bunch of different programming languages and frameworks: Java, Go, .NET, 
-Rust, Clojure, PHP, Ruby, Python, Ocaml.  We even have some folks talking about using htmx with Bash and Cobol!
+여기서 우리는 다양한 프로그래밍 언어와 프레임워크에서 진행 중인 대화를 볼 수 있습니다: Java, Go, .NET, Rust, Clojure, PHP, Ruby, Python, Ocaml. 
+심지어 htmx를 Bash와 Cobol과 함께 사용하는 것에 대해 이야기하는 사람들도 있습니다!
 
-This is exactly the future that we want to see: a rich and vibrant Web in which _every_ back-end language and framework
-can play as an equal & interesting alternative. Each language and framework has their own unique strengths & cultures and
-each can contribute to the magical [hypermedia system](https://hypermedia.systems) that is The Web.
+이것이 바로 우리가 보고 싶은 미래입니다: 모든 백엔드 언어와 프레임워크가 동등하고 흥미로운 대안으로 활약하는 풍부하고 활기찬 웹입니다. 
+각 언어와 프레임워크는 고유한 강점과 문화를 가지고 있으며, 그들은 모두 웹이라는 마법 같은 [하이퍼미디어 시스템](https://hypermedia.systems)에 기여할 수 있습니다.
 
-## But, Is it An *Anti*-JavaScript Resistance?
+## 그러나, 이것이 *반(反)-자바스크립트* 저항인가요?
 
-Before we finish this essay, we do want to address the idea that the resistance to JavaScript *everywhere* is necessarily
-*Anti*-JavaScript.
+이 에세이를 마무리하기 전에, 자바스크립트를 *어디에나* 사용하는 것에 대한 저항이 꼭 *반(反)-자바스크립트*인지는 짚고 넘어가고 싶습니다.
 
-Now, admittedly, we have laughed at our fair share of [jokes about JavaScript](/img/js-the-good-parts.jpeg), and we have 
-gone so far as to create an alternative scripting language for the web, [hyperscript](https://hyperscript.org).  
+솔직히 말해서, 우리는 [자바스크립트에 대한 농담](/img/js-the-good-parts.jpeg)을 많이 웃어 넘겼고, 심지어 웹을 위한 대안 스크립팅 언어인 
+[hyperscript](https://hyperscript.org)를 만들기까지 했습니다.
 
-So it might seem like we should be card-carrying anti-javascriptites.  
+그래서 우리는 자바스크립트를 반대하는 진영에 속한 것처럼 보일지도 모릅니다.
 
-But, to the contrary, we are deeply appreciative of JavaScript.
+하지만, 반대로 우리는 자바스크립트를 깊이 감사하고 있습니다.
 
-After all, both htmx and hyperscript are _built in JavaScript_.  We couldn't have created these libraries without
-JavaScript, which, whatever else one might say, has the great virtue of [_being there_](https://en.wikipedia.org/wiki/Being_There).
+결국, htmx와 hyperscript 모두 _자바스크립트로 구축_되었습니다. 우리는 자바스크립트 없이는 이 라이브러리를 만들 수 없었을 것입니다. 
+자바스크립트는, 무엇이든 말할 수 있겠지만, [_그 자리에 있었다는 것_](https://en.wikipedia.org/wiki/Being_There)이라는 큰 미덕을 가지고 있습니다.
 
-And we even go so far as to _recommend using_ JavaScript for front-end scripting needs in a hypermedia-driven 
-application, so long as you script in a [hypermedia-friendly](/essays/hypermedia-friendly-scripting/) way.
+그리고 우리는 하이퍼미디어 기반 애플리케이션에서 자바스크립트를 프론트엔드 스크립팅에 _사용할 것을 추천_하기까지 합니다. 
+단, [하이퍼미디어 친화적인 방식](/essays/hypermedia-friendly-scripting/)으로 스크립트를 작성해야 합니다.
 
-Further, we wouldn't steer someone away from using JavaScript (or TypeScript) on the _server side_ for a 
-hypermedia-driven application, if that language is the best option for your team.  As we said earlier, JavaScript now 
-has multiple excellent server-side runtimes and many excellent server-side libraries available.  
+또한, 하이퍼미디어 기반 애플리케이션의 _서버 사이드_에서 자바스크립트(또는 타입스크립트)를 사용하는 것을 말리지는 않을 것입니다. 
+자바스크립트는 이제 여러 훌륭한 서버 사이드 런타임과 많은 훌륭한 서버 사이드 라이브러리를 갖추고 있습니다.
 
-It might be the best option for you and your team, and there is no reason not to use it in that case.
+자바스크립트가 당신과 당신의 팀에게 가장 좋은 선택일 수 있으며, 그런 경우에는 사용할 이유가 전혀 없습니다.
 
-Hypermedia On Whatever you'd Like means just that: whatever you'd like.
+Hypermedia On Whatever you'd Like란 정말로 '원하는 대로'라는 의미입니다.
 
-But JavaScript is not, and it should not be, the *only* server-side option for your team.
+하지만 자바스크립트가 당신의 팀을 위한 *유일한* 서버 사이드 옵션이 되어서는 안 됩니다.
 
-## Turning The Ship Around
+## 방향을 전환하기
 
-With the resurgence of interest in (and improvements of) hypermedia, an open and diverse future for The Web is now a
-real possibility, if not an emerging reality.
+하이퍼미디어에 대한 관심이 다시 일어나고 (그리고 하이퍼미디어가 개선되면서), 웹의 열린 다양성 있는 미래는 이제 현실 가능성, 아니면 이미 현실이 되어가고 있습니다.
 
-The Web was designed to be an open, polyglot & participative hypermedia system.  
+웹은 원래 개방적이고, 다언어적이며 참여적인 하이퍼미디어 시스템으로 설계되었습니다.
 
-And the ship _hasn't sailed_ on that dream, at least not yet!  
+그리고 그 꿈이 _완전히 사라진_ 것은 아닙니다, 적어도 아직은 아닙니다!
 
-We can keep that dream alive by re-learning and re-embracing the foundational technology of the web: hypermedia.
+우리는 웹의 기초 기술인 하이퍼미디어를 다시 배우고 받아들임으로써 그 꿈을 계속 이어갈 수 있습니다.
 
-> I hate that the htmx community has devolved into builders helping each other without regard for likes, engaging
-> those who don't follow the hype, expanding sound bytes into nuance. It may not score cheap social media points, but
-> it's healthy. The web used to be worse than this.
+> htmx 커뮤니티가 좋아요 수에 신경 쓰지 않고 서로 돕는 빌더들로 변질된 것이 싫습니다. 하이프에 따르지 않는 사람들과 교류하고, 간단한 문구를 풍부한 의미로 확장하고 있습니다. 이것은 싸구려 소셜 미디어 포인트를 얻지는 못하지만, 건강한 것입니다. 웹은 예전보다 나아졌습니다.
 >
 > [@teej_dv](https://twitter.com/teej_dv/status/1655668643840098304)

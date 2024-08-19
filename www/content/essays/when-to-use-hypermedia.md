@@ -7,208 +7,174 @@ author = ["Carson Gross"]
 tag = ["posts"]
 +++
 
-> The trade-off, though, is that a uniform interface degrades efficiency, since information is transferred in a 
-> standardized form rather than one which is specific to an application's needs. The REST interface is designed to be 
-> efficient for large-grain hypermedia data transfer, optimizing for the common case of the Web, but resulting in an
-> interface that is not optimal for other forms of architectural interaction.
+> 그러나, 균일한 인터페이스는 정보가 애플리케이션의 특정 요구에 맞춘 형태가 아니라 표준화된 형태로 전송되기 때문에 효율성을 저하시킨다. REST 인터페이스는 대규모 하이퍼미디어 데이터 전송에 효율적이도록 설계되어 웹의 일반적인 경우에 최적화되었지만, 다른 형태의 아키텍처 상호작용에는 최적이 아닌 인터페이스를 초래한다.
 
 _-Roy Fielding, <https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_5>_
 
-We are obviously fans of hypermedia and think that it can address, at least in part, many of the problems that the web 
-development world is facing today:
+우리는 하이퍼미디어의 팬이며, 하이퍼미디어가 오늘날 웹 개발 세계가 직면한 많은 문제들을 해결할 수 있다고 생각합니다. 적어도 일부는 해결할 수 있습니다.
 
-* Hypermedia is often [significantly less complex](@/essays/a-real-world-react-to-htmx-port.md) than an SPA approach would 
-  be for many problems
-* Hypermedia allows your application API to be [much more aggressively refactored and optimized](@/essays/hateoas.md)
-* Hypermedia takes pressure off adopting a particular server technology, since you do not have an extensive JavaScript
-  front-end code base
+* 하이퍼미디어는 많은 문제에 대해 SPA 접근 방식보다 [상당히 덜 복잡합니다](@/essays/a-real-world-react-to-htmx-port.md).
+* 하이퍼미디어는 애플리케이션 API를 [훨씬 더 공격적으로 리팩터링하고 최적화할 수 있게 합니다](@/essays/hateoas.md).
+* 하이퍼미디어는 광범위한 자바스크립트 프론트엔드 코드 베이스가 필요하지 않기 때문에 특정 서버 기술을 채택하는 압박을 줄여줍니다.
 
-With [htmx](@/_index.md) and the additional UX possibilities that it gives you, we believe that many modern web applications can be built 
-using HTML and the hypermedia paradigm.
+[htmx](@/_index.md)와 그것이 제공하는 추가적인 사용자 경험(UX) 가능성을 통해, 많은 현대적인 웹 애플리케이션이 HTML과 하이퍼미디어 패러다임을 사용하여 구축될 수 있다고 믿습니다.
 
-With that being said, as with all technical choices, there are tradeoffs associated with hypermedia.  In this article
-we will give you some ways to think about if hypermedia will be a good fit for an application or feature you are building.
+그럼에도 불구하고, 모든 기술 선택에는 트레이드오프가 존재합니다. 
+이 글에서는 하이퍼미디어가 여러분이 구축 중인 애플리케이션이나 기능에 적합할지에 대해 생각해볼 수 있는 몇 가지 방법을 제시하겠습니다.
 
-## Transitional Applications & Hypermedia
+## 전환형 애플리케이션과 하이퍼미디어
 
-Before we get into the details of when hypermedia is a good choice, we'd like to clarify that adopting hypermedia is not
-an [either/or](https://en.wikipedia.org/wiki/Either/Or) decision when building a web application.  Even the most Single-y
-of Single Page Applications utilizes hypermedia after all: as a bootstrap mechanism, to start the application.
+하이퍼미디어가 좋은 선택인지에 대한 자세한 내용을 살펴보기 전에, 하이퍼미디어를 채택하는 것이 웹 애플리케이션을 구축할 때 
+[이것 아니면 저것](https://en.wikipedia.org/wiki/Either/Or) 식의 결정이 아니라는 점을 분명히 하고 싶습니다. 
+결국, 가장 단일한 SPA조차도 애플리케이션을 시작하는 부트스트랩 메커니즘으로 하이퍼미디어를 사용합니다.
 
-In his talk, [Have SPAs Ruined The Web](https://www.youtube.com/watch?v=860d8usGC0o), Rich Harris gives us the term
-"Transitional" Applications, that is applications that _mix_ both hypermedia and non-hypermedia (SPA) concepts.  We
-have responded to Mr. Harris' talk [in more detail here](@/essays/a-response-to-rich-harris.md), but suffice to say we 
-violently agree with him that a pragmatic "Transitional" approach to web development is best: you should use the
-right tool for the particular job you are working on.
+[Have SPAs Ruined The Web](https://www.youtube.com/watch?v=860d8usGC0o)에서 Rich Harris는 하이퍼미디어와 비하이퍼미디어(SPA) 개념을 모두 혼합한 애플리케이션을 
+"전환형" 애플리케이션이라는 용어로 설명합니다. 
+우리는 [그의 토크에 대한 자세한 반응을 여기에서 제공했습니다](@/essays/a-response-to-rich-harris.md), 하지만 실용적인 "전환형" 접근 방식이 웹 개발에 가장 좋다는 것에 그와 완전히 동의합니다: 
+여러분은 작업 중인 특정 작업에 적합한 도구를 사용해야 합니다.
 
-Where we would likely disagree with Mr. Harris is where "the line" is between features that can be implemented
-effectively in hypermedia and features that require a more sophisticated client-side approach.  We feel that, with htmx,
-hypermedia can go much, much further than many web developers today believe is possible.  And, further, that, for many
-applications, it can address many or all of their UX needs.
+우리가 Rich Harris와 아마도 의견이 다를 수 있는 부분은 하이퍼미디어로 효과적으로 구현할 수 있는 기능과 더 정교한 클라이언트 측 접근 방식을 필요로 하는 기능 사이의 "경계선"입니다. 
+우리는 htmx를 통해 하이퍼미디어가 오늘날 많은 웹 개발자가 믿는 것보다 훨씬 더 많은 것을 할 수 있다고 생각합니다. 그리고 많은 애플리케이션의 경우, 그것이 모든 UX 요구 사항을 해결할 수 있다고 생각합니다.
 
-## Hypermedia: A Good Fit If...
+## 하이퍼미디어: 적합한 경우는...
 
-### _...If your UI is mostly text & images_
+### _...만약 여러분의 UI가 주로 텍스트와 이미지로 구성되어 있다면_
 
-In [The Mother Of All htmx Demos](@/essays/a-real-world-react-to-htmx-port.md), David Guillot of Contexte shows how replacing
-React with htmx lead to a 67% reduction in the total codebase, along with numerous other eye-popping results.  
+[The Mother Of All htmx Demos](@/essays/a-real-world-react-to-htmx-port.md)에서 Contexte의 David Guillot은 React를 htmx로 대체함으로써 
+전체 코드베이스가 67% 감소하는 등 여러 놀라운 결과를 얻었다고 보여줍니다.
 
-As much as we would like to claim that every team moving from React to htmx would experience these results, the fact is that the
-Contexte web application is *extremely amenable* to the hypermedia style.
+우리가 모든 팀이 React에서 htmx로 전환하면 이러한 결과를 경험할 것이라고 주장하고 싶지만, 사실 Contexte 웹 애플리케이션은 하이퍼미디어 스타일에 *매우 적합*합니다.
 
-What makes Contexte so perfect for hypermedia is that it is a media-oriented web application, showing articles consisting
-of text and images for reading.  It has a sophisticated filtering mechanism and other niceties, but the crux of the
-application is displaying and categorizing articles.  This is exactly the sort of thing that hypermedia was designed to
-do, and this is why htmx and hypermedia worked so well for their application.
+Contexte가 하이퍼미디어에 완벽하게 맞는 이유는 미디어 지향 웹 애플리케이션으로서, 텍스트와 이미지로 구성된 기사를 표시하여 읽을 수 있도록 하는 것입니다. 
+이 애플리케이션은 복잡한 필터링 메커니즘과 다른 편의 기능을 제공하지만, 애플리케이션의 핵심은 기사를 표시하고 분류하는 것입니다. 
+이것이 바로 하이퍼미디어가 설계된 목적이며, htmx와 하이퍼미디어가 그들의 애플리케이션에 잘 맞는 이유입니다.
 
-### _...If your UI is CRUD-y_
+### _...만약 여러분의 UI가 CRUD에 기반해 있다면_
 
-Another area where hypermedia has a long track-record of success is [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)-y
-web applications, in the [Ruby on Rails](https://rubyonrails.org/) style.  If your main application mechanic is showing
-forms and saving the forms into a database, hypermedia can work very well.  
+또 다른 하이퍼미디어가 오랜 성공 기록을 가지고 있는 영역은 [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) 기반의 웹 애플리케이션, 
+특히 [Ruby on Rails](https://rubyonrails.org/) 스타일입니다. 애플리케이션의 주요 메커니즘이 양식을 보여주고 해당 양식을 데이터베이스에 저장하는 것이라면, 
+하이퍼미디어는 매우 잘 작동할 수 있습니다.
 
-And, with htmx, it can also be [very smooth](@/examples/click-to-edit.md), and not just constrained
-to the simple [list view/detail view](@/examples/edit-row.md) approach many server side applications take.
+그리고 htmx를 사용하면 단순한 [목록 보기/상세 보기](@/examples/edit-row.md) 접근 방식에 국한되지 않고 [매우 부드러운 사용자 경험](@/examples/click-to-edit.md)을 제공할 수 있습니다.
 
-### _...If your UI is "nested", with updates mostly taking place within well-defined blocks_
+### _...만약 여러분의 UI가 "중첩된" 구조를 가지고 있으며, 업데이트가 주로 잘 정의된 블록 내에서 발생하는 경우_
 
-One area where hypermedia can start to go a little wobbly is when you have UI dependencies that span structural
-areas of the screen.  A good example of this, and one that often comes up when discussing the hypermedia approach, is the issue
-count number shown on the ["Issues" tab](https://github.com/bigskysoftware/htmx/issues) in GitHub.  For a long time, 
-when you closed an issue on GitHub, the issue count on the tab did not update properly.  GitHub, in general (although
- not exclusively), uses a hypermedia-style application.
+하이퍼미디어가 조금 불안정해질 수 있는 영역 중 하나는 화면의 구조적 영역에 걸쳐 있는 UI 종속성이 있을 때입니다. 
+이와 관련된 좋은 예는 GitHub의 ["Issues" 탭](https://github.com/bigskysoftware/htmx/issues)에서 보여지는 이슈 수입니다. 
+오랫동안 GitHub에서 이슈를 닫으면 탭의 이슈 수가 제대로 업데이트되지 않았습니다. 일반적으로 GitHub는 (완전히는 아니지만) 하이퍼미디어 스타일의 애플리케이션을 사용합니다.
 
-"Ah ha!", exclaims the SPA enthusiast, "See, even GitHub can't get this right!"
+"아하!" SPA 애호가는 외치며 말합니다, "GitHub조차도 이것을 제대로 하지 못하고 있군요!"
 
-Well, GitHub has fixed the issue, but it does demonstrate a problem with the hypermedia approach: how do you update
-disjoint parts of the UI cleanly?  htmx offers [a few techniques for making this work](@/examples/update-other-content.md),
-and Contexte, in their talk, discuss handling this situation very cleanly, using the event approach.
+GitHub가 이 문제를 수정했지만, 이것은 하이퍼미디어 접근 방식의 문제를 보여줍니다: 
+UI의 분리된 부분을 어떻게 깔끔하게 업데이트할 수 있을까요? 
+htmx는 [이 작업을 수행하기 위한 몇 가지 기술](https://htmx.pinstella.com/examples/update-other-content/)을 제공하며, 
+Contexte는 그들의 발표에서 이벤트 접근 방식을 사용하여 이 상황을 매우 깔끔하게 처리하는 방법을 설명합니다.
 
-But, let us grant that this is an area where the hypermedia approach can get into trouble.  To avoid this problem, one
-potential strategy is to colocate dependent elements for a given resource within a given region or area on the screen in an
-application.  
+하지만, 하이퍼미디어 접근 방식이 문제가 될 수 있는 영역이라는 것을 인정합시다. 
+이 문제를 피하기 위한 잠재적 전략은 애플리케이션 화면에서 특정 리소스에 대한 종속 요소를 동일한 영역 또는 구역 내에 배치하는 것입니다.
 
-As an example, consider a contact application whose detail screen for displaying and editing a contact has:
+예를 들어, 연락처 애플리케이션에서 연락처를 표시하고 편집하는 세부 화면이 있다고 가정해 보겠습니다:
 
-* An area for basic contact information
-* An area for the contact's emails, and the count of those emails
-* An area for the contact's phone numbers, and the count of those phone numbers
+* 기본 연락처 정보를 위한 영역
+* 연락처의 이메일과 그 수를 위한 영역
+* 연락처의 전화번호와 그 수를 위한 영역
 
-This UI could be laid out in the following manner:
+이 UI는 다음과 같은 방식으로 레이아웃될 수 있습니다:
 
-![Nested Example](/img/nesting-example.png)
+![중첩 예시](/img/nesting-example.png)
 
-In this scenario, each subsection can have its own dedicated hypermedia end-points:
+이 시나리오에서는 각 하위 섹션에 자체 하이퍼미디어 엔드포인트를 할당할 수 있습니다:
 
-* `/contacts/<id>/details` for the first name/last name/ etc. info
-* `/contacts/<id>/emails` for the email section
-* `/contacts/<id>/phonenumbers` for the phone numbers section
+* `/contacts/<id>/details` 기본 정보(이름, 성 등)를 위한 엔드포인트
+* `/contacts/<id>/emails` 이메일 섹션을 위한 엔드포인트
+* `/contacts/<id>/phonenumbers` 전화번호 섹션을 위한 엔드포인트
 
-The trick here is that the email and phone counts are co-located on the screen with their collections, which allows you to 
-[target](@/attributes/hx-target.md) just that particular area for update when a modification is made to the respective 
-collections.  All the data dependencies are co-located within a single area that can be updated via a single, simple
-and obvious target, and that, further, don't interfere with one another when they are replaced.
+여기서 중요한 점은 이메일과 전화번호의 수가 각각의 컬렉션과 함께 화면에 공존한다는 것입니다. 
+이는 해당 컬렉션이 수정될 때 그 특정 영역만 업데이트하도록 [대상 지정](https://htmx.pinstella.com/attributes/hx-target/)할 수 있게 해줍니다. 
+모든 데이터 종속성은 단일 영역 내에 배치되어 단일하고 명확한 타겟을 통해 업데이트할 수 있으며, 교체될 때 서로 간섭하지 않습니다.
 
-Each area effectively forms a sort of server-side component, independent of the other areas on the screen, and they are
-all nested within a broader contact detail user interface.
+각 영역은 화면의 다른 영역과 독립적인 서버 측 구성 요소로 작동하며, 모두 넓은 연락처 세부 정보 UI 내에 중첩되어 있습니다.
 
-#### A Side Node: UI Driven Hypermedia APIs
+#### 사이드 노트: UI 기반 하이퍼미디어 API
 
-Note that our hypermedia API (i.e. our end-points) in this case is _driven by the UI_: we have a particular UI layout 
-that we want to achieve, and we adapt our API to that.  If the UI changed, we would have no qualms with completely changing
-our API to satisfy the new requirements.  This is a [unique aspect](@/essays/hateoas.md) of developing with
-hypermedia, and we [discuss it in more detail here](@/essays/hypermedia-apis-vs-data-apis.md).
+이 경우 우리의 하이퍼미디어 API(즉, 엔드포인트)는 _UI에 의해 주도됩니다_: 특정 UI 레이아웃을 달성하고자 하며, 우리는 API를 그에 맞게 조정합니다. 
+UI가 변경되면, 우리는 새로운 요구 사항을 충족시키기 위해 API를 완전히 변경하는 데 아무런 거리낌이 없습니다. 
+이것은 하이퍼미디어 개발의 [독특한 측면](https://htmx.org/essays/hateoas.md) 중 하나이며, 
+[여기서 더 자세히 논의합니다](https://htmx.org/essays/hypermedia-apis-vs-data-apis.md).
 
-Of course, there may be UI requirements that do not allow for grouping of dependent element in this manner and, if
-the techniques [mentioned above](@/examples/update-other-content.md) aren't satisfactory, then it may be 
-time to consider an alternative approach.
+물론, 종속 요소를 이 방식으로 그룹화할 수 없는 UI 요구 사항이 있을 수 있으며, 
+[위에서 언급한 기술](https://htmx.pinstella.com/examples/update-other-content/)이 만족스럽지 않다면, 대안 접근 방식을 고려할 때가 될 수도 있습니다.
 
-### _...If you need "deep links" & good first-render performance_
+### _...여러분이 "딥 링크"와 좋은 초기 렌더링 성능이 필요한 경우_
 
-A final area where hypermedia outperforms other options is when you need "deep links", that is, links into your
-application that go beyond the landing page, or when you need excellent first-render performance.  
+하이퍼미디어가 다른 옵션보다 뛰어난 또 다른 영역은 "딥 링크"가 필요할 때, 즉 랜딩 페이지를 넘어 애플리케이션 내부로의 링크가 필요할 때이거나, 훌륭한 초기 렌더링 성능이 필요할 때입니다.
 
-Since hypermedia is the natural language of the web, and since browsers are very good at rendering HTML given a URL, 
-using this approach is hard to beat for "traditional" web features such as these.
+하이퍼미디어는 웹의 자연스러운 언어이며, 브라우저는 URL이 주어졌을 때 HTML을 렌더링하는 데 매우 능숙하기 때문에, 이러한 전통적인 웹 기능에 있어 이 접근 방식은 이기기 어렵습니다.
 
-## Hypermedia: Not A Good Fit If...
+## 하이퍼미디어: 적합하지 않은 경우...
 
-### _...If your UI has many, dynamic interdependencies_
+### _...여러분의 UI가 많은 동적 상호 의존성을 가지고 있는 경우_
 
-As we discussed above in the section on "nested" UIs, one area where hypermedia can have trouble is when there are 
-many UI dependencies spread across your UI and you can't afford to "update the whole UI".  This is what Roy Fielding was
-getting at in the quote at the top of this article: the web was designed for large-grain hypermedia data transfers, not
-for lots of small data exchanges.
+위에서 언급한 "중첩된" UI 섹션에서 논의했듯이, 하이퍼미디어가 어려움을 겪을 수 있는 영역 중 하나는 UI 전반에 걸쳐 많은 UI 종속성이 있고 "전체 UI를 업데이트할 수 없는" 경우입니다. 
+이것은 이 글의 맨 위에서 Roy Fielding이 언급한 내용과 같습니다: 웹은 대규모 하이퍼미디어 데이터 전송을 위해 설계되었으며, 많은 작은 데이터 교환을 위해 설계된 것이 아닙니다.
 
-Particularly difficult for hypermedia to handle is when these dependencies are dynamic, that is, they depend on information
-that cannot be determined at server-side render-time.  A good example of this is something like a spreadsheet: a user can
-enter an arbitrary function into a cell and introduce all sorts of dependencies on the screen, on the fly.
+특히 하이퍼미디어가 처리하기 어려운 것은 이러한 종속성이 동적일 때, 즉 서버 측 렌더링 시간에 결정할 수 없는 정보에 의존하는 경우입니다. 그 좋은 예는 스프레드시트와 같은 것입니다: 
+사용자가 셀에 임의의 함수를 입력하고 화면에서 여러 종속성을 동적으로 생성할 수 있습니다.
 
-(Note, however, that for many applications, the ["editable row"](@/examples/edit-row.md) pattern is an 
-acceptable alternative to more general spreadsheet-like behavior, and this pattern does play well with hypermedia by 
-isolating edits within a bounded area.)
+(그러나, 많은 애플리케이션에서 ["편집 가능한 행"](https://htmx.org/examples/edit-row.md) 패턴은 더 일반적인 스프레드시트와 같은 동작에 대한 수용 가능한 대안이며, 
+이 패턴은 편집을 제한된 영역 내에서 격리하여 하이퍼미디어와 잘 연동됩니다.)
 
-### _...If you require offline functionality_
+### _...오프라인 기능이 필요한 경우_
 
-The hypermedia distributed architecture leans heavily on the server side for rendering representations of resources. When
-a server is down or unreachable, the architecture will obviously have trouble.  It is possible to use Service Workers
-to handle offline requests (although this is a complex option), and it is also easy to detect when a hypermedia 
-application is offline and show an offline message, as many thick-client application do.
+하이퍼미디어 분산 아키텍처는 리소스의 표현을 렌더링하기 위해 서버 측에 크게 의존합니다. 따라서 서버가 다운되거나 접근할 수 없는 경우, 이 아키텍처는 분명히 문제가 발생할 것입니다. 
+오프라인 요청을 처리하기 위해 서비스 워커를 사용하는 것이 가능하지만(물론 이 방법은 복잡할 수 있습니다), 
+많은 두꺼운 클라이언트 애플리케이션이 그렇듯이 하이퍼미디어 애플리케이션이 오프라인 상태임을 감지하고 오프라인 메시지를 표시하는 것은 쉽습니다.
 
-But if your application requires full functionality in an offline environment, then the hypermedia approach is not
-going to be an acceptable one.
+그러나 애플리케이션이 오프라인 환경에서 완전한 기능을 제공해야 한다면, 하이퍼미디어 접근 방식은 적합하지 않을 것입니다.
 
-### _...If your UI state is updated extremely frequently_
+### _...UI 상태가 매우 자주 업데이트되는 경우_
 
-Another situation where hypermedia is not going to be a good approach is if your UI state is updated frequently.  A good
-example is an online game that needs to capture mouse movements.  Putting a hypermedia network request in-between a mouse
-move and a UI update will not work well, and you would be far better off writing your own client-side state management
-for the game and syncing with a server using a different technology.
+하이퍼미디어가 적합하지 않은 또 다른 상황은 UI 상태가 자주 업데이트되는 경우입니다. 좋은 예는 마우스 움직임을 캡처해야 하는 온라인 게임입니다. 
+마우스 움직임과 UI 업데이트 사이에 하이퍼미디어 네트워크 요청을 넣는 것은 잘 작동하지 않으며, 
+게임에 대해서는 클라이언트 측 상태 관리를 작성하고 서버와는 다른 기술을 사용하여 동기화하는 것이 훨씬 더 나을 것입니다.
 
-Of course, your game may also have a setting page and that setting page might be better done with hypermedia than
-whatever solution you use for the core of your game.  There is nothing wrong with mixing approaches, in the Transitional
-style!  
+물론, 게임에는 설정 페이지가 있을 수 있으며, 이 설정 페이지는 게임의 핵심에 사용하는 솔루션보다 하이퍼미디어로 구현하는 것이 더 나을 수 있습니다. 
+접근 방식을 혼합하여 사용하는 것에는 아무런 문제가 없습니다. "전환" 스타일에서는 특히 그렇습니다!
 
-We should note, however, that it is typically easier to embed SPA components _within_ a larger hypermedia
-architecture, than vice-versa.  Isolated client-side components can communicate with a broader hypermedia application
-via [events](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events), in the manner demonstrated
-in the [drag-and-drop Sortable.js + htmx](@/examples/sortable.md) example.
+그러나 일반적으로 SPA 컴포넌트를 더 큰 하이퍼미디어 아키텍처 _내에서_ 포함하는 것이 그 반대보다 더 쉽다는 점을 주목해야 합니다. 
+격리된 클라이언트 측 컴포넌트는 [이벤트](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)를 통해 더 넓은 하이퍼미디어 애플리케이션과 통신할 수 있으며, 
+[드래그 앤 드롭 Sortable.js + htmx](https://htmx.org/examples/sortable/) 예제에서 그 방법을 보여줍니다.
 
-### _...If your team is not on board_
+### _...팀이 이에 동의하지 않는 경우_
 
-A final reason to not choose hypermedia isn't technical, but rather sociological: currently, hypermedia simply isn't
-in favor in web development.  Many companies have adopted React as their standard library for building web applications.  
-Many developers and consultants have bet their careers on it.  Many hiring managers have never heard of hypermedia, let
-alone htmx, but put React on every job they post out of habit.  It is certainly much easier to hire for!
+하이퍼미디어를 선택하지 않는 마지막 이유는 기술적인 것이라기보다는 사회적인 이유입니다. 
+현재 웹 개발에서는 하이퍼미디어가 단순히 인기를 끌지 못하고 있습니다. 많은 회사들이 웹 애플리케이션을 구축하는 표준 라이브러리로 React를 채택했습니다. 
+많은 개발자와 컨설턴트들이 이에 따라 경력을 쌓았고, 많은 채용 담당자들은 하이퍼미디어나 htmx에 대해 들어본 적도 없으며, 관성적으로 모든 채용 공고에 React를 넣습니다. 
+React는 채용이 훨씬 쉽기 때문입니다!
 
-While this is frustrating, it is a real phenomenon and should be borne in mind with humility.  Although Contexte
-was able to rewrite their application quickly and effectively in htmx, not all teams are as small, agile and
-passionate, nor are all applications such slam dunks for the approach.  It may be better to adopt hypermedia around
-the edges, perhaps for internal tools first, to prove its value first, before taking a broader look at it.
+이것은 좌절스러울 수 있지만, 현실적인 현상이며 겸손하게 받아들여야 합니다. 
+Contexte가 htmx로 애플리케이션을 빠르고 효과적으로 다시 작성할 수 있었지만, 모든 팀이 그렇게 작고 민첩하며 열정적인 것은 아니며, 
+모든 애플리케이션이 이 접근 방식에 대해 그렇게 쉽게 판단할 수 있는 것은 아닙니다. 
+먼저 내부 도구를 위해 하이퍼미디어를 가장자리에서 도입하여 그 가치를 입증한 후, 더 넓은 관점에서 검토하는 것이 더 나을 수 있습니다.
 
-## Conclusion
+## 결론
 
-We are often asked: "OK, so what sorts of applications **wouldn't** htmx be good for".  We prefer to think about
-things on a feature-by-feature basis using the "Transitional" application concept, but it is useful to have some
-broad, popular applications in mind when thinking about just how much might be done in hypermedia versus other
-approaches.
+"어떤 종류의 애플리케이션에 **htmx**가 적합하지 않을까요?"라는 질문을 자주 받습니다. 
+우리는 "전환" 애플리케이션 개념을 사용하여 기능별로 접근하는 것을 선호하지만, 하이퍼미디어 접근 방식이 다른 접근 방식보다 더 나을 수 있는지 생각할 때 도움이 되는 몇 가지 광범위하고 인기 있는 애플리케이션을 염두에 두는 것이 유용합니다.
 
-To give an example of two famous applications that we think _could_ be implemented cleanly in hypermedia, consider 
-[Twitter](https://twitter.com) or [GMail](https://gmail.com).  Both web applications are text-and-image heavy, with
-coarse-grain updates and, thus, would be quite amenable to a hypermedia approach.
+하이퍼미디어로 깔끔하게 구현될 수 있다고 생각되는 두 가지 유명한 애플리케이션의 예로는 [Twitter](https://twitter.com)와 [GMail](https://gmail.com)이 있습니다. 
+두 웹 애플리케이션 모두 텍스트와 이미지 중심이며, 대규모의 업데이트가 발생하기 때문에 하이퍼미디어 접근 방식에 매우 적합할 것입니다.
 
-Two famous examples of web applications that would _not_ be amenable to a hypermedia approach are 
-[Google Sheets](https://www.google.com/sheets/about/) and [Google Maps](https://maps.google.com).  Google Sheets can have
-a large amounts of state within and interdependencies between many cells, making it untenable to issue a server request on every
-cell update.  Google Maps, on the other hand, responds rapidly to mouse movements and simply can't afford a server round trip for
-every one of them.  Both of these applications require a much more sophisticated client-side setup than what hypermedia 
-can provide.
+하이퍼미디어 접근 방식에 적합하지 않은 두 가지 유명한 웹 애플리케이션 예로는 
+[Google Sheets](https://www.google.com/sheets/about/)와 [Google Maps](https://maps.google.com)가 있습니다. 
+Google Sheets는 많은 상태를 포함할 수 있으며, 여러 셀 간의 종속성이 많아 모든 셀 업데이트에 서버 요청을 발행하는 것은 실행 가능하지 않습니다. 
+반면, Google Maps는 마우스 움직임에 빠르게 반응해야 하며, 모든 움직임마다 서버 왕복을 허용할 수 없습니다. 
+이 두 애플리케이션은 하이퍼미디어가 제공할 수 있는 것보다 훨씬 더 정교한 클라이언트 측 설정이 필요합니다.
 
-Of course, the vast majority of web applications are nowhere near the scale and complexity of these examples. And almost 
-every web application, even Google Sheets or Google Maps, has parts where, potentially, the hypermedia approach would be
-better: simpler, faster and cleaner.
+물론, 대부분의 웹 애플리케이션은 이러한 예제들보다 규모와 복잡성이 훨씬 적습니다. 
+심지어 Google Sheets나 Google Maps조차도 하이퍼미디어 접근 방식이 더 나을 수 있는 부분이 있을 것입니다: 더 간단하고, 더 빠르고, 더 깨끗하게 구현될 수 있습니다.
 
-Having hypermedia as a tool in your tool-chest will improve your ability to address engineering problems as a web
-developer, even if it doesn't become your favorite hammer.  There is a good [theoretical basis](@/essays/hateoas.md) 
-for the approach, [practical benefits for many applications](@/essays/a-real-world-react-to-htmx-port.md),
-and it is "with the grain" of the web in a way that other approaches are not.
+하이퍼미디어를 도구 상자에 추가하는 것은 웹 개발자로서 엔지니어링 문제를 해결할 수 있는 능력을 향상시킬 것입니다. 
+그것이 여러분의 가장 선호하는 도구가 되지 않더라도 말입니다. 
+이 접근 방식에는 좋은 [이론적 근거](https://htmx.org/essays/hateoas.md)가 있으며, 
+[많은 애플리케이션에서 실질적인 이점](https://htmx.org/essays/a-real-world-react-to-htmx-port.md)이 있으며, 다른 접근 방식과 달리 웹의 흐름에 맞는 방식입니다.

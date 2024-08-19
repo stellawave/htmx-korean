@@ -7,106 +7,87 @@ author = ["Carson Gross"]
 tag = ["posts"]
 +++
 
-Recently [Tom MacWright](https://macwright.com) has written a few posts on Single Page Applications and their discontents:
+최근 [Tom MacWright](https://macwright.com)은 싱글 페이지 애플리케이션(SPA)과 그에 따른 불만 사항들에 대해 몇 가지 글을 작성했습니다:
 
-* [Second-guessing the modern web](https://macwright.com/2020/05/10/spa-fatigue.html)
-* [If not SPAs, What?](https://macwright.com/2020/10/28/if-not-spas.html)
+* [모던 웹에 대한 재고](https://macwright.com/2020/05/10/spa-fatigue.html)
+* [SPAs가 아니라면, 무엇을?](https://macwright.com/2020/10/28/if-not-spas.html)
 
-> The emerging norm for web development is to build a React single-page application, with server rendering. The two key 
-> elements of this architecture are something like: 
+> 웹 개발의 새로운 표준은 React 싱글 페이지 애플리케이션을 구축하고 서버 렌더링을 사용하는 것입니다. 이 아키텍처의 두 가지 핵심 요소는 다음과 같습니다:
 >
->1. The main UI is built & updated in JavaScript using React or something similar.
->2. The backend is an API that that application makes requests against. 
+>1. 주요 UI는 React나 유사한 것을 사용하여 자바스크립트로 구축 및 업데이트됩니다.
+>2. 백엔드는 해당 애플리케이션이 요청하는 API입니다.
 >
-> This idea has really swept the internet. It started with a few major popular websites and has crept into corners 
-> like marketing sites and blogs.
+> 이 아이디어는 정말로 인터넷을 휩쓸었습니다. 몇몇 주요 인기 웹사이트에서 시작되어 마케팅 사이트와 블로그 같은 곳까지 스며들었습니다.
 
-In these two articles Tom lays out the problem associated with the React/SPA everywhere mindset.  If I can summarize 
-them in one sentence: SPA frameworks tend to be complex, and you don't get a lot of benefit for all that
-complexity in many cases.
+이 두 기사에서 Tom은 React/SPA 전방위적 사고방식과 관련된 문제를 설명합니다. 
+요약하자면, SPA 프레임워크는 복잡한 경향이 있으며, 많은 경우 그 복잡성에 비해 얻는 이점이 크지 않다는 것입니다.
 
-## An Alternative
+## 대안
 
-Tom outlines a few alternatives to the SPA approach in the second article and, I'm happy to say, mentions htmx.  However,
-he classifies htmx (as well as [Stimulus](https://stimulusjs.org/) and [Alpine.js](https://github.com/alpinejs/alpine/))
-as "progressive-enhancement" libraries.  This is a good description, but, at least in the case of htmx, I think there 
-is a better term to help describe this style of library: *HTML-Centric* (or, perhaps, *Hypertext-Centric*)
+Tom은 두 번째 기사에서 SPA 접근 방식에 대한 몇 가지 대안을 제시하며, 기쁘게도 htmx를 언급했습니다. 
+그러나 그는 htmx(그리고 [Stimulus](https://stimulusjs.org/)와 [Alpine.js](https://github.com/alpinejs/alpine/))를 "점진적 향상" 라이브러리로 분류했습니다. 
+이는 좋은 설명이지만, 적어도 htmx의 경우, 이 스타일의 라이브러리를 설명하는 데 더 적합한 용어가 있다고 생각합니다: *HTML 중심* (또는, *하이퍼텍스트 중심*)
 
-### HTML-Centric Development
+### HTML 중심 개발
 
-In HTML-Centric Development, rather than being an afterthought, HTML is embraced as the primary medium of application
-development.  This is in contrast to most SPA frameworks, where a client-side model & the javascript that manipulates
-it is the central focus.
+HTML 중심 개발에서는 HTML이 단순한 후순위 요소가 아닌 애플리케이션 개발의 주요 매체로 받아들여집니다. 
+이는 클라이언트 측 모델과 이를 조작하는 자바스크립트가 중심이 되는 대부분의 SPA 프레임워크와 대조됩니다.
 
-HTML-Centric Development builds on the original model of the web, as outlined in 
-[Roy Fielding's PhD dissertation](https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm), describing the web
-architecture.  In particular, by embracing HTML as a hypertext, you get the benefits of 
-[REST and HATEOAS](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm), all without needing to
-be an expert in either of those topics.  
+HTML 중심 개발은 웹 아키텍처를 설명한 [Roy Fielding의 박사 학위 논문](https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm)에 기반을 두고 있습니다. 
+특히, HTML을 하이퍼텍스트로 수용함으로써 [REST와 HATEOAS](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)의 이점을 얻을 수 있으며, 
+이 두 주제에 대해 전문가가 될 필요도 없습니다.
 
-(Recall, Roy was *describing* the web architecture, so the original web was
-largely REST-ful, without any particular effort on the part of the original participants)
+(참고로, Roy는 웹 아키텍처를 *설명*한 것이므로, 원래의 웹은 원래 참여자들이 특별한 노력을 기울이지 않았음에도 불구하고 대체로 REST-ful 했습니다)
 
-By picking HTML-Centric Development, you accrue many benefits:
+HTML 중심 개발을 선택하면 많은 이점을 얻게 됩니다:
 
-* A simpler front end allows you to save your [complexity budget](@/essays/complexity-budget.md) for the back end functionality
-  that differentiates your application from others.
-* You do not face pressure to adopt javascript on the back end "since the front end is written in javascript".  This allows
-  you to use the best backend framework for your particular application.
-* With a simpler front end, a "full stack" developer can more easily manage and optimize front-to-back optimization in 
-  your application, leading to much better system tuning
-* Your web application is going to have HTML in it anyway, so by maximizing its utility you are boosting the power of
-  an existing component, rather than adding another layer of complexity between the end user and your application code.
-* The stateless network model of the web has proven very resilient and easy to develop for.  Many mature and battle-tested
-  technologies and techniques (e.g. [caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching)) exist for 
-  building HTML-based applications.
+* 단순한 프런트 엔드를 통해 [복잡성 예산](@/essays/complexity-budget.md)을 다른 애플리케이션과 차별화되는 백엔드 기능에 사용할 수 있습니다.
+* "프런트 엔드는 자바스크립트로 작성되었기 때문에 백엔드에도 자바스크립트를 사용해야 한다"는 압박을 받지 않으므로, 특정 애플리케이션에 가장 적합한 백엔드 프레임워크를 사용할 수 있습니다.
+* 단순한 프런트 엔드를 사용하면 "풀스택" 개발자가 애플리케이션의 전반적인 최적화를 더 쉽게 관리하고, 이를 통해 시스템 튜닝을 훨씬 더 잘 수행할 수 있습니다.
+* 웹 애플리케이션에는 어쨌든 HTML이 포함될 것이므로, HTML의 유틸리티를 극대화함으로써 기존 구성 요소의 강력함을 증가시키고, 사용자와 애플리케이션 코드 사이에 또 다른 복잡성 계층을 추가하는 대신 그 사이를 간소화할 수 있습니다.
+* 웹의 상태 비저장 네트워크 모델은 매우 탄력적이고 개발하기 쉬운 것으로 입증되었습니다. HTML 기반 애플리케이션을 구축하기 위한 많은 성숙하고 검증된 기술과 방법론(예: [캐싱](https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching))이 존재합니다.
 
-### HTML: The Bad Parts
+### HTML: 문제점
 
-With all these benefits of the HTML-Centric model, one may wonder why it has been abandoned (and is often mocked) by 
-many web developers.  At a high level, the answer is: 
+HTML 중심 모델이 제공하는 모든 이점에도 불구하고, 많은 웹 개발자들이 왜 이 모델을 버리고 종종 조롱하는지 궁금할 수 있습니다. 그 이유를 간단히 설명하자면:
 
-*HTML-Centric applications have historically offered a limited 
-amount of interactivity when compared with javascript-based applications*.
+*HTML 중심 애플리케이션은 자바스크립트 기반 애플리케이션에 비해 역사적으로 제한된 상호작용을 제공해왔습니다*.
 
-This is in large part because HTML is a limited hypertext.  In particular:
+이것은 HTML이 제한된 하이퍼텍스트이기 때문입니다. 특히:
 
-* Only `<a>` and `<form>` can make HTTP requests
-* Only `click` & `submit` events can trigger them
-* Only GET & POST [HTTP Methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) are widely available
-* A request must replace the entire screen, leading to a clunkly and sometimes jarring user experience
+* HTTP 요청을 보낼 수 있는 요소는 `<a>`와 `<form>`만입니다.
+* 이를 트리거할 수 있는 이벤트는 `click`과 `submit`뿐입니다.
+* 사용할 수 있는 HTTP 메서드는 [GET과 POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)뿐입니다.
+* 요청이 화면 전체를 대체해야 하므로 사용자 경험이 어색하고 때로는 불편할 수 있습니다.
 
-Of course, none of the constraints are inherent in the concept of a hypertext, and the goal of [htmx](@/_index.md)
-is to remove each of them.
+물론, 이러한 제약은 하이퍼텍스트라는 개념 자체에 내재된 것이 아니며, [htmx](@/_index.md)의 목표는 이들 제약을 제거하는 것입니다.
 
-By removing these constraints and completing HTML as a fully-functional and high-powered hypertext, HTML-Centric 
-applications can compete with SPAs in many application domains, while at the same time accruing the technical
-and complexity benefits mentioned above.
+이러한 제약을 제거하고 HTML을 완전하고 강력한 하이퍼텍스트로 완성함으로써, HTML 중심 애플리케이션은 많은 애플리케이션 도메인에서 SPA와 경쟁할 수 있으며, 
+동시에 앞서 언급한 기술적 이점과 복잡성 감소의 이점을 누릴 수 있습니다.
 
-## Being Brave, Technically
+## 기술적으로 용감해지기
 
-Tom closes his first article with this:
+Tom은 그의 첫 번째 글을 다음과 같이 마무리합니다:
 
-> What if everyone’s wrong? We’ve been wrong before.
+> 모든 사람이 틀렸다면 어떨까요? 우리는 이전에도 틀렸었습니다.
 
-Web development has gone down blind alleys quite a few times: GWT, Java Server Faces, Angular 1, FlatUI, etc.  
-During the height of the hype cycle around each of these technologies, it was difficult to go against the grain.  It is 
-particularly difficult to do in the technology world , where the being left behind technically is not only a threat to 
-our ego, but also to our employment.  
+웹 개발은 여러 번 막다른 길로 들어섰습니다: GWT, Java Server Faces, Angular 1, FlatUI 등. 
+이러한 기술들에 대한 하이프 사이클의 절정기에는 대세를 거스르기가 매우 어려웠습니다. 
+특히 기술 세계에서는 기술적으로 뒤처지는 것이 자존심뿐만 아니라 고용에 대한 위협이 될 수 있기 때문에 더욱 어렵습니다.
 
-> "No One Ever Got Fired For Using React"
+> "React를 사용해서 해고된 사람은 없다"
 
-is today's 
+라는 말은 오늘날의
 
-> "No One Ever Got Fired For Buying IBM"
+> "IBM을 선택해서 해고된 사람은 없다"
 
-That's a reality that we must accept, even if we feel that React/etc. aren't appropriate for many (or even most) web
-applications being built today.  
+와도 같습니다.
 
-However, we are starting to see a reconsideration of the SPA approach.  With a bit of technical bravery, a willingness
-to stand against the crowd, you may be able to make your application much less complex, and focus your development
-efforts on what your application does, rather than on how it does it.
+React와 같은 기술이 오늘날 개발되고 있는 많은 (또는 대부분의) 웹 애플리케이션에 적합하지 않다고 느낀다 하더라도, 이것은 우리가 받아들여야 할 현실입니다.
 
-From the [htmx developer's starter kit](https://twitter.com/htmx_org/status/1306234341056344065):
+그러나 SPA 접근 방식에 대한 재고가 시작되고 있습니다. 
+약간의 기술적 용기와 대세에 맞서는 의지가 있다면, 애플리케이션을 훨씬 덜 복잡하게 만들고 개발 노력을 애플리케이션이 *어떻게* 작동하는지가 아니라 *무엇을* 하는지에 집중할 수 있을 것입니다.
+
+[htmx 개발자 스타터 키트](https://twitter.com/htmx_org/status/1306234341056344065):
 
 ![What if?](/img/what_if.png)

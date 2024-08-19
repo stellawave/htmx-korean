@@ -7,195 +7,197 @@ author = ["Carson Gross"]
 tag = ["posts"]
 +++
 
-[Rich Harris](https://twitter.com/rich_harris) is a well-known web developer who works on [Svelte.js](https://svelte.dev/), a novel
-Single-Page Application (SPA) framework.
+[Rich Harris](https://twitter.com/rich_harris)는 새로운 싱글 페이지 애플리케이션(SPA) 프레임워크인 [Svelte.js](https://svelte.dev/)를 개발한 유명한 웹 개발자입니다.
 
-In October of 2021 he gave a talk at JamStack entitled ["Have Single-Page Apps Ruined the Web?"](https://www.youtube.com/watch?v=860d8usGC0o).
+2021년 10월, 그는 JamStack에서 "싱글 페이지 앱이 웹을 망쳤는가?"라는 주제로 [강연](https://www.youtube.com/watch?v=860d8usGC0o)을 했습니다.
 
-We have been asked for our opinion on the talk, so this essay is our response.
+우리는 이 강연에 대한 의견을 요청받았고, 이 에세이는 그에 대한 우리의 응답입니다.
 
-The first thing to say about the talk is that it is very well done: well produced, thoughtful, funny, fair to both sides of the debate
-and very reasonable throughout.  We don't agree with a lot that Mr. Harris has to say, as we will detail below, but we respect
-and appreciate his opinions as well as the technologies he works on.
+강연에 대해 첫 번째로 언급할 것은, 이 강연이 매우 잘 만들어졌다는 점입니다. 잘 제작되었고, 사려 깊으며, 유머러스하고, 논쟁의 양측에 공정하며, 전반적으로 매우 합리적입니다. 
+우리는 아래에서 자세히 설명할 것처럼 Harris 씨의 많은 의견에 동의하지 않지만, 그의 의견과 그가 작업한 기술들을 존중하고 감사하게 생각합니다.
 
-## Problems with SPAs
+## SPA의 문제점
 
-The talk begins with some reasonable criticisms of SPAs, particularly focusing on usability issues found
-with Instagram, a canonical SPA implementation from our friends at Facebook.  He takes a very fair look at
-the drawbacks to SPAs, including but not limited to the following list:
+강연은 SPA의 몇 가지 타당한 비판으로 시작됩니다. 특히 Facebook의 대표적인 SPA 구현인 Instagram에서 발견되는 사용성 문제에 초점을 맞추고 있습니다. 
+그는 SPA의 다음과 같은 단점들을 공정하게 다루고 있습니다:
 
-* You will need a bloated JS framework
-* Performance will suffer
-* It will be buggy
-* There will be accessibility issues
-* The tooling is complicated
-* It will be less resilient
+* 부피가 큰 JS 프레임워크가 필요하다.
+* 성능이 저하될 것이다.
+* 버그가 많을 것이다.
+* 접근성 문제가 있을 것이다.
+* 툴링이 복잡하다.
+* 덜 견고할 것이다.
 
-After considering the usability issues with Instagram, Mr. Harris has this to say:
+Instagram의 사용성 문제를 고려한 후, Harris 씨는 다음과 같이 말합니다:
 
-> Come on people.  If the best front end engineers in the world can't make
-> text and images work without five megabytes of javascript, then  maybe
-> we should just give up on the web platform.
+> 여러분, 제발. 세계 최고의 프론트엔드 엔지니어들이 5MB의 자바스크립트 없이 텍스트와 이미지를 작동시킬 수 없다면, 우리는 아마도 웹 플랫폼을 포기해야 할 것입니다.
 
-Here we find ourselves in violent agreement with Mr. Harris, with the caveat that we would substitute "the *javascript* web platform"
-for just "the web platform", since that is what is in play with Instagram.
+여기서 우리는 Harris 씨와 강력하게 동의합니다. 단, "웹 플랫폼" 대신 "자바스크립트 웹 플랫폼"을 사용해야 한다고 생각합니다. Instagram에서는 바로 그것이 문제가 되고 있기 때문입니다.
 
-We would further clarify that SPA applications and frameworks often simply *ignore* the *actual* web platform, that is,
-the original, [REST-ful model](@/essays/rest-explained.md) of the web, except as a bootstrap mechanism.
+우리는 또한 SPA 애플리케이션과 프레임워크가 종종 원래의 
+[REST-ful 모델](@/essays/rest-explained.md)을 단지 부트스트랩 메커니즘으로만 사용하면서 실제 웹 플랫폼을 단순히 *무시*한다는 점을 명확히 하고 싶습니다.
 
-## Problems with MPAs
+## MPA의 문제점
 
-Mr. Harris then moves on to problems with Multi-Page Applications (MPAs) which are the "traditional",
-click-a-link-load-a-page-of-HTML web applications we are all familiar with and that are, to an extent,
-being supplanted by SPAs.
+그런 다음 Harris 씨는 "전통적인", 링크를 클릭하면 HTML 페이지가 로드되는 방식의 MPA(Multi-Page Applications)와 관련된 문제로 넘어갑니다. 
+MPA는 우리가 모두 익숙한 방식이며, SPA에 의해 어느 정도 대체되고 있습니다.
 
-Below, we will go through the various problems he outlines, all of which are true of "standard" MPAs,
-and we will demonstrate how an MPA using a hypermedia-oriented technology, [htmx](@/_index.md), can solve each of them.
+아래에서 그는 "표준" MPA와 관련된 여러 문제를 설명합니다. 우리는 이들 문제를 검토하고, 
+하이퍼미디어 지향 기술인 [htmx](@/_index.md)을 사용하여 각각의 문제를 어떻게 해결할 수 있는지 설명할 것입니다.
 
-### "You Can't Keep A Video Running On Navigations"
+### "네비게이션 중에 비디오를 유지할 수 없다"
 
-A general problem with standard MPAs is that they issue a full page refresh on
-every request.  This means something like a video or audio player will be replaced and, thus, stop playing, when a request is made.
+표준 MPA의 일반적인 문제는 모든 요청에서 전체 페이지 새로 고침이 발생한다는 것입니다. 이로 인해 비디오나 오디오 플레이어와 같은 콘텐츠가 요청 시 교체되어 중단될 수 있습니다.
 
-This problem can be addressed in htmx via the [`hx-preserve`](@/attributes/hx-preserve.md) attribute, which tells htmx to
-preserve a particular piece of content between requests.
+이 문제는 htmx의 [`hx-preserve`](@/attributes/hx-preserve.md) 속성을 사용하여 각 요청 간에 특정 콘텐츠를 유지하도록 함으로써 해결할 수 있습니다.
 
-### "Back Button & Infinite Scroll Don't Work"
+### "뒤로 가기 버튼 및 무한 스크롤이 작동하지 않는다"
 
-In the presence of infinite scroll behavior (presumably implemented via javascript of some sort) the back button will not work properly with an MPA.  I would note that the presence of infinite scroll calls into question the term MPA, which would traditionally use paging instead of an infinite scroll.
+무한 스크롤 동작이 있는 경우(아마도 자바스크립트로 구현됨) 뒤로 가기 버튼이 MPA에서 제대로 작동하지 않을 것입니다. 
+전통적인 MPA는 무한 스크롤 대신 페이징을 사용하므로, MPA라는 용어 자체가 의문시될 수 있습니다.
 
-That said, [infinite scroll](@/examples/infinite-scroll.md) can be achieved quite easily using htmx, in a hypermedia-oriented and obvious manner.  When combined with the [`hx-push-url`](@/attributes/hx-push-url.md) attribute, history and the back button works properly with very little effort by the developer, all with nice Copy-and-Pasteable URLs, sometimes referred to as "Deep Links" by people in the SPA community.
+그렇긴 하지만, [무한 스크롤](@/examples/infinite-scroll.md)은 htmx를 사용하여 하이퍼미디어 지향적이고 명확한 방식으로 쉽게 구현할 수 있습니다. 
+[`hx-push-url`](@/attributes/hx-push-url.md) 속성과 결합하면, 히스토리와 뒤로 가기 버튼이 개발자가 거의 노력을 기울이지 않고도 올바르게 작동하며, 
+종종 SPA 커뮤니티에서 "딥 링크"라고 부르는 멋진 복사-붙여넣기 가능한 URL도 제공합니다.
 
-### "What about Nice Navigation Transitions?"
+### "멋진 내비게이션 전환은 어떻게 되는가?"
 
-Nice transitions are, well, nice.  We think that designers tend to over-estimate their contribution to application usability, however.  Yes, the demo sizzles, but on the 20th click users often just want the UI to get on with it.
+멋진 전환은 확실히 좋습니다. 그러나 우리는 디자이너들이 애플리케이션 사용성에 대한 기여를 과대평가하는 경향이 있다고 생각합니다. 
+데모에서는 멋질 수 있지만, 사용자가 여러 번 클릭할 때는 UI가 빠르게 응답하기를 원할 때가 많습니다.
 
-That being said, htmx supports using [standard CSS transitions](@/examples/animations.md) to make animations possible.  Obviously there is a limit to what you can achieve with these pure CSS techniques, but we believe this can give you the 80 of an 80/20 situation.  (Or, perhaps, the 95 of a 95/5 situation.)
+그럼에도 불구하고, htmx는 [표준 CSS 전환](@/examples/animations.md)을 사용하여 애니메이션을 가능하게 합니다. 
+순수한 CSS 기술로 달성할 수 있는 것에는 한계가 있지만, 이 방법이 80/20 상황의 80%를 제공할 수 있다고 믿습니다. (어쩌면 95/5 상황의 95%일 수도 있습니다.)
 
-### "Multipage Apps Load Javascript Libraries Every Request"
+### "MPA는 모든 요청에서 자바스크립트 라이브러리를 로드한다"
 
-Mr. Harris focuses heavily on "crappy Ad Tech" as a culprit for web usability issues on the web, and who can defend the 2.5MB payload of tracking, spyware and adware that most websites deliver to their users today?  Mr. Harris points out that SPAs ameliorate this issue by loading up this bundle of garbage once, rather than over and over on every request, as an MPA does.
+Harris 씨는 "엉망인 광고 기술"을 웹 사용성 문제의 주범으로 꼽으며, 오늘날 대부분의 웹사이트가 사용자에게 제공하는 2.5MB의 추적기, 
+스파이웨어, 애드웨어를 방어할 수 있는 사람은 없다고 지적합니다. 
+그는 SPA가 이 문제를 완화한다고 지적하며, SPA는 이 쓰레기 더미를 한 번만 로드하면 되므로 MPA처럼 매번 로드할 필요가 없다고 말합니다.
 
-Now, a vanilla MPA would typically have said garbage cached after the first request, so the download cost, at least, is about the same as with SPAs.  But an MPA must *execute* the bundle of garbage again on each page, which does burn CPU and can lead to poor user experience.
+사실, 기본적인 MPA는 첫 번째 요청 후에 해당 쓰레기들을 캐싱하므로, 다운로드 비용은 SPA와 거의 동일합니다. 
+그러나 MPA는 각 페이지에서 이 쓰레기들을 다시 실행해야 하므로, CPU를 소모하고 사용자 경험을 악화시킬 수 있습니다.
 
-However, an MPA powered by htmx, we note, has exactly the same characteristics as an SPA: the ad garbage would be downloaded and executed once on the first request, and, after that, all requests will be relatively light-weight replacements of DOM elements.
+그러나 htmx로 구동되는 MPA는 SPA와 정확히 동일한 특성을 가지고 있습니다. 
+광고 쓰레기는 첫 번째 요청에서 한 번만 다운로드되고 실행되며, 그 후 모든 요청은 상대적으로 가벼운 DOM 요소 교체로 이루어집니다.
 
-### "MPAs Have Network Latency Issues"
+### "MPA는 네트워크 지연 문제를 가지고 있다"
 
-This is a valid point: with an MPA-style application your UI interactions are gated by how fast your server can respond to requests, its latency.  Part of that is network latency, which is hard to overcome without giving up one of the tremendously simplifying aspects of traditional web applications: a centralized data store.  However, networks are fast and are getting faster, and there are well-known techniques for optimizing *server* latency (i.e. how fast your server returns a response), developed over decades, for monitoring and optimizing this response time.  SQL tuning, Redis caching and so on, all well established and making sub-100ms responses a reasonable goal.  Many htmx users remark just how fast htmx-based applications feel, but we won't pretend that latency isn't an issue to be considered.
+이것은 유효한 지적입니다. MPA 스타일 애플리케이션에서는 UI 상호 작용이 서버의 응답 속도, 즉 지연 시간에 의해 제한됩니다. 
+이 지연 시간의 일부는 네트워크 지연인데, 이는 중앙 집중식 데이터 저장소의 장점을 포기하지 않으면 극복하기 어려운 문제입니다. 
+그러나 네트워크는 빠르고 점점 더 빨라지고 있으며, 응답 시간을 모니터링하고 최적화하기 위한 수십 년 동안 개발된 잘 알려진 기법이 있습니다.
+SQL 튜닝, Redis 캐싱 등이 잘 확립되어 있으며 100ms 이하의 응답 시간을 목표로 할 수 있습니다. 
+많은 htmx 사용자는 htmx 기반 애플리케이션이 매우 빠르게 느껴진다고 말하지만, 우리는 지연이 고려해야 할 문제가 아니라고는 말하지 않겠습니다.
 
-Of course the problem with latency issues is that they can make an app feel laggy.  But, like you, we have worked with plenty of laggy SPAs, so we must say the problem isn't neatly solved by simply adopting SPA frameworks.  On top of that, optimistically synchronizing data with a server can lead to extremely difficult to understand data consistency issues as well as a significant increase in overall application complexity, a topic we will return to later.
+물론 지연 문제는 애플리케이션이 느리게 느껴질 수 있는 문제입니다. 
+그러나 여러분도 알다시피, 우리는 느린 SPA도 많이 작업해왔기 때문에 SPA 프레임워크를 채택한다고 해서 문제가 깔끔하게 해결되지는 않는다고 말할 수 있습니다. 
+게다가 서버와의 데이터를 낙관적으로 동기화하는 것은 매우 이해하기 어려운 데이터 일관성 문제를 초래할 수 있으며, 전반적인 애플리케이션 복잡성을 크게 증가시킬 수 있습니다. 
+이는 나중에 다시 다룰 주제입니다.
 
-### "GitHub Has UI Bugs"
+### "GitHub에는 UI 버그가 있다"
 
-GitHub does, indeed, have UI bugs.  However, none of them are particularly difficult to solve.
+GitHub에는 실제로 UI 버그가 존재합니다. 그러나 이러한 버그 중 어느 것도 해결하기 어려운 것은 아닙니다.
 
-htmx offers multiple ways to [update content beyond the target element](@/examples/update-other-content.md), all of them quite easy and any of which would work to solve the UI consistency issues Mr. Harris points out.
+htmx는 [타겟 요소 이외의 콘텐츠를 업데이트하는](@/examples/update-other-content.md) 여러 가지 방법을 제공하며, 
+이 모든 방법은 매우 간단하고 Harris 씨가 지적한 UI 일관성 문제를 해결하는 데 효과적입니다.
 
-Contrast the GitHub UI issues with the Instagram UI issues Mr. Harris pointed out earlier: the Instagram issues would
-require far more sophisticated engineering work to resolve.
+Harris 씨가 언급한 Instagram의 UI 문제와 비교해보면, Instagram 문제는 훨씬 더 정교한 엔지니어링 작업이 필요합니다.
 
-## Transitional Applications
+## 전환 애플리케이션
 
-Mr. Harris then discusses the concept of "transitional applications" which are a mix of both SPA and MPA technologies.
-This terminology is reasonable, and we will see if the term sticks in the industry.
+Harris 씨는 SPA와 MPA 기술이 혼합된 "전환 애플리케이션" 개념에 대해 논의합니다. 이 용어는 합리적이며, 이 용어가 업계에 정착될지 지켜보겠습니다.
 
-We often recommend using htmx for the parts of the app where it makes sense to keep things simple, and then using other
-technologies when needed: [alpine.js](https://alpinejs.dev/), [hyperscript](https://hyperscript.org), a small reactive
-framework, etc.
+우리는 종종 htmx를 애플리케이션에서 단순함을 유지하는 것이 의미 있는 부분에 사용하고, 다른 기술을 필요에 따라 사용하는 것을 권장합니다: 
+[alpine.js](https://alpinejs.dev/), [hyperscript](https://hyperscript.org), 소규모 반응형 프레임워크 등.
 
-So we can agree with Mr. Harris here to an extent and recommend a "transitional" approach to web development, although
-we would recommend leaning MPA/hypermedia when possible, whereas it seems fairly certain Mr. Harris would lean SPA/javascript.
+그래서 우리는 여기에서 Harris 씨와 어느 정도 동의하며, 웹 개발에 "전환" 접근 방식을 권장합니다. 
+그러나 우리는 가능한 경우 MPA/하이퍼미디어 쪽으로 기울일 것을 권장하며, Harris 씨는 SPA/자바스크립트 쪽으로 기울일 가능성이 높아 보입니다.
 
-## The Elephant In The Room: Complexity
+## 방 안의 코끼리: 복잡성
 
-Unfortunately, there is a topic that Mr. Harris does not discuss, and we believe this may be because he doesn't see it.  He is a javascript developer who is passionate about that language and who swims in the engineering culture of front end frameworks, so the current *complexity* of javascript front end development seems natural to him.  For many of us, however,  the javascript ecosystem is simply *insanely* overly-complicated.  Comically so, in fact, given the requirements of most web applications.
+불행하게도, Harris 씨가 논의하지 않은 주제가 하나 있습니다. 
+그리고 아마도 그가 이 주제를 보지 못한 이유는 그가 자바스크립트 개발자이며, 프론트엔드 프레임워크의 엔지니어링 문화 속에서 생활하기 때문일 것입니다. 
+현재 자바스크립트 프론트엔드 개발의 *복잡성*이 그에게는 자연스러워 보일지 모르지만, 우리 중 많은 사람들에게 자바스크립트 생태계는 단순히 *미친듯이* 지나치게 복잡하게 느껴집니다. 
+사실, 대부분의 웹 애플리케이션 요구 사항을 고려할 때 그 복잡성은 우스꽝스러울 정도입니다.
 
-Many of the "transitional" technologies that Mr. Harris goes on to mention: [React Server Components](https://vercel.com/blog/everything-about-react-server-components) (which he calls "like html over the wire, but vastly more sophisticated), [Marko](https://markojs.com/) (which is doing "partial hydration"), [Quik](https://github.com/BuilderIO/qwik) (which aggressively lazy loads things, apparently), are all remarkable engineering achievements, but are also all, we must say, quite complicated.
+Harris 씨가 언급한 여러 "전환" 기술들, 예를 들어 [React Server Components](https://vercel.com/blog/everything-about-react-server-components) 
+(그가 "HTML over the wire와 비슷하지만 훨씬 더 정교한 것"이라고 부르는 기술), [Marko](https://markojs.com/) (부분적 하이드레이션을 수행하는 기술), 
+[Quik](https://github.com/BuilderIO/qwik) (아주 적극적으로 게으르게 로드하는 기술로 보임) 등은 모두 놀라운 엔지니어링 성과이지만, 동시에 매우 복잡한 기술들이기도 합니다.
 
-This is, unfortunately, part of the culture of front end development right now: sky-high levels of complexity are tolerated in application frameworks, in build tool chains, in deployment models and so on, and, when problems arise due to all this complexity, more complexity is often offered as the answer.
+안타깝게도, 이는 현재 프론트엔드 개발 문화의 일부입니다. 
+애플리케이션 프레임워크, 빌드 도구 체인, 배포 모델 등에서 하늘 높이 치솟은 복잡성을 용인하고, 이러한 복잡성으로 인해 문제가 발생할 때, 더 많은 복잡성이 종종 해결책으로 제시됩니다.
 
-"Simple" is disparaging and "sophisticated" is high praise.
+"단순함"은 경시되고 "정교함"은 높은 평가를 받습니다.
 
-This complexity is overwhelming many developers and development teams today.  As Mr. Harris himself points out when discussing Instagram, even some of
-the best front-end engineers in the world appear to be unable to keep it all under control.
+이 복잡성은 오늘날 많은 개발자와 개발 팀에게 압도적입니다. 
+Harris 씨 자신이 Instagram을 논의할 때 지적한 것처럼, 세계 최고의 프론트엔드 엔지니어들조차 모든 것을 통제할 수 없게 된 것처럼 보입니다.
 
-So there is a cultural issue here.
+여기에는 문화적인 문제가 있습니다.
 
-There is a technical issue as well.
+또한 기술적인 문제도 존재합니다.
 
-This technical issue can be summarized as "The Hypermedia Approach" vs. "The Remote Procedure Call (RPC) Approach".
+이 기술적인 문제는 "하이퍼미디어 접근법" 대 "원격 프로시저 호출 (RPC) 접근법"으로 요약할 수 있습니다.
 
-When web applications moved from MPAs to SPAs, they adopted, often unwittingly, an RPC approach to application development:
-AJAX moved to JSON as a data serialization format and largely ([and correctly](@/essays/hypermedia-apis-vs-data-apis.md))
-abandoned the hypermedia concept.   This abandonment of The Hypermedia Approach was driven by the admitted usability
-issues with vanilla MPAs.
+웹 애플리케이션이 MPA에서 SPA로 전환되면서, 개발자들은 종종 무의식적으로 애플리케이션 개발에 RPC 접근 방식을 채택했습니다. 
+AJAX는 데이터 직렬화 형식으로 JSON으로 이동했고, 대체로 ([정당하게](@/essays/hypermedia-apis-vs-data-apis.md)) 하이퍼미디어 개념을 버렸습니다. 
+이 하이퍼미디어 접근법의 포기는 바닐라 MPA의 사용성 문제로 인해 발생했습니다.
 
-It turns out, however, that those usability issues often *can* [be addressed](@/examples/_index.md) using The Hypermedia Approach:
-rather than *abandoning* Hypermedia for RPC, what we needed then and what we need today is a *more powerful* Hypermedia.
+그러나 이러한 사용성 문제는 종종 하이퍼미디어 접근법을 사용하여 [해결할 수 있음이 밝혀졌습니다](@/examples/_index.md): 
+RPC로 하이퍼미디어를 *포기하는* 대신, 당시와 오늘날 우리가 필요로 하는 것은 *더 강력한* 하이퍼미디어입니다.
 
-This is exactly what htmx gives you.
+이것이 바로 htmx가 제공하는 것입니다.
 
-By returning to The Hypermedia Approach, you can build reasonably sophisticated web applications that address many of
-Mr. Harris's concerns regarding MPAs at a fraction of the complexity required by most popular SPA frameworks.  Further, without
-thinking about it very much, you will get all [the benefits](https://en.wikipedia.org/wiki/Representational_state_transfer#Architectural_concepts)
-that Roy Fielding outlined about truly REST-ful architectures.
+하이퍼미디어 접근법으로 돌아가면, 
+대부분의 인기 있는 SPA 프레임워크에서 요구하는 복잡성의 일부로 Harris 씨의 MPA에 대한 많은 우려를 해결할 수 있는 적당히 정교한 웹 애플리케이션을 구축할 수 있습니다. 
+게다가 많은 생각을 하지 않아도, 진정한 REST-ful 아키텍처에 대해 Roy Fielding이 설명한 
+[모든 이점](https://en.wikipedia.org/wiki/Representational_state_transfer#Architectural_concepts)을 얻을 수 있습니다.
 
-Is The Hypermedia Architecture right for all web applications?  Obviously not.
+하이퍼미디어 아키텍처가 모든 웹 애플리케이션에 적합합니까? 분명히 그렇지 않습니다.
 
-Is it right for many, and perhaps most, web applications?  We certainly think so, at least in part.
+그러나 많은, 아마도 대부분의 웹 애플리케이션에 적합합니까? 우리는 적어도 일부에서 그렇게 생각합니다.
 
-## Javascript: The Resistance
+## 자바스크립트: 저항
 
-Now we get to the most emotionally charged claim made in the talk: that "the ship has sailed" on javascript, and that
- we should accept that it will be the dominant programming language in web development going forward.
+이제 강연에서 제기된 가장 감정적으로 충전된 주장에 도달했습니다. 바로 "자바스크립트의 시대는 이미 지나갔다"는 주장입니다. 
+Harris 씨는 자바스크립트가 앞으로 웹 개발에서 지배적인 프로그래밍 언어가 될 것이라는 사실을 받아들여야 한다고 주장합니다.
 
-Mr. Harris believes that it will be [edge computing](https://en.wikipedia.org/wiki/Edge_computing) that will be the
-driver that finally eliminates the remaining, scattered opposition to javascript.
+Harris 씨는 최종적으로 남은 자바스크립트에 대한 저항을 없앨 주된 동력이 [엣지 컴퓨팅](https://en.wikipedia.org/wiki/Edge_computing)일 것이라고 믿고 있습니다.
 
-We are not so sure about that.
+우리는 그렇게 확신하지 않습니다.
 
-To the contrary, we do not expect edge computing to figure in the majority of web applications for the foreseeable future.
-Or, to be frank, ever. CPU is cheap, network speeds are fast and increasing and microservices are a mess.
+반대로, 우리는 가까운 미래에 엣지 컴퓨팅이 대부분의 웹 애플리케이션에 중요한 역할을 할 것이라고 기대하지 않습니다. 
+솔직히 말해, 절대 그렇게 될 것이라고 생각하지 않습니다. CPU는 저렴하고 네트워크 속도는 빠르고 계속 빨라지고 있으며 마이크로서비스는 복잡한 문제를 야기합니다.
 
-And, contra what Mr. Harris says, today the [trend is not obviously in javascripts favor](https://insights.stackoverflow.com/trends?tags=java%2Cc%2Cc%2B%2B%2Cpython%2Cc%23%2Cvb.net%2Cjavascript%2Cassembly%2Cphp%2Cperl%2Cruby%2Cvb%2Cswift%2Cr%2Cobjective-c).  Five years ago, we, as founding members
-of the javascript resistance, were despairing of any hope of stopping the Javascript juggernaut.  But then something
-unexpected happened: Python took off and, at the same time, javascript flat lined:
+Harris 씨의 말과는 달리, 오늘날 
+[자바스크립트가 분명히 우세한 추세가 아니라는 사실](https://insights.stackoverflow.com/trends?tags=java%2Cc%2Cc%2B%2B%2Cpython%2Cc%23%2Cvb.net%2Cjavascript%2Cassembly%2Cphp%2Cperl%2Cruby%2Cvb%2Cswift%2Cr%2Cobjective-c)을 볼 수 있습니다. 
+5년 전, 우리는 자바스크립트 저항의 창립 멤버로서 자바스크립트의 거대한 물결을 막을 희망이 없다고 절망하고 있었습니다. 그러나 그때 예상치 못한 일이 발생했습니다. 
+파이썬이 급성장했고, 동시에 자바스크립트의 성장세가 정체되었습니다:
 
-<div style="text-align:center">
+![자바스크립트 개발자](/img/language-trends-so.png)
 
-![Javascript Devs](/img/language-trends-so.png)
+이 자바스크립트가 2010년대 중반에 정점에 도달한 트렌드는 [GitHub에서도 관찰할 수 있습니다](https://www.benfrederickson.com/ranking-programming-languages-by-github-users/):
 
-</div>
+![자바스크립트 개발자](/img/language-trends-github.png)
 
-This trend of javascript peaking in the mid-2010's can be observed [on GitHub](https://www.benfrederickson.com/ranking-programming-languages-by-github-users/) as well:
+물론, 이것이 자바스크립트가 결국 파이썬에게 "패배"하고 사라질 것이라는 것을 의미하지는 않습니다.
 
-<div style="text-align:center">
+자바스크립트는 웹의 핵심 기술이며 영원히 우리와 함께할 것입니다. 
+자바스크립트 없이는 htmx (또는 [hyperscript](https://hyperscript.org))를 구축할 수 없었을 것이며, 자바스크립트에 대해 매우 감사하게 생각합니다.
 
-![Javascript Devs](/img/language-trends-github.png)
+하지만 이는 자바스크립트가 미래의 웹에서 *반드시* *완전히* 지배적이지 않을 수도 있음을 시사합니다. 이는 5년 전만 해도 그렇게 보였던 상황과는 다릅니다.
 
-</div>
+우리는 HOWL 스택, 즉 "Hypermedia On Whatever you'd Like"에 대해 자주 이야기합니다. 
+이는 더 강력한 하이퍼미디어 아키텍처로 돌아가면 원하는 백엔드 언어를 사용할 수 있다는 아이디어입니다: Python, LISP, Haskell, GO, JAVA, C#, 무엇이든 가능합니다. 
+자바스크립트도 사용하고 싶다면 말이죠.
 
-Now, does this mean javascript will eventually "lose" to Python and go away?
+서버 상호작용을 위해 하이퍼미디어와 HTML을 사용하고 있기 때문에, 거대한 자바스크립트 프론트엔드가 백엔드에서 자바스크립트를 채택하도록 하는 압력을 느끼지 않습니다. 
+물론 자바스크립트를 여전히 사용할 수 있습니다 (예를 들어 [alpine.js](https://alpinejs.dev/) 형태로). 
+그러나 이를 원래 의도된 방식으로, 즉 애플리케이션을 향상시키기 위한 가벼운 프론트엔드 스크립팅 언어로 사용합니다. 
+또는 용감하다면, 이러한 필요를 위해 [hyperscript](https://hyperscript.org)를 시도해 볼 수도 있습니다.
 
-Of course not.  Javascript is a core technology of the web and will be with us forever.  Without it, we couldn't have built
-htmx (or [hyperscript](https://hyperscript.org)) so we are very thankful for javascript.
+이것이 우리가 살고 싶은 세계입니다: 여러 프로그래밍 언어 옵션이 존재하고, 각 언어가 고유한 강점, 기술적 문화 및 활발한 커뮤니티를 가지고 있으며, 
+모두가 더 강력한 하이퍼미디어의 마법을 통해 웹 개발 세계에 참여할 수 있는 세상입니다. SPA가 JSON으로 Node와 통신하는 독점적인 구조 대신 말이죠. 다양성이야말로 우리의 강점입니다.
 
-But this *does* imply that the future of the web does not *necessarily* belong *entirely* to javascript, as appeared to be the case 
-say five years ago.
-
-We are fond of talking about the HOWL stack: Hypermedia On Whatever you'd Like.  The idea is that, by returning to a (more powerful) Hypermedia Architecture, you can use whatever backend language you'd like: python, lisp, haskell, go, java, c#, whatever.  Even javascript, if you like.
-
-Since you are using hypermedia & HTML for your server interactions, you don't feel that pressure to adopt javascript on
-the backend that a huge javascript front end produces.  You can still use javascript, of course, (perhaps in the form of [alpine.js](https://alpinejs.dev/))
-but you use it in the manner it was originally intended: as a light, front end scripting language for enhancing your
-application.  Or, if you are brave, perhaps you can try [hyperscript](https://hyperscript.org) for these needs.
-
-This is a world we would prefer to live in: many programming language options, each with their own strengths, technical cultures and thriving
-communities, all able to participate in the web development world through the magic of more powerful hypermedia, rather than a
-monolith of SPAs-talking-to-Node-in-JSON.  Diversity, after all, is our strength.
-
-In conclusion,
+결론적으로,
 
 <div style="text-align:center">
 

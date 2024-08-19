@@ -19,11 +19,11 @@ page_template = "essay.html"
 
 ### Why Hypermedia? Why Multi-Page Applications?
 * [Hypermedia On Whatever you'd Like (HOWL)](@/essays/hypermedia-on-whatever-youd-like.md)
-* [A Response To "Have SPAs Ruined The Web"](@/essays/a-response-to-rich-harris.md)
-* [When To Use Hypermedia?](@/essays/when-to-use-hypermedia.md)
+* [“SPA가 웹을 망쳤나"에 대한 답변](@/essays/a-response-to-rich-harris.md)
+* [언제 하이퍼미디어를 써야 하는가?](@/essays/when-to-use-hypermedia.md)
 * [The API Churn/Security Trade-off](https://intercoolerjs.org/2016/02/17/api-churn-vs-security.html)
-* [Does Hypermedia Scale?](@/essays/does-hypermedia-scale.md)
-* [SPA Alternative](@/essays/spa-alternative.md)
+* [하이퍼미디어는 확장 가능한가요?](@/essays/does-hypermedia-scale.md)
+* [SPA 대체](@/essays/spa-alternative.md)
 * [htmx는 역겹다](@/essays/htmx-sucks.md)
 
 ### Building Hypermedia Applications

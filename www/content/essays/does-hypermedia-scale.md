@@ -7,152 +7,129 @@ author = ["Carson Gross"]
 tag = ["posts"]
 +++
 
-One objection that we sometimes hear to htmx and hypermedia is some variation of the following:
+htmx와 하이퍼미디어에 대해 종종 듣는 반론 중 하나는 다음과 같은 변형된 주장입니다:
 
-> Well, it might work well for something small, but it won't scale.
- 
-It is always dangerous to provoke us with essay-fodder and so lets dig into this claim a bit and see if we can
-shed some light on whether [Hypermedia-Driven Applications](@/essays/hypermedia-driven-applications.md) (HDAs) can scale.
+> "작은 규모에서는 잘 작동할지 모르지만, 확장성에는 문제가 있을 것이다."
 
-## Scaling
+우리를 에세이 소재로 자극하는 것은 언제나 위험한 일이기 때문에, 이번 기회에 이 주장을 좀 더 파헤쳐서 
+[하이퍼미디어 기반 애플리케이션](https://htmx.org/essays/hypermedia-driven-applications/) (HDA)이 확장 가능할지 여부에 대해 알아보겠습니다.
 
-First of all, let's define the term "scaling" and then the contexts that word can be used in development. In a software
-context, scaling typically means the ability of the software to handle "larger" things.  Those things can be:
+## 확장성
 
-* More nodes in a general [system](https://hypermedia.systems)
-* More user requests (scaling your individual applications performance)
-* More features  (scaling your codebase) 
-* More _complex_ features 
-* More developers (scaling your team size)
+먼저 "확장성"이라는 용어를 정의하고, 이 단어가 개발에서 사용될 수 있는 맥락들을 살펴보겠습니다. 
+소프트웨어 맥락에서 확장성은 일반적으로 소프트웨어가 "더 큰" 것들을 처리할 수 있는 능력을 의미합니다. 이러한 "더 큰" 것들은 다음과 같습니다:
 
-Each of these sense of the word "scaling" demand their own analysis with respect to HDAs.
+* 일반적인 [시스템](https://hypermedia.systems)에서 더 많은 노드
+* 더 많은 사용자 요청 (개별 애플리케이션의 성능 확장)
+* 더 많은 기능 (코드베이스의 확장)
+* 더 복잡한 기능
+* 더 많은 개발자 (팀 규모의 확장)
 
-## Scaling Nodes In General
+이 확장성의 각 측면에 대해 HDA와 관련된 분석이 필요합니다.
 
-Although this isn't of much interest to individual developers making decisions about their own applications, it is worth
-stating that The Web has scaled _incredibly well_ as a distributed networking system.  It is the most successful
-distributed system that I am aware of, in any event.
+## 일반적인 노드 확장
 
-This is not necessarily of interest to an _individual_ application developer, but it sets the proper tone: hypermedia
-can scale.
+개발자가 자신의 애플리케이션에 대한 결정을 내릴 때는 크게 관심이 없는 부분일 수 있지만, 웹은 분산 네트워킹 시스템으로서 _엄청나게 잘_ 확장되었다는 점을 언급할 필요가 있습니다. 
+이것은 제가 알고 있는 가장 성공적인 분산 시스템입니다.
 
-## Scaling Application Performance
+이것은 개별 애플리케이션 개발자에게는 관심이 없을 수 있지만, 하이퍼미디어가 확장 가능하다는 점을 잘 보여줍니다.
 
-Does hypermedia scale well with _performance_?  To answer this question, lets first look at some of the characteristics 
-of performance-scalable software.  While there is no authoritative source for these characteristics, most engineers
-with experience scaling software will agree that most of the items on this list are at least helpful:
+## 애플리케이션 성능 확장
 
-* Software should be _stateless_
-* Software should support _horizontal scaling_
-* Features in the software should be _independent_
-* The performance of the system should be _observable_
-* The software should utilize caching
+하이퍼미디어가 _성능_ 측면에서 잘 확장될 수 있을까요? 이 질문에 답하기 위해, 먼저 성능 확장이 가능한 소프트웨어의 특성을 살펴보겠습니다. 
+이러한 특성에 대한 권위 있는 출처는 없지만, 소프트웨어 확장 경험이 있는 대부분의 엔지니어들은 이 목록에 있는 대부분의 항목들이 최소한 도움이 된다는 데 동의할 것입니다:
 
-It turns out, happily, that properly designed hypermedia systems can have all these characteristics.
+* 소프트웨어는 _무상태_이어야 한다.
+* 소프트웨어는 _수평 확장_을 지원해야 한다.
+* 소프트웨어의 기능은 _독립적_이어야 한다.
+* 시스템의 성능은 _관찰 가능_해야 한다.
+* 소프트웨어는 캐싱을 활용해야 한다.
 
-Statelessness is [a constraint of the REST-ful architecture](https://ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_3)
-that Roy Fielding created to describe the web.  In practice, many hypermedia-driven applications use a _session cookie_
-to manage a small amount of state on the server side, but this is a well-understood technique that hasn't proven fatal
-in scaling applications.
+다행스럽게도, 적절하게 설계된 하이퍼미디어 시스템은 이러한 모든 특성을 가질 수 있습니다.
 
-Horizontal scaling has a long history in hypermedia-driven applications and dovetails with the stateless nature of most 
-hypermedia-driven applications: early PAAS vendors like [heroku](https://www.heroku.com/) (of blessed memory) offered 
-easy horizontal scaling of rails-driven applications, for example.
+무상태성은 Roy Fielding이 웹을 설명하기 위해 만든 [REST-ful 아키텍처의 제약](https://ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_3)입니다. 
+실무에서는 많은 하이퍼미디어 기반 애플리케이션이 _세션 쿠키_를 사용하여 서버 측에 소량의 상태를 관리하지만, 이는 확장성 애플리케이션에서 치명적이지 않은 것으로 잘 알려진 기술입니다.
 
-Feature independence is another strength of HDAs.  In HDAs, end-points for screens tend to be
-[_decoupled_](@/essays/two-approaches-to-decoupling.md) from one another in a way that general JSON APIs are not.  This
-means that those endpoints can be monitored, evolved and be tuned independently of one another. We have a long history of 
-tuning these sorts of endpoints to create sub-100 millisecond response times (e.g. minimizing database queries for a
-given end-point by SQL tuning.)
+수평 확장은 하이퍼미디어 기반 애플리케이션에서 오랜 역사를 가지고 있으며, 대부분의 하이퍼미디어 기반 애플리케이션의 무상태 특성과 잘 맞아떨어집니다. 
+초기 PAAS 제공업체인 [Heroku](https://www.heroku.com/) (영광의 기억으로)는 예를 들어 레일스 기반 애플리케이션의 수평 확장을 쉽게 제공했습니다.
 
-Building on the independence of end-points to support various views, platform performance is easy to monitor and 
-understand.  Rather than a generalized JSON API that can be accessed in multiple ways across your application, you have
-UI specific end-points that construct hypermedia for specific views.  Determining what is causing a performance issue
-becomes much easier when views are constructed on the server-side and requests are driven through simple hypermedia
-exchanges.
+기능 독립성은 HDA의 또 다른 강점입니다. 
+HDA에서는 화면을 위한 엔드포인트가 일반적인 JSON API와 다르게 [_독립적_](/essays/two-approaches-to-decoupling.md)으로 존재하는 경향이 있습니다. 
+이는 이러한 엔드포인트들이 서로 독립적으로 모니터링, 진화 및 조정될 수 있음을 의미합니다. 
+우리는 이러한 종류의 엔드포인트를 조정하여 100밀리초 이하의 응답 시간을 만드는 오랜 역사를 가지고 있습니다 (예: SQL 튜닝을 통해 특정 엔드포인트에 대한 데이터베이스 쿼리를 최소화).
 
-Finally, web applications have a long and storied history of [caching](https://ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_4).
-HTTP offers caching at the browser, controlled by headers.  Mature server side frameworks like Rails offer sophisticated
-caching at the controller layer.  Caching is second nature for HDAs.
+뷰를 지원하는 다양한 엔드포인트의 독립성을 바탕으로 플랫폼 성능을 쉽게 모니터링하고 이해할 수 있습니다. 
+일반화된 JSON API가 애플리케이션 전체에서 여러 방식으로 액세스되는 것과 달리, HDA에서는 특정 뷰에 대해 하이퍼미디어를 구성하는 UI 특정 엔드포인트가 있습니다. 
+성능 문제를 유발하는 원인을 파악하는 것은 서버 측에서 뷰가 구성되고 요청이 간단한 하이퍼미디어 교환을 통해 구동될 때 훨씬 쉬워집니다.
 
-All of these combine to make HDAs extremely scalable from a performance perspective.  Battle-tested performance techniques
-are available for scaling your HDA as user load increases.
+마지막으로, 웹 애플리케이션은 [캐싱](https://ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_4)의 오랜 역사를 가지고 있습니다. 
+HTTP는 브라우저에서 헤더로 제어되는 캐싱을 제공합니다. 레일스와 같은 성숙한 서버 측 프레임워크는 컨트롤러 레벨에서 정교한 캐싱을 제공합니다. 캐싱은 HDA에 있어 매우 자연스러운 작업입니다.
 
-Does the HDA approach push more computation onto the server side?  To an extent, this is true.  However, the difference
-between the JSON representation for a given resource and the HTML representation for it is not nearly as large as some
-people think, particularly if you don't include the header and footer information in HTML requests, as is common in
-htmx-based applications.  Network latency and datastore-access typically dominates request time anyway, and the ability
-to use SQL (or a similar server-side query language) gives you an opportunity to optimize that aspect of the request.
+이 모든 것들이 결합되어 HDA를 성능 관점에서 매우 확장 가능하게 만듭니다. 사용자 로드가 증가함에 따라 HDA를 확장할 수 있는 검증된 성능 기술이 존재합니다.
 
-HDAs also typically have the optimal ["one request per view"](https://twitter.com/htmx_org/status/1721750496086798378) 
-naturally since, well, in HDAs the requests *are* your views.
+HDA 접근 방식이 서버 측에 더 많은 계산을 밀어 넣을까요? 어느 정도는 그렇습니다. 그러나 특정 리소스에 대한 JSON 표현과 HTML 표현 간의 차이는 일부 사람들이 생각하는 것만큼 크지 않습니다. 
+특히 htmx 기반 애플리케이션에서 일반적으로 HTML 요청에 헤더와 푸터 정보를 포함하지 않는 경우에는 더욱 그렇습니다. 
+네트워크 지연 시간과 데이터 저장소 액세스가 일반적으로 요청 시간의 대부분을 차지하며, SQL(또는 유사한 서버 측 쿼리 언어)을 사용할 수 있는 능력은 요청의 해당 측면을 최적화할 기회를 제공합니다.
 
-## Scaling With # Of Features
+HDA는 또한 "뷰당 하나의 요청"이 최적의 상태를 자연스럽게 가지며, 이는 HDA에서 요청이 곧 뷰이기 때문입니다.
 
-Because HDAs tend to have independent end-points driven by UI needs, rather than a general JSON data API, scaling with 
-the number of features is typically very easy.  Assuming a reasonable Model-View-Controller split on the server side, 
-Controllers and Models tend to be very independent of one another.  When features truly overlap, having the features 
-developed and tested on the server-side provides a more controlled and testable environment.
+## 기능 수에 따른 확장
 
-Views can achieve reuse via server-side includes, found in nearly all server-side templating libraries, or be maintained
-separately in order to avoid interdependencies.
+HDA는 일반적인 JSON 데이터 API가 아니라 UI 요구에 의해 구동되는 독립적인 엔드포인트를 갖는 경향이 있기 때문에, 기능 수에 따른 확장은 일반적으로 매우 쉽습니다. 
+서버 측에서 합리적인 모델-뷰-컨트롤러(MVC) 분할이 이루어진다고 가정하면, 컨트롤러와 모델은 서로 독립적인 경우가 많습니다. 
+기능들이 실제로 겹치는 경우에도, 기능을 서버 측에서 개발하고 테스트하는 것이 더 통제 가능하고 테스트하기 쉬운 환경을 제공합니다.
 
-All of this is to say that, with reasonable application architecture, HDAs often scale _very well_ with the # of 
-features in an application, especially when those features are inherently decoupled from one another.
+뷰는 거의 모든 서버 측 템플릿 라이브러리에서 찾을 수 있는 서버 측 포함 기능을 통해 재사용할 수 있거나, 상호 의존성을 피하기 위해 별도로 유지 관리할 수 있습니다.
 
-## Scaling With Complexity Of Features
+결론적으로, 합리적인 애플리케이션 아키텍처를 갖추고 있다면, HDA는 애플리케이션 내 기능 수가 증가함에 따라 매우 잘 확장될 수 있습니다. 
+특히 이 기능들이 본질적으로 서로 독립적일 경우 더욱 그렇습니다.
 
-Scaling with the # of features is at some level akin to _horizontal scaling_: so long as they are relatively independent
-they will scale fine (and if they aren't, HDAs will still often scale as well as or better than other options.)
+## 기능 복잡도에 따른 확장
 
-But what about _deep_ features: features that are complex _in themselves_?
+기능 수에 따른 확장은 어느 정도 _수평 확장_과 유사합니다. 즉, 기능이 상대적으로 독립적이라면 문제없이 확장될 것입니다. 
+(그리고 그렇지 않더라도, HDA는 종종 다른 옵션들보다 더 잘 확장될 수 있습니다.)
 
-Here we must split the deep features into two categories:
+그러나 _깊은_ 기능, 즉 자체적으로 복잡한 기능에 대해서는 어떨까요?
 
-* Server-side deep features
-* Client-side deep features
+여기서는 깊은 기능을 두 가지 범주로 나눠서 살펴봐야 합니다:
 
-For deep server-side features, HDAs are often a great choice.  A good example of this is something like an AI chat-bot:
-this is a very sophisticated server-side feature, but it interacts with the user via a simple textual interface.  Many
-[AI chat-bots](https://www.sliceofexperiments.com/p/building-a-personalized-ask-me-anything) have been built using 
-htmx, with people remarking on how simple it is.
+* 서버 측 깊은 기능
+* 클라이언트 측 깊은 기능
 
-For deep _client-side_ features, HDAs are sometimes _not_ a great choice.  We outline details on this in our essay on
-[when to choose hypermedia](@/essays/when-to-use-hypermedia.md).  To summarize that article: if your UI requires responding to a large number of events
-quickly (e.g. dragging a map-view) or has significant inter-UI dependencies that cannot be updated in a bulk hypermedia
-exchange (e.g. a spreadsheet application), the hypermedia approach isn't going to work well
+서버 측 깊은 기능에 대해서는, HDA가 종종 훌륭한 선택이 됩니다. 
+예를 들어, AI 채팅봇과 같은 기능은 매우 복잡한 서버 측 기능이지만, 사용자와의 상호작용은 간단한 텍스트 인터페이스를 통해 이루어집니다. 
+[AI 채팅봇](https://www.sliceofexperiments.com/p/building-a-personalized-ask-me-anything) 중 많은 수가 htmx를 사용해 구축되었으며, 많은 사람들이 그 간단함에 대해 놀라워하고 있습니다.
 
-However, we would note two things:
+반면, 깊은 _클라이언트 측_ 기능에 대해서는 HDA가 항상 최선의 선택이 아닐 수 있습니다. 
+이 주제에 대한 자세한 내용은 [언제 하이퍼미디어를 선택해야 하는가](https://htmx.org/essays/when-to-use-hypermedia/)라는 에세이에서 다루고 있습니다. 
+그 요약은 다음과 같습니다: 
+만약 UI가 많은 이벤트에 빠르게 반응해야 하거나 (예: 지도 뷰 드래그) 또는 대량의 하이퍼미디어 교환으로 업데이트할 수 없는 상당한 상호 UI 종속성을 가지고 있다면 (예: 스프레드시트 애플리케이션), 하이퍼미디어 접근 방식은 잘 작동하지 않을 것입니다.
 
-* It is often possible to _wrap_ more complex front-end behavior within an HDA application, integrating via events. 
-* Sometimes it is better to [say "No"](https://grugbrain.dev/#grug-on-saying-no) to complex front-end features, or at
-  least consider if a simpler implementation is acceptable that doesn't entail the additional complexity typically 
-  found with complex front end frameworks.
+그러나 두 가지를 언급하고 싶습니다:
 
-## Scaling The Team
+* 보다 복잡한 프론트엔드 동작을 HDA 애플리케이션 내에서 _래핑_하고 이벤트를 통해 통합하는 것이 종종 가능합니다.
+* 복잡한 프론트엔드 기능에 대해 "아니요"라고 말하거나, 적어도 복잡한 프론트엔드 프레임워크에서 발생하는 추가 복잡성을 수반하지 않는 단순한 구현이 받아들일 만한지 고려해보는 것이 좋습니다.
 
-The final sense of scaling we will consider is the idea of scaling a development team.  Here we must rely on more
-subjective and anecdotal measures, unfortunately.
+## 팀 확장
 
-It is our experience (and the experience of others) that HDAs seem to allow you to accomplish more with _fewer_ developers.
-They also eliminate the front-end/back-end split, and the communication friction of this split,
-since developers become responsible for entire features.  Some people _like_ the front-end/back-end split and feel
-this allows teams to scale better by making the teams independent.
+마지막으로 고려할 확장성의 측면은 개발 팀의 규모를 확장하는 것입니다. 여기서는 불행히도 더 주관적이고 일화적인 측정에 의존해야 합니다.
 
-We do not agree.  We think that the front-end and back-end of most web applications are _inherently coupled_ and, therefore,
-the best approach is to adopt an architecture that accepts this coupling and is designed to handle change well, which
-the hypermedia approach is (via the uniform interface.)
+우리의 경험(그리고 다른 사람들의 경험)으로 볼 때, HDA는 _더 적은_ 개발자로 더 많은 것을 성취할 수 있게 해주는 경향이 있습니다. 
+또한 프론트엔드와 백엔드의 분리를 없애고, 이 분리로 인해 발생하는 커뮤니케이션 마찰도 제거합니다. 개발자들은 전체 기능에 대한 책임을 지게 되기 때문입니다. 
+일부 사람들은 프론트엔드와 백엔드의 분할을 좋아하며, 이는 팀이 독립적으로 운영되기 때문에 팀 확장이 더 잘 이루어진다고 생각할 수 있습니다.
 
-Can HDAs scale to teams of 100 or more?  This we can't answer because we haven't seen this scenario.  But it can certainly
-scale into the 10s.  We can _imagine_ the approach scaling much higher (it did during the web 1.0 era, after all) but
-at this point we are speculating.
+우리는 동의하지 않습니다. 
+대부분의 웹 애플리케이션에서 프론트엔드와 백엔드는 _본질적으로 연결되어_ 있으며, 따라서 가장 좋은 접근 방식은 이 연결성을 수용하고 변화에 잘 대응할 수 있도록 설계된 아키텍처를 채택하는 것입니다. 하이퍼미디어 접근 방식이 바로 그런 아키텍처입니다(균일한 인터페이스를 통해).
 
-We prefer smaller teams anyway.  10 developers should be enough for any application.
+HDA가 100명 이상의 팀으로 확장될 수 있을까요? 이에 대해서는 우리가 그런 시나리오를 본 적이 없기 때문에 확답할 수 없습니다. 
+하지만 10명 단위로 확장될 수 있다는 것은 확실합니다. 우리는 이 접근 방식이 훨씬 더 크게 확장될 수 있을 것이라고 _상상_할 수 있습니다(결국 웹 1.0 시대에 그랬으니까요). 
+하지만 이 시점에서는 추측일 뿐입니다.
 
-## Conclusion
+어차피 우리는 작은 팀을 선호합니다. 10명의 개발자면 어떤 애플리케이션에도 충분할 것입니다.
 
-So, taking these all together, we have the following conclusion regarding scaling Hypermedia-Driven Applications:
+## 결론
 
-HDAs can scale very well with respect to performance and feature count.  They *can* scale with feature complexity,
-with caveats.  And, finally, the jury is still out on scaling with team size, although we can say that the HDA approach
-tends to keep teams smaller and eliminate inter-team communication friction.
+이 모든 것을 종합해 보면, 하이퍼미디어 기반 애플리케이션의 확장성과 관련하여 다음과 같은 결론을 내릴 수 있습니다:
+
+HDA는 성능과 기능 수에 대해 매우 잘 확장될 수 있습니다. 기능 복잡성에 대해서는 주의할 점이 있지만 확장될 수 있습니다. 
+그리고 마지막으로, 팀 규모의 확장성에 대해서는 아직 확실한 결론이 나지 않았지만, HDA 접근 방식이 팀을 더 작게 유지하고 팀 간의 커뮤니케이션 마찰을 줄이는 경향이 있다는 것을 알 수 있습니다.
