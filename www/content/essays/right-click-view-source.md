@@ -6,176 +6,144 @@ updated = 2023-09-21
 author = ["Carson Gross"]
 +++
 
-> Not for nothing, Hypercard presaged the web's critical "#ViewSource" affordance, which allowed people to copy,
-> modify, customize and improve on the things that they found delightful or useful.  This affordance was later adapted 
-> by other human-centered projects like #Scratch, and is a powerful tonic against #enshittification.
-> 
-> \-\-[Cory Doctorow @pluralistic@mamot.fr](https://twitter.com/doctorow/status/1701934612686196872)
-
-## Open Culture & The Web
-
-When people talk about open source software, that conversation is often dominated by
-[the Free Software Foundation's notion of free software](https://www.gnu.org/philosophy/free-sw.html):
-
-> “Free software” means software that respects users' freedom and community. Roughly, it means that the users have the 
-> freedom to run, copy, distribute, study, change and improve the software."
-
-This definition of free software has been a useful one and, through advocating for it, the FSF has gifted the world a 
-lot of wonderful open source software.
-
-Web applications, however, have always been an uncomfortable fit for this definition of free.  This is mainly
-for technical reasons: web applications involve a web browser interacting with a web server that is, typically, running
-on a remote system.
-
-At a fundamental level, the REST-ful architecture of the web was built around _hypermedia representations_ of remote
-resources:  browsers deal only with hypermedia representations provided by the server and, thus, have no visibility into
-the actual source of the code executing on the server side.
-
-Now, the web has certainly _leveraged_ free and open source software in its growth: browsers are typically (at least mostly)
-open source, server software is often open source, and so on.  And there are, of course, open source web applications
-that users may run for things like forums and so forth.
-
-However, from the standpoint of typical web application users, web applications are not free in the FSF sense of that
-term: the users are unable to see and modify the source of the server code that is being executed as they interact with
-the application via the browser.
-
-### Right-Click-View-Source As Culture
-
-Despite the fact that the web has a somewhat uncomfortable relationship with the notion of free software, the early web 
-none-the-less had a radically open _developer culture_. 
-
-In fact, in some important and practical ways, the early web had a _more_ open developer culture than what was achieved 
-by the free software movement.
-
-The [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) affordance available in browsers allowed people 
-to understand and "own", at least in an informal way, the web in a way that even most FSF-conforming applications could 
-not: you had direct access to the "source", or at least _part_ of the source, of the application available from 
-_within_ the application itself.  
-
-You could copy-and-paste (or save) the "source" (HTML, JavaScript & CSS) and start modifying it, without a complicated
-build tool chain or, indeed, without any tool chain at all.
-
-This radical openness of the web allowed many people, often not formally trained computer programmers, to learn how to 
-create web pages and applications in an ad hoc and informal way.  
-
-In strict free software terms, this was, of course, a compromise: as a user of a web application, you had no visibility 
-into how a server was constructing a given hypermedia response.
-
-But you could see _what_ the server was responding with: you could download and tweak it, poke and prod at it.  You could,
-if you were an advanced user, use browser tools to modify the application in place.  
-
-And, most importantly, you could _learn from it_, even if you couldn't see how the HTML was being produced.
-
-This radical openness of the client and network protocol, and the culture it produced, was a big part of the success
-of the early web.
-
-## Digital Enclosure vs. Technical Enclosure
-
-The [Enclosure Movement](https://en.wikipedia.org/wiki/Enclosure) was a period in English history when what were 
-previously [commons](https://en.wikipedia.org/wiki/Commons) were privatized.
-
-This was a traumatic event in English history, as evidenced by this poem by an 18th century anon:
-
-> The law locks up the man or woman
-> 
-> Who steals the goose from off the common,
-> 
-> But lets the greater felon loose
-> 
-> Who steals the common from the goose.
+> 괜히 그런 게 아닙니다. Hypercard는 사람들에게 그들이 발견한 즐겁거나 유용한 것들을 복사하고, 수정하고, 맞춤화하고, 개선할 수 있도록 해주는 웹의 중요한 "#ViewSource" 기능을 예고했습니다. 이 기능은 이후 #Scratch와 같은 사람 중심의 프로젝트에서 채택되었으며, #enshittification에 대한 강력한 해독제입니다.
 >
-> --18th century anon
+> \-\-[코리 닥터로우 @pluralistic@mamot.fr](https://twitter.com/doctorow/status/1701934612686196872)
 
-In the last decade, the web has gone through a period of "Digital Enclosure", where ["Walled Gardens"](https://en.wikipedia.org/wiki/Closed_platform),
-such as Facebook & Twitter, have replaced the earlier, more open and more chaotic blogs and internet forums.
+## 오픈 문화와 웹
 
-### Technical Enclosure
+오픈 소스 소프트웨어에 대해 이야기할 때, 그 대화는 종종 [자유 소프트웨어 재단(FSF)의 자유 소프트웨어 개념](https://www.gnu.org/philosophy/free-sw.html)에 의해 지배됩니다:
 
-Many (most?) web developers have decried this trend.  
+> “자유 소프트웨어”는 사용자들의 자유와 커뮤니티를 존중하는 소프트웨어를 의미합니다. 대략적으로, 이것은 사용자가 소프트웨어를 실행하고, 복사하고, 배포하고, 공부하고, 변경하고, 개선할 자유를 가지고 있음을 의미합니다.
 
-However, despite recognizing the danger of an increasingly closed internet, many web developers don't consider their own
-technical decisions and how those decisions can also contribute to the disappearance of web's _culture_ of openness.
+이 자유 소프트웨어의 정의는 유용한 것이었으며, 이를 통해 FSF는 세상에 많은 훌륭한 오픈 소스 소프트웨어를 선물했습니다.
 
-Inadvertently (for the most part) technical trends and decisions in web development in the last two decades have lead
-to what we term a "Technical Enclosure" of the web, a processes whereby technical decisions chip away at the #ViewSource
-affordance that Cory Doctrow discusses in the opening quote of this article, an affordance that existed as a commons
-for early web developers.
+그러나 웹 애플리케이션은 기술적인 이유로 인해 이 자유의 정의에 부합하기가 어렵습니다. 
+웹 애플리케이션은 일반적으로 원격 시스템에서 실행되는 웹 서버와 상호작용하는 웹 브라우저를 포함하기 때문입니다.
 
-To see a stark example of the decline of the [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) affordance
-in web development and Technical Enclosure in action, we can look at what is perhaps the most popular web page on the 
-internet, [The Google Homepage](https://google.com).
+기본적으로, 웹의 RESTful 아키텍처는 원격 리소스의 _하이퍼미디어 표현_을 중심으로 구축되었습니다: 
+브라우저는 서버에서 제공하는 하이퍼미디어 표현만 처리하며, 서버 측에서 실행되는 코드의 실제 소스에 대한 가시성이 없습니다.
 
-Here is the nearly complete source of that page from the year 2000, taken from 
-[the wayback machine](http://web.archive.org/web/20000229040250/http://www.google.com/):
+물론 웹은 성장 과정에서 자유 및 오픈 소스 소프트웨어를 _활용_해 왔습니다: 브라우저는 보통(적어도 대부분) 오픈 소스이며, 서버 소프트웨어도 자주 오픈 소스입니다. 
+또한 포럼과 같은 용도로 사용되는 오픈 소스 웹 애플리케이션도 있습니다.
 
-### Google in 2000
-<img src="/img/google-2000.png" alt="Google Source Code in 2000" style="border-radius: 12px; margin: 12px">
+그러나 일반적인 웹 애플리케이션 사용자 관점에서 볼 때, 웹 애플리케이션은 FSF의 의미에서 자유롭지 않습니다: 
+사용자는 브라우저를 통해 애플리케이션과 상호작용할 때 실행되는 서버 코드의 소스를 볼 수 없고 수정할 수 없습니다.
 
-In contrast, here is a random snapshot of roughly 1/100th of the current source code for the website:
+### 우클릭-소스 보기(View Source) 기능으로서의 문화
 
-### Google in 2023
-<img src="/img/google-2023.png" alt="Google Source Code in 2023" style="border-radius: 12px; margin: 12px">
+비록 웹이 자유 소프트웨어의 개념과 약간 불편한 관계에 있지만, 초기 웹은 그럼에도 불구하고 급진적으로 열린 _개발자 문화_를 가졌습니다.
 
-These two screenshots dramatically demonstrate the decline in the effectiveness of the [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) affordance over time:
-yes, you can still right-click the page and view its underlying source, but making sense of the latter code would be
-challenging for even the most seasoned web developer.
+사실, 중요한 실용적인 측면에서 초기 웹은 자유 소프트웨어 운동이 이룬 것보다 _더_ 개방적인 개발자 문화를 가지고 있었습니다.
 
-A new web developer would have almost no chance of deriving any value from doing so.
+브라우저에서 제공되는 [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) 기능은 사람들이 웹을 이해하고 어느 정도 비공식적으로 "소유"할 수 있도록 해주었습니다. 
+이는 대부분의 FSF 기준에 맞는 애플리케이션조차도 할 수 없었던 방식입니다: 사용자는 애플리케이션 내부에서 "소스"의 일부(HTML, JavaScript 및 CSS)에 직접 접근할 수 있었습니다.
 
-Now, this is not to criticize the google engineer's technical decisions that lead to this situation _as technical 
-decisions_: obviously, despite similar appearances, the google homepage of 2023 is far more sophisticated than the one 
-available in 2000.
+사용자는 "소스"를 복사하고 붙여넣기(또는 저장)하여 수정할 수 있었으며, 복잡한 빌드 도구 체인 없이, 실제로는 도구 체인 자체가 필요하지 않았습니다.
 
-The 2023 google homepage is going to be a lot more complicated than the 2000 page and, given the zeitgeist, it is going to 
-involve a lot of JavaScript.
+웹의 이러한 급진적인 개방성은 많은 사람들, 특히 공식적으로 컴퓨터 프로그래밍을 배우지 않은 사람들이 즉흥적이고 비공식적인 방식으로 웹 페이지와 애플리케이션을 만드는 방법을 배우도록 했습니다.
 
-However, this is to point out that something deeply important about the early web has been lost, almost certainly 
-unintentionally, along the way: the ability to view the source of the page, make sense of what it is doing and, most 
-importantly, to learn from it.
+엄격한 자유 소프트웨어 측면에서 보면, 이는 물론 타협이었습니다: 웹 애플리케이션의 사용자는 서버가 주어진 하이퍼미디어 응답을 어떻게 구성하는지에 대한 가시성이 없었습니다.
 
-## Right-Click-View-Source Extremism
+그러나 사용자는 서버가 _무엇_을 응답하는지 볼 수 있었습니다: 
+그것을 다운로드하고 수정하며, 찔러보고 실험할 수 있었습니다. 고급 사용자라면 브라우저 도구를 사용하여 애플리케이션을 직접 수정할 수도 있었습니다.
 
-Both [htmx](/) and [hyperscript](https://hyperscript.org) adhere to the [Locality of Behavior](@/essays/locality-of-behaviour.md)
-design principle.
+그리고 가장 중요한 것은, 비록 HTML이 어떻게 생성되는지 알 수는 없었지만, 그것으로부터 _배울 수_ 있었습니다.
 
-This principle states that:
+클라이언트와 네트워크 프로토콜의 이러한 급진적인 개방성과 그것이 만들어낸 문화는 초기 웹의 성공에 큰 역할을 했습니다.
 
-> The behaviour of a unit of code should be as obvious as possible by looking only at that unit of code
+## 디지털 폐쇄와 기술적 폐쇄
 
-The main technical advantage of Locality of Behavior is ease of maintenance, as outlined in the essay above.
+[인클로저 운동](https://en.wikipedia.org/wiki/Enclosure)은 과거에 [공유지](https://en.wikipedia.org/wiki/Commons)가 사유화된 영국 역사상의 시기였습니다.
 
-However, there is an important cultural benefit to the Locality of Behavior of htmx and hyperscript as well: **it restores
-the power of the [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) affordance on the web**.
+이것은 영국 역사에서 트라우마틱한 사건이었으며, 다음과 같은 18세기 익명의 시로 증명됩니다:
 
-Consider [Hyperwordle](https://arhamjain.com/hyperwordle/), a hyperscript-based clone of the popular 
-[Wordle](https://www.nytimes.com/games/wordle/index.html) game, now owned by the New York Times.
+> 법은 남자나 여자가 공공지에서 거위를 훔치는 것을 막지만,
+>
+> 더 큰 범죄자를 풀어줍니다,
+>
+> 거위에게서 공유지를 훔치는 자를.
+>
+> --18세기 익명의 시인
 
-You can visit Hyperwordle, right click and view the source of it, and you will be presented with some HTML and hyperscript,
-all of which is, with a bit of effort, understandable.
+지난 10년 동안, 웹은 "디지털 폐쇄"의 시기를 겪었으며, 
+[“벽으로 둘러싸인 정원”](https://en.wikipedia.org/wiki/Closed_platform)인 페이스북과 트위터와 같은 플랫폼들이 초기의 더 개방적이고 혼란스러운 블로그와 인터넷 포럼을 대체했습니다.
 
-The  [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) affordance is effective in this case.
+### 기술적 폐쇄
 
-Contrast this with the view-source experience of the Wordle implementation at the New York Times.
+많은(혹은 대부분의) 웹 개발자들이 이러한 경향을 비판해왔습니다.
 
-Now, this is of course a bit unfair: the NYTimes version has a lot more functionality and is heavily optimized. Hyperwordle
-is a proof of concept and not being hammered by millions of users every day.
+그러나 점점 더 폐쇄적으로 변하는 인터넷의 위험성을 인식하고 있음에도 불구하고, 
+많은 웹 개발자들은 자신의 기술적 결정이 웹의 _개방성 문화_의 사라짐에 어떻게 기여할 수 있는지 고려하지 않는 경우가 많습니다.
 
-Despite that qualification, Hyperwordle demonstrates a potential future for the web, a future where a culture of openness,
-of [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) politeness, is once again a touchstone of the
-culture of the web.
+지난 20년 동안 웹 개발에서의 기술적 경향과 결정들이 대부분 의도치 않게(혹은 일부 의도적으로) 웹의 "기술적 폐쇄"를 초래했습니다. 
+이 과정에서 Cory Doctorow가 이 글의 처음에서 언급한 #ViewSource 기능이 점차 쇠퇴해갔습니다. 이는 초기 웹 개발자들에게 공공재로 존재했던 기능이었습니다.
 
-## Prioritizing [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme)
+웹 개발에서 [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) 기능의 쇠퇴와 기술적 폐쇄의 명확한 예를 보려면, 
+아마도 인터넷에서 가장 인기 있는 웹 페이지인 [구글 홈페이지](https://google.com)를 살펴볼 수 있습니다.
 
-Engineers who care about the open culture of the web should recognize that the threats to that culture come not only from
-Digital Enclosure by large, private companies of the most important pieces of the web.  
+여기에는 2000년 당시의 거의 완전한 소스 코드가 [웨이백 머신](http://web.archive.org/web/20000229040250/http://www.google.com/)에서 가져온 것입니다:
 
-They should also recognize the risks of Technical Enclosure, and the _non-technical_ value of the 
-[#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) affordance in perpetuating the open culture of
-web development.  They should start thinking about making this affordance a priority in their technical decisions.  As
-with all priorities, this may involve trading off against other technical and even functional priorities during 
-application development.
+### 2000년의 구글
 
-But if we don't stand up for [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme), no one else will.
+<img src="/img/google-2000.png" alt="2000년 구글 소스 코드" style="border-radius: 12px; margin: 12px">
+
+반면, 여기에는 현재 구글 홈페이지 소스 코드의 약 1/100 정도에 불과한 스냅샷이 있습니다:
+
+### 2023년의 구글
+
+<img src="/img/google-2023.png" alt="2023년 구글 소스 코드" style="border-radius: 12px; margin: 12px">
+
+이 두 스크린샷은 시간이 지남에 따라 [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) 기능의 효용성이 얼마나 줄어들었는지를 극명하게 보여줍니다. 
+예, 여전히 페이지를 우클릭하여 기본 소스를 볼 수 있지만, 후자의 코드를 이해하는 것은 가장 숙련된 웹 개발자에게도 어려운 일입니다.
+
+새로운 웹 개발자는 이 소스를 통해 무언가를 배울 가능성이 거의 없습니다.
+
+이는 구글 엔지니어들이 이러한 상황을 초래한 _기술적 결정_을 비판하는 것이 아닙니다. 
+2000년에 비해 2023년의 구글 홈페이지는 훨씬 더 정교하다는 것은 분명합니다.
+
+2023년의 구글 홈페이지는 2000년의 페이지보다 훨씬 더 복잡할 것이고, 현재의 경향을 감안할 때 많은 자바스크립트를 포함할 것입니다.
+
+그러나 이 과정에서 초기 웹의 중요한 부분이, 아마도 의도치 않게, 상실되었음을 지적하는 것입니다. 
+바로 페이지의 소스를 보고 그것이 무엇을 하는지 이해하며, 가장 중요한 것은 그것으로부터 _배우는_ 능력입니다.
+
+## 극단적인 우클릭-소스 보기(View Source) 기능
+
+[htmx](/)와 [hyperscript](https://hyperscript.org)는 모두 [Locality of Behavior](@/essays/locality-of-behaviour.md) 설계 원칙을 따릅니다.
+
+이 원칙은 다음과 같이 말합니다:
+
+> 코드 단위의 동작은 그 코드 단위만을 보고도 최대한 명확해야 합니다.
+
+이 설계 원칙의 주요 기술적 장점은 유지 관리의 용이성입니다. 이는 위의 에세이에서 설명되었습니다.
+
+그러나 htmx와 hyperscript의 Locality of Behavior에는 중요한 문화적 이점도 있습니다. 
+**웹에서 [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) 기능의 효용을 회복시켜준다는 점입니다.**
+
+[Hyperwordle](https://arhamjain.com/hyperwordle/), 
+뉴욕 타임스가 소유한 인기 게임 [Wordle](https://www.nytimes.com/games/wordle/index.html)의 hyperscript 기반 클론을 생각해보십시오.
+
+Hyperwordle에 접속하여 우클릭하고 소스를 보면, HTML과 hyperscript가 표시되며, 약간의 노력으로 그것을 이해할 수 있습니다.
+
+이 경우 [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) 기능이 효과적입니다.
+
+이것을 뉴욕 타임스의 Wordle 구현에서의 소스 보기 경험과 비교해보십시오.
+
+물론 이는 다소 불공정한 비교일 수 있습니다. NYTimes 버전은 훨씬 더 많은 기능을 가지고 있고, 강력한 최적화가 이루어져 있습니다. 
+Hyperwordle은 개념 증명(proof of concept)일 뿐이며, 매일 수백만 명의 사용자로부터 접속을 받지 않습니다.
+
+그럼에도 불구하고 Hyperwordle은 웹의 미래를 보여줍니다. 
+개방성, [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) 예의의 문화가 다시 한 번 웹의 문화의 핵심이 되는 미래를 보여줍니다.
+
+## [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme)를 우선시하기
+
+웹의 개방적인 문화를 중요하게 여기는 엔지니어들은 그 문화를 위협하는 요소들이 대기업들이 웹의 중요한 부분을 디지털로 폐쇄하려는 시도에서만 오지 않는다는 점을 인식해야 합니다.
+
+그들은 또한 기술적 폐쇄의 위험성과 웹 개발의 개방 문화를 영속시키는 데 있어 
+[#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme) 기능의 _비기술적_ 가치를 인식해야 하며, 이 기능을 기술적 결정의 우선 순위로 고려하기 시작해야 합니다. 
+모든 우선 순위와 마찬가지로, 이는 애플리케이션 개발 중 다른 기술적 및 기능적 우선 순위와의 타협을 수반할 수 있습니다.
+
+그러나 우리가 [#ViewSource](https://en.wikipedia.org/wiki/View-source_URI_scheme)를 지키지 않는다면, 다른 누구도 지키지 않을 것입니다.
 
 <br/>
 

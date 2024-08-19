@@ -16,24 +16,17 @@ show_author = false
 
 <div style="font-family: monospace">
 
-I'd just like to interject for a moment.  What you're referring to as REST,
-is in fact, JSON/RPC, or as I've recently taken to calling it, REST-less.
-JSON is not a hypermedia unto itself, but rather a plain data format made
-useful by out of band information as defined by swagger documentation or
-similar.
+잠시 끼어들고 싶습니다.  여러분이 REST라고 부르는 것은 사실 JSON/RPC, 또는 최근에 저는 REST-less라고 부르고 있습니다. 
+JSON은 그 자체로 하이퍼미디어라기보다는 swagger 문서 등에 정의된 대로 out of band 정보에 의해 유용하게 만들어진 일반 데이터 형식입니다.
 
-Many computer users work with a canonical version of REST every day,
-without realizing it.  Through a peculiar turn of events, the version of REST
-which is widely used today is often called "The Web", and many of its users are
-not aware that it is basically the REST-ful architecture, defined by Roy Fielding.
+많은 컴퓨터 사용자들은 자신도 모르게 매일 표준 버전의 REST로 작업합니다.  
+특이한 사건의 전환으로 오늘날 널리 사용되는 REST 버전은 종종 “웹”이라고 불리며, 많은 사용자들은 이것이 기본적으로 Roy Fielding이 정의한 REST-ful 아키텍처라는 사실을 알지 못합니다.
 
-There really is a REST, and these people are using it, but it is just a
-part of The Web they use.  REST is the network architecture: hypermedia encodes the state
-of resources for hypermedia clients. JSON is an essential part of Single Page Applications,
-but useless by itself; it can only function in the context of a complete API specification.
-JSON is normally used in combination with SPA libraries: the whole system
-is basically RPC with JSON added, or JSON/RPC.  All these so-called "REST-ful"
-APIs are really JSON/RPC.
+실제로 REST가 존재하고 사람들이 이를 사용하고 있지만 이는 그들이 사용하는 The Web의 일부일 뿐입니다.  
+REST는 네트워크 아키텍처입니다. 하이퍼미디어는 하이퍼미디어 클라이언트를 위해 리소스 상태를 인코딩합니다. 
+JSON은 단일 페이지 애플리케이션의 필수적인 부분이지만 그 자체로는 쓸모가 없으며, 완전한 API 사양의 맥락에서만 작동할 수 있습니다. 
+JSON은 일반적으로 SPA 라이브러리와 함께 사용되며, 전체 시스템은 기본적으로 JSON이 추가된 RPC 또는 JSON/RPC입니다. 소위 “REST-ful” API라고 불리는 모든 API는 실제로는 JSON/RPC입니다.
+
 
 </div>
 <button _="on click
@@ -61,21 +54,20 @@ Copy For HN
 
 <div style="font-family: monospace">
 
-In a world of digital wonder, allow me to take a moment to clarify. What many name as REST is, in truth, JSON/RPC, or as
-I've lately begun to refer to it, the REST-less. JSON is not a magical script unto itself, but rather a simple parchment
-of data made meaningful by wisdom from unseen sources, shaped by the likes of the Swagger tomes and their ilk.
+디지털 경이로움의 세계에서 잠시 시간을 내어 명확히 설명해드리겠습니다. 많은 사람들이 REST라고 부르는 것은 사실 JSON/RPC, 또는 최근에 사용하기 시작한 REST-less입니다. 
+JSON은 그 자체로 마법의 스크립트가 아니라, Swagger 책과 그 동류에 의해 형성된 보이지 않는 출처의 지혜로 의미 있게 만들어진 단순한 데이터 양피지에 불과합니다.
 
-Countless keepers of the code interact with a revered form of REST each day, oblivious to its presence. Through an
-unexpected twist of fate, the interpretation of REST most commonly employed today is frequently dubbed "The Web", and
-many of its inhabitants are unaware that they are, in essence, dwelling within the architectural dominion of REST, as
-laid out by the sage Roy Fielding.
+수많은 코드의 수호자들은 매일 그 존재를 의식하지 못한 채 존경받는 형태의 REST와 상호작용합니다. 
+예상치 못한 운명의 장난으로 오늘날 가장 일반적으로 사용되는 REST의 해석은 종종 “웹”이라고 불리며, 
+많은 주민들은 현자 Roy Fielding이 제시한 것처럼 본질적으로 REST의 아키텍처 영역에 살고 있다는 사실을 인식하지 못하고 있습니다.
 
-Indeed, there exists a true REST, and these individuals are making use of it, but it is merely a facet of The Web they
-engage with. REST is the great network architecture: hypermedia inscribes the state of resources for the hypermedia
-voyagers. JSON is a vital element of Single Page Applications, yet worthless in solitude; it can only exhibit its power
-within the realm of a comprehensive API specification. JSON is typically deployed in alliance with SPA libraries: the
-entire realm is fundamentally RPC embellished with JSON, or JSON/RPC. All these entities hailed as "REST-ful" APIs are
-in actuality, the embodiment of JSON/RPC.
+실제로 진정한 REST가 존재하며, 이 사람들은 이를 활용하고 있지만, 이는 그들이 관여하는 웹의 한 측면일 뿐입니다. 
+REST는 위대한 네트워크 아키텍처입니다. 하이퍼미디어는 하이퍼미디어 항해자들을 위해 리소스 상태를 새겨 넣습니다. 
+JSON은 단일 페이지 애플리케이션의 핵심 요소이지만 단독으로는 가치가 없으며, 포괄적인 API 사양의 영역 내에서만 그 힘을 발휘할 수 있습니다. 
+JSON은 일반적으로 SPA 라이브러리와 함께 배포되며, 전체 영역은 기본적으로 JSON으로 장식된 RPC, 즉 JSON/RPC입니다. 
+“REST-ful” API로 환영받는 이러한 모든 엔티티는 실제로는 JSON/RPC의 구체화입니다.
+
+Translated with DeepL.com (free version)
 
 </div>
 <button _="on click

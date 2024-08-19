@@ -6,10 +6,10 @@ page_template = "essay.html"
 
 ### Hypermedia and REST
 * [HATEOAS](@/essays/hateoas.md)
-* [How Did REST Come To Mean The Opposite of REST?](@/essays/how-did-rest-come-to-mean-the-opposite-of-rest.md)
-* [Two Approaches To Decoupling](@/essays/two-approaches-to-decoupling.md)
+* [REST가 어떻게 REST의 반대의 의미를 가지게 되었나요?](@/essays/how-did-rest-come-to-mean-the-opposite-of-rest.md)
+* [Decoupling을 위한 두 가지 접근 방식](@/essays/two-approaches-to-decoupling.md)
 * [Hypermedia APIs vs. Data APIs](@/essays/hypermedia-apis-vs-data-apis.md)
-* [Splitting Your Data & Application APIs: Going Further](@/essays/splitting-your-apis.md)
+* [데이터 및 애플리케이션 API 분할하기: 더 나아가기](@/essays/splitting-your-apis.md)
 * [Hypermedia Clients](@/essays/hypermedia-clients.md)
 * [HATEOAS Is For Humans](https://intercoolerjs.org/2016/05/08/hatoeas-is-for-humans.html)
 * [Rescuing REST From the API Winter](https://intercoolerjs.org/2016/01/18/rescuing-rest.html)

@@ -7,46 +7,39 @@ author = ["Carson Gross"]
 tag = ["posts"]
 +++
 
-> The central feature that distinguishes the REST architectural style from other network-based styles is its emphasis on 
-> a uniform interface between components. By applying the software engineering principle of generality to the component 
-> interface, the overall system architecture is simplified and the visibility of interactions is improved. 
-> Implementations are decoupled from the services they provide, which encourages independent evolvability.
+> REST 아키텍처 스타일이 다른 네트워크 기반 스타일과 구별되는 중심 기능은 구성 요소 간의 **일관된 인터페이스**에 중점을 둔다는 점입니다. 소프트웨어 엔지니어링의 일반성 원칙을 구성 요소 인터페이스에 적용함으로써 전체 시스템 아키텍처가 단순화되고 상호작용의 가시성이 향상됩니다. 구현은 제공하는 서비스와 분리되며, 이는 독립적인 발전 가능성을 촉진합니다.
 
 _-Roy Fielding, <https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_5>_
 
-In this essay we will look at two different types of decoupling in the context of web applications:
+이 에세이에서는 웹 애플리케이션의 맥락에서 두 가지 유형의 결합 해제(Decoupling)를 살펴보겠습니다:
 
-* Decoupling at the _application level_ via a generic JSON Data API
-* Decoupling at the _network architecture level_ via a hypermedia API
+* **애플리케이션 수준**에서의 JSON 데이터 API를 통한 결합 해제
+* **네트워크 아키텍처 수준**에서의 하이퍼미디어 API를 통한 결합 해제
 
-We will see that, at the application level, a hypermedia API tightly couples your front-end and back-end.  Despite this
-fact, surprisingly, the hypermedia API is in fact more resilient in the face of change.
+우리는 애플리케이션 수준에서는 하이퍼미디어 API가 프론트엔드와 백엔드를 긴밀하게 결합시키지만, 이 사실에도 불구하고 하이퍼미디어 API가 변화에 더 잘 견디는 경향이 있음을 알게 될 것입니다.
 
-## Coupling
+## 결합(Coupling)
 
-[Coupling](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29) is a property of a software system in which
-two modules or aspects of the system have a high degree of interdependence. _Decoupling_ software is the act of reducing this 
-interdependence between unrelated modules so that they can evolve independently of one another.
+[결합(Coupling)](https://en.wikipedia.org/wiki/Coupling_%28computer_programming%29)은 
+소프트웨어 시스템에서 두 개의 모듈이나 시스템의 측면이 높은 상호 의존성을 가지는 특성을 말합니다. 
+**결합 해제(Decoupling)**는 이와 관련이 없는 모듈 간의 상호 의존성을 줄여 독립적으로 발전할 수 있도록 하는 행위입니다.
 
-The concept of coupling and decoupling is closely (and inversely) related to 
-[cohesion](https://en.wikipedia.org/wiki/Cohesion_(computer_science)).  Highly cohesive software has related logic 
-within a module or conceptual boundary, rather than spread out throughout a codebase.  (A related concept is our own idea
-of [Locality of Behavior](/essays/locality-of-behaviour/))
+결합 및 결합 해제 개념은 [응집력(Cohesion)](https://en.wikipedia.org/wiki/Cohesion_(computer_science))과 밀접하게 (그리고 반대로) 연관되어 있습니다. 
+응집력이 높은 소프트웨어는 관련된 논리가 모듈이나 개념적 경계 내에 존재하며, 코드베이스 전체에 퍼지지 않습니다. 
+(관련 개념으로는 우리의 [행동의 지역성](/essays/locality-of-behaviour/) 아이디어가 있습니다.)
 
-Broadly, experienced developers strive for decoupled and cohesive systems.
+일반적으로 경험이 많은 개발자들은 결합 해제되고 응집력 있는 시스템을 지향합니다.
 
-## JSON Data APIs - Application Level Decoupling
+## JSON 데이터 API - 애플리케이션 수준의 결합 해제
 
-A common approach to building web applications today is to create a JSON Data API and then consume that JSON API using
-a JavaScript framework such as React.  This application-level architectural decision decouples the front-end code
-from the back-end code, and allows the reuse of the JSON API in other contexts, such as a mobile applications, 3rd 
-party client integrations, etc.
+오늘날 웹 애플리케이션을 구축하는 일반적인 접근 방식은 JSON 데이터 API를 생성하고 이를 React와 같은 JavaScript 프레임워크를 사용하여 소비하는 것입니다. 
+이 애플리케이션 수준의 아키텍처 결정은 프론트엔드 코드와 백엔드 코드를 분리하고, 이 JSON API를 모바일 애플리케이션, 타사 클라이언트 통합 등과 같은 다른 컨텍스트에서 재사용할 수 있게 합니다.
 
-This is an _application-level_ decoupling because the decision and implementation of the decoupling is done by the
-application developer themselves.  The JSON API provides a "hard" interface between the two pieces of software.
+이는 **애플리케이션 수준**의 결합 해제입니다. 왜냐하면 결합 해제의 결정과 구현이 애플리케이션 개발자에 의해 이루어지기 때문입니다. 
+JSON API는 소프트웨어의 두 부분 사이에 "단단한" 인터페이스를 제공합니다.
 
-Using my favorite example, consider a simple JSON for a bank that has a `GET` end point at `https://example.com/account/12345`.
-This API might return the following content:
+제가 좋아하는 예시를 사용하여, `https://example.com/account/12345`에 `GET` 엔드포인트를 가지고 있는 은행을 위한 간단한 JSON을 고려해보겠습니다. 
+이 API는 다음과 같은 내용을 반환할 수 있습니다:
 
 ```json
 HTTP/1.1 200 OK
@@ -63,161 +56,145 @@ HTTP/1.1 200 OK
 }
 ```
 
-This Data API can be consumed by any client: a web application, a mobile client, a third party, etc.  It is, therefore
-decoupled from any particular client.
+이 데이터 API는 웹 애플리케이션, 모바일 클라이언트, 타사 등 어떤 클라이언트에서도 소비할 수 있습니다. 따라서 특정 클라이언트에 종속되지 않습니다.
 
-### Decoupling Via A JSON API In Practice
+### JSON API를 통한 결합 해제의 실제 사례
 
-So far, so good.  But how does this decoupling work out in practice?
+지금까지는 잘 되었습니다. 하지만 이 결합 해제가 실제로는 어떻게 작동할까요?
 
-In our essay [Splitting Your Data & Application APIs: Going Further](https://htmx.org/essays/splitting-your-apis/) you
-will find the following quote:
+우리의 에세이 [Splitting Your Data & Application APIs: Going Further](https://htmx.org/essays/splitting-your-apis/)에서 다음과 같은 인용문을 찾을 수 있습니다:
 
-> The worst part of my job these days is designing APIs for front-end developers. The conversation goes inevitably as:
+> 요즘 내 일에서 가장 어려운 부분은 프론트엔드 개발자를 위해 API를 설계하는 것입니다. 대화는 불가피하게 다음과 같이 진행됩니다:
 >
->  Dev – So, this screen has data element x,y,z… could you please create an API with the response format {x: , y:, z: }
+>  Dev – 이 화면에는 데이터 요소 x, y, z가 있습니다... 이 형식의 응답을 제공하는 API를 만들어 주실 수 있나요? {x: , y:, z: }
 >
->  Me – Ok
-> 
+>  Me – 알겠습니다.
+>
 > Jean-Jacques Dubray - <https://www.infoq.com/articles/no-more-mvc-frameworks>
 
-This quote shows that, although we have driven coupling out with a pitchfork (or, in our case, with a JSON API) it has come 
-back through requests for web application-specific JSON API end points.  These sorts of requests end up recoupling the
-front-end and back-end code: the JSON API is no longer providing a generic JSON Data API, but rather a specific API for 
-the front-end needs.
+이 인용문은 우리가 결합을 피치포크로 (또는 우리의 경우 JSON API로) 몰아냈지만, 웹 애플리케이션 전용 JSON API 엔드포인트에 대한 요청을 통해 다시 돌아왔음을 보여줍니다. 
+이러한 요청은 프론트엔드와 백엔드 코드를 다시 결합시킵니다: JSON API는 더 이상 일반적인 JSON 데이터 API를 제공하지 않고, 대신 프론트엔드의 특정 요구에 맞는 API를 제공하게 됩니다.
 
-Worse, these front-end needs will often change frequently as your application evolves, necessitating the modification
-of your JSON API.  What if other non-web application clients have come to depend on the original API?
+더 나쁜 것은, 애플리케이션이 발전함에 따라 프론트엔드의 요구 사항이 자주 변경될 수 있으며, 이는 JSON API의 수정을 필요로 한다는 것입니다. 
+만약 다른 비웹 애플리케이션 클라이언트가 원래의 API에 의존하게 된다면 어떻게 될까요?
 
-This problem leads to the "versioning hell" that many JSON Data API developers face when supporting both web applications as well
-as other non-web application clients.
+이 문제는 웹 애플리케이션과 다른 비웹 애플리케이션 클라이언트를 지원할 때 많은 JSON 데이터 API 개발자들이 직면하는 "버전 관리 지옥"으로 이어집니다.
 
-#### A Solution: GraphQL
+#### 해결책: GraphQL
 
-One potential solution to this problem is to introduce [GraphQL](https://graphql.org/), which allows you to have a much
-more expressive JSON API.  This means that you don't need to change it as often when your API client's needs change.  
+이 문제에 대한 한 가지 잠재적인 해결책은 [GraphQL](https://graphql.org/)을 도입하는 것입니다. 
+GraphQL을 사용하면 API 클라이언트의 요구가 변경될 때마다 API를 자주 변경하지 않아도 되는 훨씬 더 표현력 있는 JSON API를 가질 수 있습니다.
 
-This is a reasonable approach for addressing the problem outlined above, but there are problems with it.  The biggest 
-issue that we see is security, as we outline this in [The API Churn/Security Trade-off](https://intercoolerjs.org/2016/02/17/api-churn-vs-security.html) essay.  
+이것은 위에서 설명한 문제를 해결하기 위한 합리적인 접근 방식이지만, 몇 가지 문제가 있습니다. 
+우리가 [API 변동성/보안 절충안](https://intercoolerjs.org/2016/02/17/api-churn-vs-security.html) 에세이에서 설명한 바와 같이, 가장 큰 문제는 보안입니다.
 
-Apparently facebook uses a [whitelist](https://twitter.com/AdamChainz/status/1392162996844212232) to deal with the security
-issues introduced by GraphQL, but many developers who are using GraphQL appear to not understand the security threats 
-involved with it.
+Facebook은 [허용 목록](https://twitter.com/AdamChainz/status/1392162996844212232)을 사용하여 GraphQL이 도입하는 보안 문제를 처리하는 것 같습니다. 
+그러나 GraphQL을 사용하는 많은 개발자들이 관련된 보안 위협을 이해하지 못하는 것 같습니다.
 
-#### Another Solution: Splitting Your Application & General Data APIs
+#### 또 다른 해결책: 애플리케이션 및 일반 데이터 API 분리
 
-Another approach recommended by [Max Chernyak](https://max.engineer/) in his article
-[Don’t Build A General Purpose API To Power Your Own Front End](https://max.engineer/server-informed-ui), is to build
-*two* JSON APIs: 
+또 다른 접근 방식으로는, [Max Chernyak](https://max.engineer/)이 그의 기사 
+[Don’t Build A General Purpose API To Power Your Own Front End](https://max.engineer/server-informed-ui)에서 제안한 방법입니다. 
+이 접근 방식은 **두 가지** JSON API를 구축하는 것입니다:
 
-* An application specific JSON API that can be modified as needed
-* A general purpose JSON API that can be consumed by other clients such as mobile, etc.
+* 필요에 따라 수정할 수 있는 애플리케이션 전용 JSON API
+* 모바일 등 다른 클라이언트에서 소비할 수 있는 일반적인 JSON API
 
-This is a pragmatic solution to address what appears to be the _inherent_ coupling between your web application's front-end
-and the back-end code supporting it, and it doesn't involve the security tradeoffs involved in a general GraphQL API.
+이것은 여러분의 웹 애플리케이션의 프론트엔드와 이를 지원하는 백엔드 코드 간의 **본질적인** 결합을 해결하기 위한 실용적인 해결책이며, 
+일반적인 GraphQL API에서 발생하는 보안 절충점을 포함하지 않습니다.
 
-## Hypermedia - Network Architecture Decoupling
+## 하이퍼미디어 - 네트워크 아키텍처 결합 해제
 
-Now let us consider how a _hypermedia API_ decouples software.  
+이제 **하이퍼미디어 API**가 소프트웨어를 어떻게 결합 해제하는지 살펴보겠습니다.
 
-Consider a potential response to the same `GET` for `https://example.com/account/12345` that we saw above:
+위에서 본 `https://example.com/account/12345`에 대한 동일한 `GET` 요청에 대한 잠재적인 응답을 고려해보세요:
 
 ```html
 HTTP/1.1 200 OK
 
 <html>
   <body>
-    <div>Account number: 12345</div>
-    <div>Balance: $100.00 USD</div>
-    <div>Links:
-        <a href="/accounts/12345/deposits">deposits</a>
-        <a href="/accounts/12345/withdrawals">withdrawals</a>
-        <a href="/accounts/12345/transfers">transfers</a>
-        <a href="/accounts/12345/close-requests">close-requests</a>
+    <div>계좌 번호: 12345</div>
+    <div>잔액: $100.00 USD</div>
+    <div>링크:
+        <a href="/accounts/12345/deposits">예금</a>
+        <a href="/accounts/12345/withdrawals">출금</a>
+        <a href="/accounts/12345/transfers">송금</a>
+        <a href="/accounts/12345/close-requests">계좌 해지</a>
     </div>
   <body>
 </html>
 ```
 
-(Yes, this is an API response.  It just happens to be a hypermedia-formatted response, in this case HTML.)
+(네, 이것은 API 응답입니다. 이번 경우에는 하이퍼미디어 형식의 응답이며, HTML로 제공됩니다.)
 
-Here we see that, at the application level, this response could not be more tightly coupled to the "front-end".  In fact,
-it *is* the front-end, in the sense that the API response specifies not only the data for the resource, but also provides
-layout information on how, exactly, to display this data to the user.
+여기서 볼 수 있듯이, 애플리케이션 수준에서 이 응답은 "프론트엔드"와 더 긴밀하게 결합될 수 없습니다. 
+사실, 이 응답은 리소스에 대한 데이터뿐만 아니라 이 데이터를 사용자에게 어떻게 정확히 표시할지에 대한 레이아웃 정보도 제공하기 때문에 프론트엔드 자체입니다.
 
-The response also contains _hypermedia controls_, in this case, links, that an end user can select from to continue
-navigating the hypermedia API that this [Hypermedia-Driven Application](https://htmx.org/essays/hypermedia-driven-applications/) provides.
+응답에는 하이퍼미디어 제어 요소, 이 경우에는 링크가 포함되어 있어 사용자가 이 
+[하이퍼미디어 기반 애플리케이션](https://htmx.org/essays/hypermedia-driven-applications/)이 제공하는 하이퍼미디어 API를 계속 탐색할 수 있습니다.
 
-So, where is the decoupling in this case?
+그렇다면, 이 경우 결합 해제는 어디에서 일어나고 있을까요?
 
-### REST & The Uniform Interface
+### REST & 일관된 인터페이스
 
-The decoupling in this case is occurring at a _lower level_.  It is happening at the _network architecture_ level, which
-is to say, at the system level.  [Hypermedia systems](https://hypermedia.systems) are designed to decouple the hypermedia
-client (in the case of the web, the browser) from the hypermedia server.
+이 경우 결합 해제는 **더 낮은 수준**에서 발생하고 있습니다. 즉, **네트워크 아키텍처** 수준에서 시스템 수준으로 발생합니다. 
+[하이퍼미디어 시스템](https://hypermedia.systems)은 하이퍼미디어 클라이언트(웹의 경우, 브라우저)를 하이퍼미디어 서버에서 결합 해제하도록 설계되었습니다.
 
-This is accomplished primarily via the Uniform Interface constraint of REST and, in particular, by using 
-Hypermedia As The Engine of Application State ([HATOEAS](/essays/hateoas)).
+이는 REST의 일관된 인터페이스 제약 조건을 통해, 특히 애플리케이션 상태의 엔진으로서의 하이퍼미디어([HATOEAS](/essays/hateoas))를 사용하여 주로 달성됩니다.
 
-This style of decoupling allows tighter coupling at the higher application level (which we have seen may be an 
-_inherent_ coupling) while still retaining the benefits of decoupling for the overall system.
+이러한 스타일의 결합 해제는 더 높은 애플리케이션 수준에서 더 긴밀한 결합을 허용하면서(이는 **본질적인** 결합일 수 있음) 전체 시스템의 결합 해제의 이점을 여전히 유지합니다.
 
-### Decoupling Via Hypermedia In Practice
+### 하이퍼미디어를 통한 결합 해제의 실제 사례
 
-How does this sort of decoupling work in practice?  Well, let's say that we wish to remove the ability to transfer money 
-from our bank to other banks as well as the ability to close accounts.
+이러한 결합 해제가 실제로 어떻게 작동하는지 살펴보겠습니다. 은행 계좌에서 다른 은행으로 송금하는 기능과 계좌를 해지하는 기능을 제거하고 싶다고 가정해보겠습니다.
 
-What does our hypermedia response for this `GET` request now look like?
+이 `GET` 요청에 대한 하이퍼미디어 응답은 어떻게 보일까요?
 
 ```html
 HTTP/1.1 200 OK
 
 <html>
   <body>
-    <div>Account number: 12345</div>
-    <div>Balance: $100.00 USD</div>
-    <div>Links:
-        <a href="/accounts/12345/deposits">deposits</a>
-        <a href="/accounts/12345/withdrawals">withdrawals</a>
+    <div>계좌 번호: 12345</div>
+    <div>잔액: $100.00 USD</div>
+    <div>링크:
+        <a href="/accounts/12345/deposits">예금</a>
+        <a href="/accounts/12345/withdrawals">출금</a>
     </div>
   <body>
 </html>
 ```
 
-You can see that in this response, links for those two actions have been removed from the HTML.  The browser simply 
-render the new HTML to the user.  To a rounding error, there are no clients sitting around using the _old_ API.  The
-API is encoded within and discovered through the hypermedia.
+이 응답에서는 HTML에서 해당 두 작업에 대한 링크가 제거된 것을 볼 수 있습니다. 브라우저는 단순히 새 HTML을 사용자에게 렌더링합니다. 
+거의 모든 클라이언트가 **이전** API를 사용하지 않게 됩니다. API는 하이퍼미디어 내에 인코딩되고 하이퍼미디어를 통해 발견됩니다.
 
-This means that we can dramatically change our API without breaking our clients.
+이것은 클라이언트를 손상시키지 않고 API를 크게 변경할 수 있음을 의미합니다.
 
-This flexibility is the crux of the REST-ful network architecture and, in particular, of [HATEOAS](/essays/hateoas/).
+이 유연성은 REST-ful 네트워크 아키텍처, 특히 [HATEOAS](/essays/hateoas/)의 핵심입니다.
 
-As you can see, despite much tighter _application-level_ coupling between our front-end and back-end, we actually have
-more flexibility due to the _network architecture_ decoupling afforded to us by the Uniform Interface aspect of 
-REST-ful [hypermedia systems](https://hypermedia.systems).
+보시다시피, 우리의 프론트엔드와 백엔드 간의 **애플리케이션 수준** 결합이 훨씬 더 긴밀해졌음에도 불구하고, 
+REST-ful [하이퍼미디어 시스템](https://hypermedia.systems)이 제공하는 일관된 인터페이스 측면에서 **네트워크 아키텍처** 결합 해제 덕분에 우리는 더 큰 유연성을 갖게 됩니다.
 
-### But That's A Terrible (Data) API!
+### 하지만 이것은 끔찍한 (데이터) API입니다!
 
-Many people would object that, sure, this hypermedia API may be flexible for our web application, but it makes for a 
-terrible general purpose API.
+많은 사람들이 이 하이퍼미디어 API가 웹 애플리케이션에는 유연할 수 있지만, 일반적인 API로서는 끔찍하다고 반박할 수 있습니다.
 
-This is quite true.  This hypermedia API is tuned for a specific web application.  It would be cumbersome and error-prone
-to try to download this HTML, parse it and try to extract information from it.  This hypermedia API only makes sense as part
-of a larger hypermedia system, being consumed by a proper hypermedia client.
+이것은 사실입니다. 이 하이퍼미디어 API는 특정 웹 애플리케이션에 맞게 조정되었습니다. 
+이 HTML을 다운로드하고 구문 분석하여 정보를 추출하려고 하면 번거롭고 오류가 발생하기 쉽습니다. 
+이 하이퍼미디어 API는 적절한 하이퍼미디어 클라이언트가 소비하는 더 큰 하이퍼미디어 시스템의 일부로서만 의미가 있습니다.
 
-This is exactly why we recommend creating a general purpose JSON API alongside your hypermedia API in
-[Splitting Your Data & Application APIs: Going Further](https://htmx.org/essays/splitting-your-apis/).  You can
-take advantage of the flexibility of hypermedia for your own web application, while providing a 
-general purpose JSON API for mobile applications, third party applications, etc.
+바로 이 이유 때문에 우리는 
+[Splitting Your Data & Application APIs: Going Further](https://htmx.org/essays/splitting-your-apis/)에서 하이퍼미디어 API와 함께 일반적인 JSON API를 생성할 것을 권장합니다. 
+이렇게 하면 하이퍼미디어의 유연성을 웹 애플리케이션에서 활용하는 동시에 모바일 애플리케이션, 타사 애플리케이션 등을 위한 일반적인 JSON API를 제공할 수 있습니다.
 
-(Although, we should mention, a [hypermedia-based mobile application](https://hyperview.org) might be a good choice too!)
+(참고로, [하이퍼미디어 기반 모바일 애플리케이션](https://hyperview.org)도 좋은 선택일 수 있습니다!)
 
-## Conclusion
+## 결론
 
-In this essay we looked at two different types of decoupling:
+이 에세이에서는 두 가지 유형의 결합 해제에 대해 살펴보았습니다:
 
-* Application level decoupling via a JSON Data API
-* Network-architecture decoupling via REST/HATEOAS in a hypermedia system
+* JSON 데이터 API를 통한 애플리케이션 수준의 결합 해제
+* 하이퍼미디어 시스템에서 REST/HATEOAS를 통한 네트워크 아키텍처 결합 해제
 
-And we saw that, despite the tighter application-level coupling found in a hypermedia-based application, it is the
-hypermedia system that handles changes more gracefully.
+그리고 하이퍼미디어 기반 애플리케이션에서 더 긴밀한 **애플리케이션 수준** 결합이 있음에도 불구하고, 하이퍼미디어 시스템이 변화에 더 잘 대응할 수 있다는 것을 확인했습니다.
