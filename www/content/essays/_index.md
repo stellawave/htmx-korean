@@ -28,13 +28,13 @@ page_template = "essay.html"
 
 ### Building Hypermedia Applications
 * [React에서 htmx 전환 실제 반응](@/essays/a-real-world-react-to-htmx-port.md)
-* [Another Real World React to htmx Port](@/essays/another-real-world-react-to-htmx-port.md)
-* [Web Security Basics (with htmx)](@/essays/web-security-basics-with-htmx.md)
+* [React에서 htmx 전환 다른 실제 반응](@/essays/another-real-world-react-to-htmx-port.md)
+* [(htmx와 함께하는) 웹 보안 기초](@/essays/web-security-basics-with-htmx.md)
 * [Hypermedia-Driven Applications (HDAs)](@/essays/hypermedia-driven-applications.md)
-* [Hypermedia Friendly Scripting](@/essays/hypermedia-friendly-scripting.md)
-* [10 Tips For Building SSR/HDA applications](@/essays/10-tips-for-SSR-HDA-apps.md)
-* [Why I Tend Not To Use Content Negotiation](@/essays/why-tend-not-to-use-content-negotiation.md)
-* [Template Fragments](@/essays/template-fragments.md)
+* [하이퍼미디어 친화적인 스크립팅](@/essays/hypermedia-friendly-scripting.md)
+* [SSR/HDA 애플리케이션 구축을 위한 10가지 팁](@/essays/10-tips-for-SSR-HDA-apps.md)
+* [내가 콘텐츠 협상을 사용하지 않는 이유](@/essays/why-tend-not-to-use-content-negotiation.md)
+* [템플릿 조각](@/essays/template-fragments.md)
 * [View Transitions](@/essays/view-transitions.md)
 * [Model/View/Controller](@/essays/mvc.md)
 * [Is Rendering JSON More Efficient Than Rendering HTML?](https://github.com/1cg/html-json-speed-comparison)
@@ -42,9 +42,9 @@ page_template = "essay.html"
 
 ### Complexity Very Very Bad
 * [The Grug Brained Developer](https://grugbrain.dev)
-* [Locality of Behavior (LoB)](@/essays/locality-of-behaviour.md)
-* [Complexity Budget](@/essays/complexity-budget.md)
-* [Why htmx Does Not Have a Build Step](@/essays/no-build-step.md)
+* [행동의 지역성 (LoB)](@/essays/locality-of-behaviour.md)
+* [복잡성 비용](@/essays/complexity-budget.md)
+* [htmx에 빌드 단계가 없는 이유](@/essays/no-build-step.md)
 * [htmx는 또 하나의 자바스크립트 프레임워크일 뿐인가요?](@/essays/is-htmx-another-javascript-framework.md)
 * [htmx Implementation Deep Dive (Video)](https://www.youtube.com/watch?v=javGxN-h9VQ)
 

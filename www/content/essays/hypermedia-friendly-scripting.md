@@ -7,104 +7,88 @@ author = ["Carson Gross"]
 tag = ["posts"]
 +++
 
-> The final addition to our constraint set for REST comes from the code-on-demand style of Section 3.5.3 (Figure 5-8). 
-> REST allows client functionality to be extended by downloading and executing code in the form of applets or scripts. 
-> This simplifies clients by reducing the number of features required to be pre-implemented. Allowing features to be 
-> downloaded after deployment improves system extensibility. However, it also reduces visibility, and thus is only an
-> optional constraint within REST.
+> REST에 대한 제약 조건 집합에 최종적으로 추가된 것은 3.5.3절의 코드 온 디맨드 스타일에서 비롯됩니다(Figure 5-8).
+> REST는 클라이언트 기능을 확장하기 위해 애플릿이나 스크립트 형태로 코드를 다운로드하고 실행하는 것을 허용합니다.
+> 이는 사전에 구현해야 하는 기능의 수를 줄임으로써 클라이언트를 단순화합니다. 배포 후 기능을 다운로드할 수 있게 함으로써 시스템 확장성을 개선할 수 있습니다.
+> 그러나 이는 가시성을 낮추기 때문에 REST 내에서 선택적인 제약 조건으로 간주됩니다.
 >
-> \-\-[Roy Fielding - Representational State Transfer (REST)](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7)
+> \-\- [Roy Fielding - 대표 상태 전송(REST)](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7)
 
-## Scripting & The Web {#scripting_and_the_web}
+## 스크립팅과 웹 {#scripting_and_the_web}
 
-In [Hypermedia-Driven Applications](@/essays/hypermedia-driven-applications.md) we discuss how to build
-web applications in such a manner that they are _hypermedia_-driven, in contrast with the popular SPA approach, in which
-they are _JavaScript_ and, at the network-level, [RPC-driven](@/essays/how-did-rest-come-to-mean-the-opposite-of-rest.md).
+[하이퍼미디어 기반 애플리케이션](@/essays/hypermedia-driven-applications.md)에서 우리는 웹 애플리케이션을 빌드하는 방법에 대해 논의합니다. 
+이 방법은 현재 인기를 끌고 있는 SPA 접근법과 달리 애플리케이션을 _하이퍼미디어_ 기반으로 빌드하는 것입니다. 
+SPA 접근법은 _JavaScript_ 기반이며, 네트워크 수준에서 [RPC 기반](@/essays/how-did-rest-come-to-mean-the-opposite-of-rest.md)입니다.
 
-In the HDA article we mention scripting briefly:
+HDA(Hypermedia-Driven Application) 문서에서 스크립팅에 대해 간단히 언급합니다:
 
-> In an HDA, hypermedia (HTML) is the primary medium for building the application, which means that:
+> HDA에서 하이퍼미디어(HTML)는 애플리케이션을 빌드하는 주요 매체이므로:
 >
-> * All communication with the server is still managed via HTTP requests with hypermedia (HTML) responses
-> * Scripting is used mainly to enhance the front-end experience of the application
+> * 모든 서버와의 통신은 여전히 HTTP 요청과 하이퍼미디어(HTML) 응답을 통해 관리됩니다.
+> * 스크립팅은 애플리케이션의 프론트엔드 경험을 향상시키는 데 주로 사용됩니다.
 >
-> Scripting augments the existing hypermedia (HTML) but does not supersede it or subvert the fundamental REST-ful 
-> architecture of the HDA.
+> 스크립팅은 기존 하이퍼미디어(HTML)를 보완하지만, 이를 초월하거나 기본적인 REST-ful 아키텍처를 전복하지 않습니다.
 
-In this article we would like to expand on this last comment and describe what scripting that does not "supersede" or
-"subvert" a REST-ful, Hypermedia-Driven Application looks like.  These rules of thumb apply to scripting written
-directly to support a web application, as well as to general purpose JavaScript libraries.
+이 기사에서는 이 마지막 언급을 확장하여 REST-ful, 하이퍼미디어 기반 애플리케이션을 초월하거나 전복하지 않는 스크립팅이 어떤 모습인지 설명하고자 합니다. 
+이 규칙들은 웹 애플리케이션을 지원하기 위해 직접 작성된 스크립팅뿐만 아니라 일반적인 JavaScript 라이브러리에도 적용됩니다.
 
-The basic rules for hypermedia-friendly scripting are:
+하이퍼미디어 친화적인 스크립팅의 기본 규칙은 다음과 같습니다:
 
-* [Respect HATEOAS](#prime_directive)
-* [Client-side only state is OK](#state)
-* [Use events to communicate between components](#events)
-* [Use islands to isolate non-hypermedia components from the rest of your application](#islands)
-* [Optionally, consider inline scripting](#inline)
+* [HATEOAS를 존중하세요](#prime_directive)
+* [클라이언트 측 상태는 허용됩니다](#state)
+* [구성 요소 간 통신에 이벤트를 사용하세요](#events)
+* [비하이퍼미디어 구성 요소를 애플리케이션의 다른 부분과 격리하기 위해 아일랜드를 사용하세요](#islands)
+* [선택적으로 인라인 스크립팅을 고려하세요](#inline)
 
-Each of these rules will be elaborated on below.
+이 규칙들은 아래에서 더 자세히 설명됩니다.
 
-## The Prime Directive {#prime_directive}
+## 기본 원칙 {#prime_directive}
 
-The prime directive of an HDA is to use [Hypermedia As The Engine of Application State](@/essays/hateoas.md).
-A hypermedia-friendly scripting approach will follow this directive.  
+HDA의 기본 원칙은 [애플리케이션 상태의 엔진으로서의 하이퍼미디어(HATEOAS)](@/essays/hateoas.md)를 사용하는 것입니다. 하이퍼미디어 친화적인 스크립팅 접근법은 이 원칙을 따릅니다.
 
-**Practically, this means that scripting should avoid making non-hypermedia exchanges over the network with a server.**
+**실제로, 이는 스크립팅이 서버와의 비하이퍼미디어 네트워크 교환을 피해야 한다는 것을 의미합니다.**
 
-So, in general, hypermedia-friendly scripting should avoid the use of `fetch()` and `XMLHttpRequest` _unless_ the responses
-from the server use a hypermedia of some sort (e.g. HTML), rather than a data API format (e.g. plain JSON).
+따라서 일반적으로 하이퍼미디어 친화적인 스크립팅은 서버에서 하이퍼미디어(예: HTML)를 사용한 응답이 아닌 데이터 API 형식(예: 단순 JSON)을 사용한 응답을 받는 `fetch()` 및 `XMLHttpRequest` 사용을 피해야 합니다.
 
-Respecting HATEOAS also means that, in general, complicated state stored in JavaScript (rather than in the DOM) should 
-be avoided.
+HATEOAS를 존중한다는 것은 또한 JavaScript에 저장된 복잡한 상태(즉, DOM 외부에 저장된 상태)를 피해야 한다는 것을 의미합니다.
 
-However, this last statement needs to be qualified: state may be stored client-side in JavaScript so long as it is 
-directly supporting a more sophisticated front-end experience (e.g. widget) than pure HTML allows.  
+그러나 이 마지막 진술은 수정을 필요로 합니다: JavaScript에 상태를 클라이언트 측에 저장하는 것은 더 정교한 프론트엔드 경험(예: 위젯)을 직접 지원하는 경우 허용될 수 있습니다.
 
-To reiterate what Fielding says regarding the purpose of scripting in REST:
+필딩이 REST에서 스크립팅의 목적에 대해 말한 것을 다시 강조하자면:
 
-> Allowing features to be downloaded after deployment improves system extensibility.
+> 배포 후 기능을 다운로드할 수 있게 함으로써 시스템 확장성을 개선할 수 있습니다.
 
-So scripting is a legitimate part a REST-ful system, in order to allow the creation of additional features not directly implemented
-within the underlying hypermedia, thus making a hypermedia (e.g. HTML) more extensible.
+따라서 스크립팅은 하이퍼미디어(예: HTML)보다 더 많은 기능을 구현할 수 있도록 하여 하이퍼미디어를 더 확장 가능하게 만드는 REST-ful 시스템의 정당한 일부입니다.
 
-A good example of this sort of feature is a rich-text editor: it might have an extremely sophisticated JavaScript model
-of the editor's document, including selection information, highlighting information, code completion and so forth.
-However, this model should be isolated from the rest of the DOM and the rich text editor should expose its information
-to the DOM using standard hypermedia features.  For example, it should use a hidden input to communicate the contents of the
-editor to the surrounding DOM, rather than requiring a JavaScript API call to get the content.
+이러한 기능의 좋은 예는 리치 텍스트 편집기입니다: 이 편집기는 선택 정보, 하이라이팅 정보, 코드 자동 완성 등을 포함한 문서의 매우 정교한 JavaScript 모델을 가질 수 있습니다. 
+그러나 이 모델은 나머지 DOM과 격리되어야 하며, 리치 텍스트 편집기는 콘텐츠를 가져오기 위해 JavaScript API 호출을 요구하는 것이 아니라, 
+표준 하이퍼미디어 기능을 사용하여 정보를 DOM에 노출해야 합니다. 예를 들어, 숨겨진 입력 필드를 사용하여 편집기의 내용을 주변 DOM에 전달해야 합니다.
 
-The idea is to use scripting to improve the hypermedia experience by providing features and functionality that are
-not part of the standard hypermedia (HTML) tool set, but do so in a way that plays well with HTML, rather than relegating
-HTML to a mere UI description language within a larger JavaScript application, as many SPA frameworks do.
+아이디어는 스크립팅을 사용하여 하이퍼미디어 경험을 향상시키되, 
+많은 SPA 프레임워크가 하는 것처럼 HTML을 더 큰 JavaScript 애플리케이션 내의 단순한 UI 설명 언어로 전락시키지 않고 HTML과 잘 작동하는 방식으로 이를 수행하는 것입니다.
 
-## State
+## state
 
-Note that using Hypermedia As The Engine Of Application State does not mean that you cannot have _any_ client-side state.
-Obviously, the rich-text editor example cited above may have a significant amount of client-side state.  But
-there are simpler cases where client-side state are warranted and perfectly consistent with a Hypermedia-Driven Application.
+애플리케이션 상태의 엔진으로서의 하이퍼미디어(HATEOAS)를 사용하는 것은 클라이언트 측 상태를 전혀 가질 수 없다는 것을 의미하지 않습니다. 
+위에서 언급한 리치 텍스트 편집기 예시는 클라이언트 측에 상당한 양의 상태를 가질 수 있습니다. 하지만 클라이언트 측 상태가 정당하고 하이퍼미디어 기반 애플리케이션과 완전히 일치하는 더 간단한 경우들도 있습니다.
 
-Consider a simple visibility toggle, where clicking a button or anchor adds a class to another element, making it visible.
+예를 들어, 버튼이나 앵커를 클릭하여 다른 요소에 클래스를 추가하여 이를 보이도록 하는 간단한 가시성 토글을 고려해 보세요.
 
-This ephemeral client-side state is fine in a Hypermedia-Driven Application, because the state is purely front-end.  No
-system state is being updated with this sort of scripting.  If system state were to be mutated (that is, if showing or
-hiding the element had an effect on the data stored on the server), then it would be necessary to use a hypermedia
-exchange. 
+이 일시적인 클라이언트 측 상태는 하이퍼미디어 기반 애플리케이션에서 문제가 없습니다. 이 상태는 순전히 프론트엔드 상태이기 때문입니다. 
+만약 시스템 상태가 이 종류의 스크립팅과 함께 업데이트된다면(즉, 요소를 표시하거나 숨기는 것이 서버에 저장된 데이터에 영향을 미치는 경우), 하이퍼미디어 교환이 필요하게 됩니다.
 
-The crucial aspect to consider is whether any state updated on the client side needs to be synchronized with the server.  
-If yes, then a hypermedia exchange should be used.  If no, then it is fine to keep the state client-side only.
+고려해야 할 중요한 측면은 클라이언트 측에서 업데이트된 상태가 서버와 동기화되어야 하는지 여부입니다.  
+만약 그렇다면 하이퍼미디어 교환이 사용되어야 합니다. 그렇지 않다면 상태를 클라이언트 측에만 유지하는 것이 괜찮습니다.
 
-## Events
+## events
 
-One excellent way for a JavaScript library to enable hypermedia-friendly scripting is for it to have 
-[a rich custom event model](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events).
+JavaScript 라이브러리가 하이퍼미디어 친화적인 스크립팅을 가능하게 하는 훌륭한 방법 중 하나는
+[풍부한 커스텀 이벤트 모델](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)을 가지는 것입니다.
 
-A JavaScript-based component that triggers events allows for hypermedia-oriented JavaScript libraries, such as htmx,
-to listen for those events and trigger hypermedia exchanges.  This, in turn, makes any JavaScript library a potential
-_hypermedia control_, able to drive the Hypermedia-Driven Application via user-selected actions.
+이벤트를 트리거하는 JavaScript 기반 구성 요소는 htmx와 같은 하이퍼미디어 지향 JavaScript 라이브러리가 이러한 이벤트를 듣고 하이퍼미디어 교환을 트리거할 수 있게 합니다. 
+이는 결과적으로 모든 JavaScript 라이브러리가 사용자가 선택한 동작을 통해 하이퍼미디어 기반 애플리케이션을 구동할 수 있는 _하이퍼미디어 컨트롤_이 될 수 있게 합니다.
 
-A good example of this is the [Sortable.js](@/examples/sortable.md) example, in which htmx listens for
-the `end` event triggered by Sortable.js:
+그 예로 [Sortable.js](@/examples/sortable.md) 예제를 들 수 있습니다. 여기서 htmx는 Sortable.js에서 트리거되는 `end` 이벤트를 듣습니다:
 
 ```html
 <form class="sortable" hx-post="/items" hx-trigger="end">
@@ -117,53 +101,48 @@ the `end` event triggered by Sortable.js:
 </form>
 ```
 
-The `end` event is triggered by Sortable.js when a drag-and-drop completes.  htmx listens for this event via the 
-[`hx-trigger`](@/attributes/hx-trigger.md) attribute and then issues an HTTP request, exchanging hypermedia with the 
-server.  This turns this Sortable.js drag-and-drop powered widget into a new, powerful hypermedia control.
+`end` 이벤트는 Sortable.js에서 드래그 앤 드롭이 완료될 때 트리거됩니다. 
+htmx는 [`hx-trigger`](@/attributes/hx-trigger.md) 속성을 통해 이 이벤트를 듣고 HTTP 요청을 발행하여 서버와 하이퍼미디어를 교환합니다. 
+이렇게 하면 Sortable.js를 사용하는 드래그 앤 드롭 기능이 강력한 하이퍼미디어 컨트롤로 변환됩니다.
 
 ## Islands
 
-A recent trend in web development is the notion of ["islands"](https://www.patterns.dev/posts/islands-architecture/):
+최근 웹 개발에서 주목받고 있는 트렌드 중 하나는 ["아일랜드"](https://www.patterns.dev/posts/islands-architecture/)라는 개념입니다:
 
-> The islands architecture encourages small, focused chunks of interactivity within server-rendered web pages.
+> 아일랜드 아키텍처는 서버 렌더링된 웹 페이지 내에서 작은, 집중된 인터랙티브 요소들을 권장합니다.
 
-In cases where a more sophisticated scripting approach is required and where communication with a server
-outside of the normal hypermedia-exchange mechanism is necessary, the most hypermedia-friendly approach is to use the island
-architecture.  This isolates non-hypermedia components from the rest of the Hypermedia-Driven Application.
+더 정교한 스크립팅 접근이 필요하고, 정상적인 하이퍼미디어 교환 메커니즘 외부의 서버와의 통신이 필요한 경우, 가장 하이퍼미디어 친화적인 접근은 아일랜드 아키텍처를 사용하는 것입니다. 
+이를 통해 비하이퍼미디어 요소를 하이퍼미디어 기반 애플리케이션의 나머지 부분과 격리할 수 있습니다.
 
-Events are a clean way to integrate your non-hypermedia-driven islands within a broader Hypermedia-Driven Application, 
-allowing you to convert an "inner" island into an "outer" hypermedia control, just as in the case of the Sortable.js example
-above.
+이벤트는 비하이퍼미디어 기반의 아일랜드를 더 넓은 하이퍼미디어 기반 애플리케이션 내에서 통합하는 깔끔한 방법으로, 
+위에서 설명한 Sortable.js 예제처럼 "내부" 아일랜드를 "외부" 하이퍼미디어 컨트롤로 변환할 수 있게 합니다.
 
-Deniz Akşimşek has made the observation that it is typically easier to embed non-hypermedia islands within a larger
-Hypermedia-Driven Application, rather than vice-versa.
+Deniz Akşimşek는 비하이퍼미디어 아일랜드를 더 큰 하이퍼미디어 기반 애플리케이션 내에 포함하는 것이 반대의 경우보다 일반적으로 더 쉽다는 점을 관찰했습니다.
 
-## Inline Scripts {#inline}
+## 인라인 스크립트 {#inline}
 
-A final rule for hypermedia-friendly scripting is inline scripting: writing your scripts directly within a hypermedia, 
-rather than locating your scripts in an external file.  This is a controversial concept compared with the others
-listed here, and we consider it an "optional" rule for hypermedia-friendly scripting: worth considering but not required.
+하이퍼미디어 친화적인 스크립팅을 위한 마지막 규칙은 인라인 스크립팅입니다. 이는 하이퍼미디어 내에 직접 스크립트를 작성하는 것이며, 
+외부 파일에 스크립트를 배치하는 것과는 다릅니다. 이는 여기서 언급된 다른 개념들에 비해 논란이 될 수 있으며, 하이퍼미디어 친화적인 스크립팅을 위한 "선택적" 규칙으로 간주됩니다: 
+고려해볼 만하지만 필수는 아닙니다.
 
-This approach to scripting, while idiosyncratic, has been adopted by some HTML scripting libraries, notably
-[Alpine.js](https://alpinejs.dev/) and [hyperscript](https://hyperscript.org).  
+이러한 스크립팅 접근법은 독특하지만, 일부 HTML 스크립팅 라이브러리, 특히 [Alpine.js](https://alpinejs.dev/)와 [hyperscript](https://hyperscript.org)에서 채택되었습니다.
 
-Here is some example hyperscript, showing an inline script:
+다음은 인라인 스크립트를 보여주는 hyperscript의 예입니다:
 
 ```html
 <button _="on click toggle .visible on the next <section/>">
-    Show Next Section
+    다음 섹션 표시
 </button>
 <section>
     ....
 </section>
 ```
-This button, as it says, toggles the `.visible` class on the `section` element when it is clicked.
+이 버튼은 클릭할 때 `section` 요소의 `.visible` 클래스를 토글합니다.
 
-A primary advantage of this inline approach to hypermedia scripting is that, conceptually, the hypermedia itself is 
-emphasized, rather than the scripting of the hypermedia.
+이러한 인라인 스크립팅 접근의 주요 장점은 개념적으로 하이퍼미디어 자체가 강조된다는 점입니다. 이는 하이퍼미디어 스크립팅보다 더 강조됩니다.
 
-Contrast this code with [JSX Components](https://reactjs.org/docs/components-and-props.html), where the
-scripting language (JavaScript) is the core concept, with hypermedia/HTML embedded within it:
+이 코드를 [JSX Components](https://reactjs.org/docs/components-and-props.html)와 비교해보면, 스크립팅 언어(JavaScript)가 핵심 개념이며, 
+하이퍼미디어/HTML이 그 안에 포함되어 있는 방식입니다:
 
 ```js
 class Button extends React.Component {
@@ -179,36 +158,28 @@ class Button extends React.Component {
 }
 ```
 
-Here, you can see that the JavaScript is the primary technology in use, with the hypermedia/HTML being used as a UI
-description mechanism.  The fact that the HTML is a hypermedia is almost immaterial in this case.
+여기서 JavaScript가 주로 사용되는 기술이며, 하이퍼미디어/HTML은 UI 설명 메커니즘으로 사용됩니다. 이 경우, HTML이 하이퍼미디어라는 사실은 거의 중요하지 않습니다.
 
-That being said, the inline scripting and the JSX approach do share an advantage in common: both satisfy the [Locality of Behavior(LoB)](@/essays/locality-of-behaviour.md),
-design principle.  They both _localize_ behavior to the elements or components in question, which makes it easier to see
-what these elements and components do.
+그럼에도 불구하고, 인라인 스크립팅과 JSX 접근법은 공통된 장점을 공유합니다: 둘 다 [행동의 지역성(LoB)](@/essays/locality-of-behaviour.md) 원칙을 충족합니다. 
+이들은 모두 요소나 구성 요소에 대한 행동을 _지역화_ 하여 이러한 요소와 구성 요소가 무엇을 하는지 쉽게 알 수 있게 만듭니다.
 
-Of course, with inline scripts, there should be a soft limit to the amount of scripting done directly within the 
-hypermedia.  You don't want to overwhelm your hypermedia with scripting, so that it becomes difficult to understand "the shape"
-of the hypermedia document.  
+물론, 인라인 스크립트의 경우, 하이퍼미디어 내에서 직접 수행되는 스크립팅의 양에 대한 적절한 한계가 있어야 합니다. 
+스크립팅이 너무 많아져 하이퍼미디어 문서의 "형태"를 이해하기 어려워지지 않도록 주의해야 합니다.
 
-Using techniques like invoking library functions or using [hyperscript behaviors](https://hyperscript.org/features/behavior/) 
-allow you to use inline scripting while pulling implementations out to a separate file or location.
+라이브러리 함수를 호출하거나 
+[hyperscript behaviors](https://hyperscript.org/features/behavior/)를 사용하는 등의 기법을 통해 인라인 스크립팅을 사용하면서도 구현을 별도의 파일이나 위치로 분리할 수 있습니다.
 
-Inline scripting isn't required for scripting to be hypermedia-friendly, but it is worth considering as an alternative to a 
-more traditional scripting/hypermedia split.
+인라인 스크립팅은 하이퍼미디어 친화적인 스크립팅에 필수는 아니지만, 전통적인 스크립팅/하이퍼미디어 분리와는 대안으로 고려해볼 만합니다.
 
-## Pragmatism
+## 실용주의
 
-Of course, here in the real world, there are many useful JavaScript libraries that violate HATEOAS and that do not trigger 
-events.  This often makes them difficult fits for a Hypermedia-Driven Application.  Nonetheless, these libraries may 
-provide crucial bits of functionality that are difficult to find elsewhere.  
+물론, 현실 세계에서는 HATEOAS를 위반하고 이벤트를 트리거하지 않는 유용한 JavaScript 라이브러리가 많이 있습니다. 
+이는 종종 하이퍼미디어 기반 애플리케이션에 적합하지 않은 경우가 많습니다. 그럼에도 불구하고, 이러한 라이브러리는 다른 곳에서 찾기 어려운 중요한 기능을 제공할 수 있습니다.
 
-In cases like this, we advocate pragmatism: if it is easy enough to alter the library to be hypermedia-friendly or to
-wrap it in a hypermedia-friendly way, that may be a good option.  You never know, the upstream author might 
-[consider a pull request](https://github.com/dropzone/dropzone/commit/64771e35baf032ee0910d1e56e6f44457efe138e) 
-to help improve their library.
+이러한 경우, 실용주의를 권장합니다: 라이브러리를 하이퍼미디어 친화적으로 변경하거나 하이퍼미디어 친화적인 방식으로 감싸는 것이 쉽다면, 그것이 좋은 선택이 될 수 있습니다. 
+예상하지 못한 곳에서, 업스트림 작성자가 [풀 리퀘스트를 고려](https://github.com/dropzone/dropzone/commit/64771e35baf032ee0910d1e56e6f44457efe138e)할 수도 있습니다.
 
-But, if not, and if there are no good alternatives, then just use the JavaScript library as it is designed.
+하지만, 그렇지 않고 좋은 대안이 없다면, JavaScript 라이브러리를 설계된 대로 사용하십시오.
 
-Try to isolate a hypermedia-unfriendly library from the rest of your application, but, in general, do not
-spend too much of your [complexity budget](https://hyperscript.org/docs/#debugging) on maintaining conceptual purity:
-sufficient unto the day is the evil thereof.
+하이퍼미디어 친화적이지 않은 라이브러리를 애플리케이션의 나머지 부분과 격리하려고 노력하되, 
+개념적 순수성을 유지하기 위해 [복잡성 예산](https://hyperscript.org/docs/#debugging)을 너무 많이 소모하지 않도록 하십시오: 그날에 충분한 악은 그것으로 족합니다.

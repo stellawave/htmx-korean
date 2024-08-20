@@ -7,85 +7,77 @@ author = ["Carson Gross"]
 tag = ["posts"]
 +++
 
-Every software project involves managing a complexity budget.  
+모든 소프트웨어 프로젝트는 복잡성 예산을 관리하는 작업을 포함합니다.
 
-A complexity budget can be defined as:
+복잡성 예산을 다음과 같이 정의할 수 있습니다:
 
-> An explicit or implicit allocation of complexity across the entire application
+> 애플리케이션 전반에 걸쳐 복잡성을 명시적 또는 암시적으로 할당하는 것
 
-"Complexity" here is defined subjectively (rather than [formally](https://en.wikipedia.org/wiki/Programming_complexity))
-and in [Stewartian Terms](https://en.wikipedia.org/wiki/I_know_it_when_I_see_it): "I know it when I see it."
+여기서 "복잡성"은 [형식적으로](https://en.wikipedia.org/wiki/Programming_complexity) 정의되기보다는 주관적으로, 그리고 
+[스튜어트적인 의미](https://en.wikipedia.org/wiki/I_know_it_when_I_see_it)에서 "나는 그것을 보면 안다"는 식으로 정의됩니다.
 
-Or, more specifically to software development: "I know it when I *feel* it."
+더 구체적으로 소프트웨어 개발에 적용하자면: "나는 그것을 *느낄 때* 안다."
 
-One of the primary jobs of an application architect is to manage a projects complexity budget:
+애플리케이션 아키텍트의 주요 업무 중 하나는 프로젝트의 복잡성 예산을 관리하는 것입니다:
 
-* Decide if a given feature is "worth it"
-* Decide if a given implementation is "worth it"
-* Add appropriate system boundaries to limit complexity between components
-* And so on
+* 주어진 기능이 "가치가 있는지" 결정하기
+* 주어진 구현이 "가치가 있는지" 결정하기
+* 구성 요소 간의 복잡성을 제한하기 위한 적절한 시스템 경계를 설정하기
+* 그 외 관련 작업 수행하기
 
-An infuriating aspect of complexity is that that attempts to address it can, in fact, add more complexity.
+복잡성과 관련해 정말 답답한 점은, 이를 해결하려는 시도가 실제로 더 많은 복잡성을 초래할 수 있다는 것입니다.
 
-A good example of this from experience was when a company I worked at added [OSGi](https://en.wikipedia.org/wiki/OSGi) to the system to manage the
-increasing complexity of the project.  It seemed like a reasonable approach, 
-it offered a sophisticated [module](https://www.osgi.org/resources/what-is-osgi/) system,
-it was recommended by a newly hired architect, and it even says on the "What is OSGI page":
+제가 겪었던 경험 중 하나는, 제가 일했던 회사에서 프로젝트의 증가하는 복잡성을 관리하기 위해 [OSGi](https://en.wikipedia.org/wiki/OSGi)를 시스템에 도입했을 때입니다. 
+이는 합리적인 접근처럼 보였고, 정교한 [모듈](https://www.osgi.org/resources/what-is-osgi/) 시스템을 제공했으며, 새로 고용된 아키텍트가 추천하기도 했습니다. 
+게다가 "OSGi란 무엇인가"라는 페이지에는 다음과 같이 적혀 있었습니다:
 
-> OSGi significantly reduces complexity in almost all aspects of development: code is easier to write and test, reuse is
-> increased, build systems become significantly simpler, deployment is more manageable, bugs are detected early, and 
-> the runtime provides an enormous insight into what is running.
+> OSGi는 개발의 거의 모든 측면에서 복잡성을 크게 줄입니다: 코드를 더 쉽게 작성하고 테스트할 수 있으며, 재사용성이
+> 증가하고, 빌드 시스템이 훨씬 간단해지며, 배포가 더 관리하기 쉬워지고, 버그가 초기에 발견되며,
+> 런타임은 실행 중인 것에 대한 막대한 통찰력을 제공합니다.
 
-What's not to like?
+좋지 않나요?
 
-Unfortunately, adding OSGi to that project effectively ground the entire project to a halt: it took a few of our best
-engineers out of normal application development for over a year, and when they were done the codebase was even more
-difficult to work with than when they started.  Feature velocity, already teetering, collapsed.
+불행히도, OSGi를 프로젝트에 도입한 결과 프로젝트 전체가 사실상 중단되고 말았습니다. 
+우리 최고의 엔지니어 몇 명이 1년 넘게 정상적인 애플리케이션 개발에서 빠져나갔고, 그들이 끝마쳤을 때 코드베이스는 시작할 때보다 더 다루기 어려워졌습니다. 
+이미 흔들리던 기능 개발 속도는 완전히 무너졌습니다.
 
-This is not to say OSGi is universally bad.  But, in this case, rather than boosting our development teams productivity,
-it effectively ended it.
+이것이 OSGi가 보편적으로 나쁘다는 것을 의미하는 것은 아닙니다. 하지만 이 경우, OSGi가 개발 팀의 생산성을 높이기보다는 사실상 끝장낸 셈이 되었습니다.
 
-A good software architect is someone who manages the software budget of their project effectively, either explicitly or 
-implicitly.
+좋은 소프트웨어 아키텍트는 명시적으로든 암시적으로든 프로젝트의 복잡성 예산을 효과적으로 관리할 수 있는 사람입니다.
 
-## Complexity Growth
+## 복잡성 증가
 
-My sense, admittedly without hard evidence, is that Stewartian Application Complexity grows roughly geometrically with 
-the size of an application.  Proper [factoring](https://en.wikipedia.org/wiki/Decomposition_(computer_science)) by 
-experienced developers can hold this curve down for quite some time.
+명확한 증거는 없지만, 제 느낌으로는 스튜어트식 애플리케이션 복잡성은 애플리케이션의 크기와 함께 대략 기하급수적으로 증가하는 것 같습니다. 
+경험 많은 개발자들이 적절히 [분해](https://en.wikipedia.org/wiki/Decomposition_(computer_science))하면 이 곡선을 꽤 오랫동안 낮게 유지할 수 있습니다.
 
-However, this doesn't change the fact that, somewhere out there, there is a Complexity Wall lurking.
+그러나 이것이 어딘가에 복잡성의 벽이 도사리고 있다는 사실을 바꾸지는 않습니다.
 
-And, if you aren't careful, you will run headlong into it and grind your development velocity to a halt.
+그리고 주의하지 않으면 그 벽에 정면으로 부딪혀 개발 속도가 멈추게 될 것입니다.
 
-I have had multiple experiences with this: one day, inexplicably, development on a system that I was working on went 
-from feeling "large, but manageable" to "this is impossible to deal with".
+저는 여러 번 이런 경험을 했습니다. 어느 날, 설명할 수 없는 이유로 제가 작업 중이던 시스템의 개발이 "크지만 관리할 수 있는" 상태에서 "다루기 불가능한" 상태로 느껴졌습니다.
 
-## Spending Your Complexity Budget Wisely
+## 복잡성 예산을 현명하게 사용하기
 
-Here are some tools for managing your complexity budget:
+여기 복잡성 예산을 관리하기 위한 몇 가지 도구가 있습니다:
 
-1. Foremost: understanding that there *is* a complexity budget that needs to be managed
-1. Focus your "complexity spend" on the areas where your application is adding value and/or differentiates itself
-1. Saying "No" - probably the easiest, best and, also, hardest tool to use in your battle with complexity
-1. Embracing [KISS](https://en.wikipedia.org/wiki/KISS_principle), even if it means admitting you are stupid (Note that it's often very good for an organization if the senior developers can admit they are fallible)
-1. Proper factoring of components - this is an art: Too many components and your complexity explodes.  Too few... same. 
-1. Choosing the proper balance of expressiveness and restrictions for a component
+1. 가장 중요한 것은, 관리해야 할 복잡성 예산이 *있다*는 것을 이해하는 것입니다.
+2. 애플리케이션이 가치를 추가하거나 차별화되는 영역에 복잡성 비용을 집중하세요.
+3. "아니오"라고 말하기 - 아마도 복잡성과의 싸움에서 사용하기 가장 쉽고, 좋으며, 동시에 어려운 도구일 것입니다.
+4. [KISS](https://en.wikipedia.org/wiki/KISS_principle)를 받아들이세요. 설령 자신이 어리석음을 인정해야 한다고 해도 말이죠. (참고로, 시니어 개발자가 자신이 실수를 할 수 있음을 인정하는 것은 조직에 매우 긍정적인 영향을 줄 수 있습니다.)
+5. 컴포넌트의 적절한 분해 - 이는 예술입니다: 컴포넌트가 너무 많으면 복잡성이 폭발합니다. 너무 적어도 마찬가지입니다.
+6. 컴포넌트에 대해 표현력과 제한의 적절한 균형을 선택하세요.
 
-Unfortunately, experience shows that managing Stewartian Complexity is a subjective endeavor and that many talented and
-experience developers will disagree on the proper course of action at a given decision point.
+불행히도, 경험에 따르면 스튜어트식 복잡성을 관리하는 것은 주관적인 작업이며, 많은 재능 있고 경험 많은 개발자들이 주어진 결정 지점에서 올바른 조치에 대해 의견이 다를 수 있습니다.
 
-Nonetheless, by making the concept of a complexity budget explicit in your software project, these conversations can be
-more productive and ultimately lead to better software outcomes.
+그럼에도 불구하고, 소프트웨어 프로젝트에서 복잡성 예산이라는 개념을 명확히 함으로써 이러한 논의는 더 생산적이 될 수 있으며 궁극적으로 더 나은 소프트웨어 결과로 이어질 수 있습니다.
 
-## A Final Note
+## 마지막으로
 
-Almost all mature applications are complex.  
+거의 모든 성숙한 애플리케이션은 복잡합니다.
 
-Finding a new codebase "complex" is *not* an excuse for tearing everything apart or aggressive refactoring.  We must always bear in mind [Chesterton's Fence](https://fs.blog/2020/03/chestertons-fence/).
+새로운 코드베이스를 "복잡하다"고 느끼는 것은 모든 것을 뜯어고치거나 공격적인 리팩토링을 해야 한다는 변명이 *되지 않습니다*. 
+우리는 항상 [체스터턴의 울타리](https://fs.blog/2020/03/chestertons-fence/)를 염두에 두어야 합니다.
 
-If an application is functioning well (or even reasonably) then we should assume that the complexity budget was well
-(or at least reasonably) managed.
+애플리케이션이 잘 (또는 적어도 합리적으로) 작동하고 있다면, 복잡성 예산이 잘 (또는 적어도 합리적으로) 관리되었다고 가정해야 합니다.
 
-And we must always remember that, with unfortunate frequency, big attempts at addressing complexity in existing, large 
-applications often fail or, sadly, make things worse.
+그리고 불행하게도, 기존의 대규모 애플리케이션에서 복잡성을 해결하려는 큰 시도가 종종 실패하거나, 안타깝게도 상황을 더 악화시킨다는 사실을 항상 기억해야 합니다.

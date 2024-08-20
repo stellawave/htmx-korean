@@ -6,80 +6,95 @@ author = ["Alexander Petros"]
 tag = ["posts"]
 +++
 
-As htmx has gotten more popular, it's reached communities who have never written server-generated HTML before. Dynamic HTML templating was, and still is, the standard way to use many popular web frameworks—like Rails, Django, and Spring—but it is a novel concept for those coming from Single-Page Application (SPA) frameworks—like React and Svelte—where the prevalence of JSX means you never write HTML directly.
+htmx가 인기를 얻으면서 서버에서 생성된 HTML을 작성해 본 적이 없는 커뮤니티에도 도달하게 되었습니다. 
+동적 HTML 템플릿은 여전히 Rails, Django, Spring과 같은 인기 있는 웹 프레임워크를 사용하는 표준 방식이지만, 
+React와 Svelte 같은 단일 페이지 애플리케이션(SPA) 프레임워크를 사용해 온 사람들에게는 HTML을 직접 작성하지 않는 것이 일반적입니다.
 
-But have no fear! Writing web applications with HTML templates is a slightly different security model, but it's no harder than securing a JSX-based application, and in some ways it's a lot easier.
+하지만 걱정하지 마세요! HTML 템플릿으로 웹 애플리케이션을 작성하는 것은 약간 다른 보안 모델을 요구하지만, JSX 기반 애플리케이션을 보호하는 것보다 어렵지 않으며, 어떤 면에서는 훨씬 더 쉽습니다.
 
-## Who is guide this for?
+## 이 가이드의 대상은 누구인가요?
 
-These are web security basics with htmx, but they're (mostly) not htmx-specific—these concepts are important to know if you're putting *any* dynamic, user-generated content on the web.
+이 가이드는 htmx에서 웹 보안의 기초를 다룹니다. 그러나 이 개념들은 htmx에만 국한되지 않고, 동적이며 사용자 생성 콘텐츠를 웹에 배포할 때 중요하게 고려해야 하는 개념들입니다.
 
-For this guide, you should already have a basic grasp of the semantics of the web, and be familiar with how to write a backend server (in any language). For instance, you should know not to create `GET` routes that can alter the backend state. We also assume that you're not doing anything super fancy, like making a website that hosts other people's websites. If you're doing anything like that, the security concepts you need to be aware of far exceed the scope of this guide.
+이 가이드를 위해, 여러분은 웹의 기본 의미를 이해하고 백엔드 서버를 작성할 수 있어야 합니다(언어는 상관없습니다). 
+예를 들어, 상태를 변경할 수 있는 `GET` 경로를 만들지 않아야 한다는 것을 알고 있어야 합니다. 
+또한, 이 가이드는 다른 사람의 웹사이트를 호스팅하는 것과 같은 복잡한 작업을 다루지 않습니다. 만약 그런 작업을 하고 있다면, 이 가이드에서 다루는 보안 개념을 넘어서는 내용을 숙지해야 합니다.
 
-We make these simplifying assumptions in order to target the widest possible audience, without including distracting information—obviously this can't catch everyone. No security guide is perfectly comprehensive. If you feel there's a mistake, or an obvious gotcha that we should have mentioned, please reach out and we'll update it.
+이러한 간소화된 가정을 통해 가능한 한 많은 사람들에게 타겟팅하고, 방해가 되는 정보를 포함하지 않도록 노력했습니다. 당연히 모든 상황을 포괄할 수는 없습니다. 
+어떤 보안 가이드도 완벽히 포괄적일 수는 없습니다. 만약 실수가 있거나 언급해야 할 명백한 위험 요소가 있다고 생각하시면, 연락해 주시면 업데이트하겠습니다.
 
-## The Golden Rules
+## 황금 규칙
 
-Follow these four simple rules, and you'll be following the client security best practices:
+다음 네 가지 간단한 규칙을 따르면 클라이언트 보안 모범 사례를 따르게 됩니다:
 
-1. Only call routes you control
-2. Always use an auto-escaping template engine
-3. Only serve user-generated content inside HTML tags
-4. If you have authentication cookies, set them with `Secure`, `HttpOnly`, and `SameSite=Lax`
+1. 제어할 수 있는 경로만 호출하기
+2. 자동 이스케이프(template engine)를 항상 사용하기
+3. 사용자 생성 콘텐츠를 HTML 태그 내에서만 제공하기
+4. 인증 쿠키가 있는 경우 `Secure`, `HttpOnly`, `SameSite=Lax` 설정하기
 
-In the following section, I'll discuss what each of these rules does, and what kinds of attack they protect against. The vast majority of htmx users—those using htmx to build a website that allows users to login, view some data, and update that data—should never have any reason to break them.
+다음 섹션에서는 각 규칙이 무엇을 의미하며, 어떤 종류의 공격을 방어하는지 설명하겠습니다. 
+대부분의 htmx 사용자, 즉 사용자가 로그인하고, 데이터를 조회하고, 그 데이터를 업데이트할 수 있는 웹사이트를 구축하는 사용자는 이러한 규칙을 어길 이유가 거의 없을 것입니다.
 
-Later on I will discuss how to break some of these rules. Many useful applications can be built under these constraints, but if you do need more advanced behavior, you'll be doing so with the full knowledge that you're increasing the conceptual burden of securing your application. And you'll have learned a lot about web security in the process.
+이후에는 일부 규칙을 깨는 방법에 대해 설명하겠습니다. 이러한 제약 내에서 유용한 애플리케이션을 많이 구축할 수 있지만, 
+더 고급스러운 기능이 필요하다면 애플리케이션의 보안을 유지하는 개념적 부담이 증가할 것이라는 점을 충분히 인식하고 있어야 합니다. 이 과정에서 웹 보안에 대해 많은 것을 배우게 될 것입니다.
 
-## Understanding the Rules
+## 규칙 이해하기
 
-### Only call routes you control
+### 제어할 수 있는 경로만 호출하기
 
-This is the most basic one, and the most important: **do not call untrusted routes with htmx.**
+이 규칙은 가장 기본적이고 가장 중요합니다: **신뢰할 수 없는 경로를 htmx로 호출하지 마세요.**
 
-In practice, this means you should only use relative URLs. This is fine:
+실제로는 상대 URL만 사용해야 한다는 의미입니다. 다음은 괜찮은 예입니다:
 
 ```html
 <button hx-get="/events">Search events</button>
 ```
 
-But this is not:
+하지만 다음은 잘못된 예입니다:
 
 ```html
 <button hx-get="https://google.com/search?q=events">Search events</button>
 ```
 
-The reason for this is simple: htmx inserts the response from that route directly into the user's page. If the response has a malicious `<script>` inside it, that script can steal the user's data. When you don't control the route, you cannot guarantee that whoever does control the route won't add a malicious script.
+그 이유는 간단합니다: htmx는 해당 경로에서 받은 응답을 사용자의 페이지에 직접 삽입합니다. 만약 응답에 악성 `<script>`가 포함되어 있다면, 
+해당 스크립트가 사용자의 데이터를 훔칠 수 있습니다. 경로를 제어하지 않으면, 해당 경로를 제어하는 사람이 악성 스크립트를 추가하지 않으리라는 보장이 없습니다.
 
-Fortunately, this is a very easy rule to follow. Hypermedia APIs (i.e. HTML) are [specific to the layout of your application](https://htmx.org/essays/hypermedia-apis-vs-data-apis/), so there is almost never any reason you'd *want* to insert someone else's HTML into your page. All you have to do is make sure you only call your own routes (htmx 2 will actually disable calling other domains by default).
+다행히도 이 규칙은 매우 쉽게 지킬 수 있습니다. 하이퍼미디어 API(즉, HTML)는 
+[애플리케이션의 레이아웃에 구체적](https://htmx.org/essays/hypermedia-apis-vs-data-apis/)이므로 다른 사람의 HTML을 페이지에 삽입할 이유가 거의 없습니다. 
+자신이 제어하는 경로만 호출하면 됩니다(실제로 htmx 2 버전에서는 기본적으로 다른 도메인 호출을 비활성화합니다).
 
-Though it's not quite as popular these days, a common SPA pattern was to separate the frontend and backend into different repositories, and sometimes even to serve them from different URLs. This would require using absolute URLs in the frontend, and often, [disabling CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS). With htmx (and, to be fair, modern React with NextJS) this is an anti-pattern.
+이전에는 프론트엔드와 백엔드를 별도의 리포지토리로 분리하고 때로는 서로 다른 URL에서 제공하는 SPA 패턴이 흔했지만, 
+htmx(그리고 공정하게 말하면 현대의 React와 NextJS에서도)는 이것을 반패턴으로 간주합니다.
 
-Instead, you simply serve your HTML frontend from the same server (or at least the same domain) as your backend, and everything else falls into place: you can use relative URLs, you'll never have trouble with CORS, and you'll never call anyone else's backend.
+대신, 프론트엔드 HTML을 백엔드와 동일한 서버(또는 최소한 동일한 도메인)에서 제공하면 모든 것이 쉽게 정리됩니다: 
+상대 URL을 사용할 수 있고, CORS 문제를 겪지 않으며, 다른 사람의 백엔드를 호출할 일이 없습니다.
 
-htmx executes HTML; HTML is code; never execute untrusted code.
+htmx는 HTML을 실행합니다; HTML은 코드입니다; 신뢰할 수 없는 코드를 절대 실행하지 마세요.
 
-### Always use an auto-escaping template engine
+### 자동 이스케이프 템플릿 엔진을 항상 사용하기
 
-When you send HTML to the user, all dynamic content must be escaped. Use a template engine to construct your responses, and make sure that auto-escaping is on.
+사용자에게 HTML을 전송할 때는 모든 동적 콘텐츠를 이스케이프해야 합니다. 응답을 구성할 때 템플릿 엔진을 사용하고, 자동 이스케이프가 활성화되어 있는지 확인하세요.
 
-Fortunately, all template engines support escaping HTML, and most of them enable it by default. Below are just a few examples.
+다행히 모든 템플릿 엔진은 HTML 이스케이프를 지원하며, 대부분은 기본적으로 활성화되어 있습니다. 아래는 몇 가지 예시입니다.
 
-| Language | Template Engine | Escapes HTML by default? |
-| ---- | ---- | ---- |
-| JavaScript | Nunjucks | Yes |
-| JavaScript | EJS | Yes, with `<%= %>` |
-| Python | DTL | Yes |
-| Python | Jinja | **Sometimes** (Yes, in Flask)|
-| Ruby | ERB | Yes, with `<%= %>` |
-| PHP | Blade | Yes |
-| Go | html/template | Yes |
-| Java | Thymeleaf | Yes |
-| Rust | Tera | Yes |
+| 언어         | 템플릿 엔진        | 기본적으로 HTML 이스케이프가 활성화되어 있는가? |
+|------------|---------------|------------------------------|
+| JavaScript | Nunjucks      | 예                            |
+| JavaScript | EJS           | 예, `<%= %>` 사용               |
+| Python     | DTL           | 예                            |
+| Python     | Jinja         | **경우에 따라 다름** (Flask에서는 예)   |
+| Ruby       | ERB           | 예, `<%= %>` 사용               |
+| PHP        | Blade         | 예                            |
+| Go         | html/template | 예                            |
+| Java       | Thymeleaf     | 예                            |
+| Rust       | Tera          | 예                            |
 
-The kind of vulnerability this prevents is often called a Cross-Site Scripting (XSS) attack, a term that is [broadly used](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#introduction) to mean the injection of any unexpected content into your webpage. Typically, an attacker uses your APIs to store malicious code in your database, which you then serve to your other users who request that info.
+이 규칙이 방지하는 취약점은 흔히 교차 사이트 스크립팅(XSS) 공격으로 불리며, 
+이는 [광범위하게 사용](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#introduction)되는 용어로, 
+웹페이지에 예상치 못한 콘텐츠를 주입하는 것을 의미합니다. 일반적으로 공격자는 API를 사용해 악성 코드를 데이터베이스에 저장한 후, 
+그 정보를 요청하는 다른 사용자들에게 해당 코드를 제공하는 방식을 사용합니다.
 
-For example, let's say you're building a dating site, and it lets users share a little bio about themselves. You'd render that bio like this, with `{{ user.bio }}` being the bio stored in the database:
+예를 들어, 데이트 사이트를 구축 중이라고 가정하고, 사용자가 자신의 소개글을 공유할 수 있게 했다고 합시다. 데이터베이스에 저장된 소개글은 `{{ user.bio }}`로 렌더링될 것입니다:
 
 ```html
 <p>
@@ -87,7 +102,7 @@ For example, let's say you're building a dating site, and it lets users share a 
 </p>
 ```
 
-If a malicious user wrote a bio with a script element in it—like one that sends the client's cookie to another website—then this HTML will get sent to every user who views that bio:
+만약 악의적인 사용자가 `<script>` 요소를 포함한 소개글을 작성했다면, 이 HTML은 해당 소개글을 보는 모든 사용자에게 전송될 것입니다:
 
 ```html
 <p>
@@ -97,13 +112,14 @@ If a malicious user wrote a bio with a script element in it—like one that send
 </p>
 ```
 
-Fortunately this one is so easy to fix that you can write the code yourself. Whenever you insert untrusted (i.e. user-provided) data, you just have to replace eight characters with their non-code equivalents. This is an example using JavaScript:
+다행히도 이 문제는 아주 간단히 해결할 수 있습니다. 사용자가 제공한 데이터를 삽입할 때, 여덟 개의 문자를 그들의 비코드 대체 문자로 바꿔주기만 하면 됩니다. 
+다음은 JavaScript로 작성된 예시입니다:
 
 ```js
 /**
- * Replace any characters that could be used to inject a malicious script in an HTML context.
+ * HTML 컨텍스트에서 악성 스크립트를 주입할 수 있는 문자를 치환합니다.
  */
-export function escapeHtmlText (value) {
+export function escapeHtmlText(value) {
   const stringValue = value.toString()
   const entityMap = {
     '&': '&amp;',
@@ -116,13 +132,14 @@ export function escapeHtmlText (value) {
     '=': '&#x3D;'
   }
 
-  // Match any of the characters inside /[ ... ]/
+  // /[ ... ]/ 내부의 모든 문자와 일치시킵니다.
   const regex = /[&<>"'`=/]/g
   return stringValue.replace(regex, match => entityMap[match])
 }
 ```
 
-This tiny JS function replaces `<` with `&lt;`, `"` with `&quot;`, and so on. These characters will still render properly as `<` and `"` when they're used in the text, but can't be interpreted as code constructs. The previous malicious bio will now be converted into the following HTML:
+이 작은 JS 함수는 `<`을 `&lt;`, `"`을 `&quot;`로 바꿉니다. 이러한 문자들은 텍스트로 사용할 때 `<`와 `"`로 올바르게 렌더링되지만, 코드 구문으로 해석될 수는 없습니다. 
+이전의 악성 소개글은 다음과 같은 HTML로 변환됩니다:
 
 ```html
 <p>
@@ -132,56 +149,65 @@ This tiny JS function replaces `<` with `&lt;`, `"` with `&quot;`, and so on. Th
 </p>
 ```
 
-which displays harmlessly as text.
+이제는 안전하게 텍스트로 표시됩니다.
 
-Fortunately, as established above, you don't have to do your escaping manually—I just wanted to demonstrate how simple these concepts are. Every template engine has an auto-escaping feature, and you're going to want to use a template engine anyway. Just make sure that escaping is enabled, and send all your HTML through it.
+다행히도, 앞서 언급했듯이 수동으로 이스케이프할 필요는 없습니다. 이스케이프의 개념이 얼마나 간단한지를 보여주기 위해 예시를 든 것뿐입니다. 
+모든 템플릿 엔진에는 자동 이스케이프 기능이 있으며, 어차피 템플릿 엔진을 사용하게 될 것입니다. 이스케이프가 활성화되어 있는지 확인하고, 모든 HTML을 이를 통해 전송하세요.
 
-### Only serve user-generated content inside HTML tags
+### 사용자 생성 콘텐츠는 HTML 태그 안에만 제공하기
 
-This is an addendum to the template engine rule, but it's important enough to call out on its own. Do not allow your users to define arbitrary CSS or JS content, even with your auto-escaping template engine.
+이 규칙은 템플릿 엔진 규칙의 추가 사항이지만, 충분히 중요한 부분이므로 별도로 언급하고자 합니다. 
+자동 이스케이프 템플릿 엔진을 사용하더라도 사용자가 임의로 CSS나 JS 콘텐츠를 정의하지 않도록 해야 합니다.
 
 ```html
-<!-- Don't include inside script tags -->
+<!-- script 태그 안에 포함하지 마세요 -->
 <script>
   const userName = {{ user.name }}
 </script>
 
-<!-- Don't include inside CSS tags -->
+<!-- CSS 태그 안에 포함하지 마세요 -->
 <style>
   h1 { color: {{ user.favorite_color }} }
 </style>
 ```
 
-And, don't use user-defined attributes or tag names either:
+또한, 사용자 정의 속성이나 태그 이름도 사용하지 마세요:
 ```html
-<!-- Don't allow user-defined tag names -->
+<!-- 사용자 정의 태그 이름 허용하지 않기 -->
 <{{ user.tag }}></{{ user.tag }}>
 
-<!-- Don't allow user-defined attributes -->
+<!-- 사용자 정의 속성 허용하지 않기 -->
 <a {{ user.attribute }}></a>
 
-<!-- User-defined attribute VALUES are sometimes okay, it depends -->
+<!-- 사용자 정의 속성 값은 경우에 따라 괜찮을 수 있음 -->
 <a class="{{ user.class }}"></a>
 
-<!-- Escaped content is always safe inside HTML tags (this is fine) -->
+<!-- 이스케이프된 콘텐츠는 항상 HTML 태그 안에서 안전함 (이건 괜찮습니다) -->
 <a>{{ user.name }}</a>
 ```
 
-CSS, JavaScript, and HTML attributes are ["dangerous contexts,"](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#dangerous-contexts) places where it's not safe to allow arbitrary user input, even if it's escaped. Escaping will protect you from some vulnerabilities here, but not all of them; the vulnerabilities are varied enough that it's safest to default to not doing *any* of these.
+CSS, JavaScript, 그리고 HTML 속성은 
+["위험한 컨텍스트"](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#dangerous-contexts)로, 
+이스케이프되더라도 임의의 사용자 입력을 허용하는 것이 안전하지 않습니다. 이스케이프는 여기에서 일부 취약점을 방어해 줄 수 있지만, 모든 것을 막아주지는 못하며, 
+취약점이 다양한 만큼 기본적으로는 이러한 작업을 전혀 하지 않는 것이 가장 안전합니다.
 
-Inserting user-generated text directly into a script tag should never be necessary, but there *are* some situations where you might let users customize their CSS or customize HTML attributes. Handling those properly will be discussed down below.
+사용자 생성 텍스트를 스크립트 태그에 직접 삽입하는 것은 절대 필요하지 않지만, 사용자가 CSS를 커스터마이징하거나 HTML 속성을 커스터마이징하도록 허용해야 할 상황이 있을 수 있습니다. 
+이러한 작업을 올바르게 처리하는 방법에 대해서는 아래에서 다루겠습니다.
 
-## Secure your cookies
+## 쿠키 보안 설정
 
-The best way to do authentication with htmx is using cookies. And because htmx encourages interactivity primarily through first-party HTML APIs, it is usually trivial to enable the browser's best cookie security features. These three in particular:
+htmx에서 인증을 수행하는 가장 좋은 방법은 쿠키를 사용하는 것입니다. 
+htmx는 기본적으로 첫 번째 HTML API를 통한 상호작용을 권장하기 때문에 브라우저의 최상의 쿠키 보안 기능을 활성화하는 것이 대개 간단합니다. 특히 다음 세 가지를 활성화해야 합니다:
 
-* `Secure` - only send the cookie via HTTPS, never HTTP
-* `HttpOnly` - don't make the cookie available to JavaScript via `document.cookie`
-* `SameSite=Lax` - don't allow other sites to use your cookie to make requests, unless it's just a plain link
+* `Secure` - HTTPS를 통해서만 쿠키를 전송하고, HTTP를 통해서는 전송하지 않음
+* `HttpOnly` - 쿠키를 `document.cookie`를 통해 JavaScript에서 사용할 수 없도록 함
+* `SameSite=Lax` - 단순한 링크가 아닌 이상, 다른 사이트에서 쿠키를 사용하여 요청을 보낼 수 없도록 함
 
-To understand what these protect you against, let's go over the basics. If you come from JavaScript SPAs, where it's common to authenticate using the `Authorization` header, you might not be familiar with how cookies work. Fortunately they're very simple. (Please note: this is not an "authentication with htmx" tutorial, just an overview of cookie tokens generally)
+이 설정들이 무엇을 방어하는지 이해하기 위해, 쿠키의 기본 사항을 살펴보겠습니다. 
+JavaScript SPA에서 주로 `Authorization` 헤더를 사용하여 인증하는 경우, 쿠키가 어떻게 동작하는지 익숙하지 않을 수 있습니다. 
+다행히도 쿠키는 매우 간단합니다. (참고: 이것은 htmx에서의 인증에 대한 튜토리얼이 아니라, 쿠키 토큰에 대한 일반적인 개요입니다)
 
-If your users log in with a `<form>`, their browser will send your server an HTTP request, and your server will send back a response that looks something like this:
+사용자가 `<form>`을 통해 로그인하면, 브라우저는 서버에 HTTP 요청을 보내고, 서버는 다음과 같은 응답을 반환합니다:
 
 ```
 HTTP/2.0 200 OK
@@ -191,7 +217,7 @@ Set-Cookie: token=asd8234nsdfp982
 [HTML content]
 ```
 
-That token corresponds to the user's current login session. From now on, every time that user makes a request to any route at `yourdomain.com`, the browser will include that cookie from `Set-Cookie` in the HTTP request.
+이 토큰은 사용자의 현재 로그인 세션에 해당하며, 이후 해당 사용자가 `yourdomain.com`의 모든 경로에 요청을 보낼 때마다 브라우저는 `Set-Cookie`에서 받은 이 쿠키를 HTTP 요청에 포함합니다.
 
 ```
 GET /users HTTP/1.1
@@ -199,9 +225,9 @@ Host: yourdomain.com
 Cookie: token=asd8234nsdfp982
 ```
 
-Each time someone makes a request to your server, it needs to parse out that token and determine if it's valid. Simple enough.
+사용자가 서버에 요청을 보낼 때마다, 서버는 이 토큰을 파싱하고 유효한지 확인해야 합니다. 간단하죠.
 
-You can also set options on that cookie, like the ones I recommended above. How to do this differs depending on the programming language, but the outcome is always an HTTP response that looks like this:
+또한, 위에서 권장한 옵션을 포함하여 쿠키에 옵션을 설정할 수도 있습니다. 프로그래밍 언어에 따라 설정 방법은 다르지만, 결과적으로는 다음과 같은 HTTP 응답이 생성됩니다:
 
 ```
 HTTP/2.0 200 OK
@@ -211,66 +237,80 @@ Set-Cookie: token=asd8234nsdfp982; Secure; HttpOnly; SameSite=Lax
 [HTML content]
 ```
 
-So what do the options do?
+그렇다면 이 옵션들은 무엇을 하는 걸까요?
 
-The first one, `Secure`, ensures that the browser will not send the cookie over an insecure HTTP connection, only a secure HTTPS connection. Sensitive info, like a user's login token, should *never* be sent over an insecure connection.
+첫 번째, `Secure`는 브라우저가 안전하지 않은 HTTP 연결을 통해 쿠키를 전송하지 않고, 오직 안전한 HTTPS 연결을 통해서만 전송하도록 보장합니다. 
+사용자의 로그인 토큰과 같은 민감한 정보는 절대 안전하지 않은 연결을 통해 전송되지 않아야 합니다.
 
-The second option, `HttpOnly`, means that the browser will not expose the cookie to JavaScript, ever (i.e. it won't be in [`document.cookie`](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie)). Even if someone is able to insert a malicious script, like in the `evilwebsite.com` example above, that malicious script cannot access the user's cookie or send it to `evilwebsite.com`. The browser will only attach the cookie when the request is made to the website the cookie came from.
+두 번째 옵션인 `HttpOnly`는 브라우저가 쿠키를 JavaScript에 노출하지 않도록 합니다(`document.cookie`에서 쿠키를 사용할 수 없도록 함). 
+앞서 언급한 `evilwebsite.com` 예시와 같이, 누군가 악성 스크립트를 삽입하더라도, 해당 스크립트는 사용자의 쿠키에 접근하거나 이를 `evilwebsite.com`으로 전송할 수 없습니다. 
+브라우저는 쿠키를 해당 쿠키가 발급된 웹사이트에 대한 요청을 보낼 때만 첨부합니다.
 
-Finally, `SameSite=Lax` locks down an avenue for Cross-Site Request Forgery (CSRF) attacks, which is where an attacker tries to get the client's browser to make a malicious request to the `yourdomain.com` server—like a POST request. The `SameSite=Lax` setting tells the browser not to send the `yourdomain.com` cookie if the site that made the request isn't `yourdomain.com`—unless it's a straightforward `<a>` link navigating to your page. This is *mostly* browser default behavior now, but it's important to still set it directly.
+마지막으로, `SameSite=Lax`는 크로스 사이트 요청 위조(CSRF) 공격을 방어하는 데 도움이 됩니다. 
+CSRF 공격은 공격자가 클라이언트의 브라우저가 `yourdomain.com` 서버로 악의적인 요청(예: POST 요청)을 보내도록 시도하는 것입니다. 
+`SameSite=Lax` 설정은 요청을 보낸 사이트가 `yourdomain.com`이 아닌 경우, 브라우저가 `yourdomain.com` 쿠키를 전송하지 않도록 지시합니다(단순한 `<a>` 링크를 통해 페이지로 이동하는 경우는 제외). 
+이는 대부분의 브라우저의 기본 동작이지만, 여전히 직접 설정하는 것이 중요합니다.
 
-In 2024, `SameSite=Lax` is [usually enough](https://security.stackexchange.com/questions/252300/do-i-still-need-a-csrf-token) to protect against CSRF, but there are [additional mitigations](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) you can consider as well for more sensitive or complicated cases.
+2024년에는 `SameSite=Lax` 설정이 CSRF를 방어하기에 [충분한 경우](https://security.stackexchange.com/questions/252300/do-i-still-need-a-csrf-token)가 많지만, 
+더 민감하거나 복잡한 상황에서는 [추가적인 완화책](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)을 고려할 수도 있습니다.
 
-**Important Note:** `SameSite=Lax` only protects you at the domain level, not the subdomain level (i.e. `yourdomain.com`, not `yoursite.github.io`). If you're doing user login, you should always be doing that at your own domain in production. Sometimes the [Public Suffixes List](https://security.stackexchange.com/questions/223473/for-samesite-cookie-with-subdomains-what-are-considered-the-same-site) will protect you, but you shouldn't rely on that.
+**중요한 참고 사항:** `SameSite=Lax`는 도메인 수준에서만 보호하며, 하위 도메인 수준(예: `yourdomain.com`, `yoursite.github.io`)에서는 보호하지 않습니다. 
+사용자가 로그인할 때는 항상 프로덕션에서 자체 도메인을 사용하는 것이 좋습니다. 
+때로는 [공용 접미사 목록(Public Suffixes List)](https://security.stackexchange.com/questions/223473/for-samesite-cookie-with-subdomains-what-are-considered-the-same-site)이 보호해 줄 수 있지만, 이에 의존해서는 안 됩니다.
 
-## Breaking the rules
+## 규칙을 깨는 경우
 
-We started with the easiest, most secure practices—that way mistakes lead to a broken UX, which can be fixed, rather than stolen data, which cannot.
+우리는 가장 쉽고 안전한 관행부터 시작했습니다. 이렇게 하면 실수로 인해 사용자 경험이 손상되는 경우, 데이터를 도난당하는 것보다 훨씬 쉽게 수정할 수 있습니다.
 
-Some web applications demand more complicated functionality, with more user customization; they also require more complicated security mechanisms. You should only break these rules if you are convinced that it is absolutely necessary, and the desired functionality cannot be implemented through alternative means.
+일부 웹 애플리케이션은 더 복잡한 기능을 요구하며, 더 많은 사용자 커스터마이징을 필요로 합니다. 이러한 경우 더 복잡한 보안 메커니즘이 필요합니다. 
+이러한 규칙을 깨야 한다면, 그것이 정말로 필요하다는 것과 대체 수단으로 구현할 수 없다는 것을 확신한 후에만 그렇게 해야 합니다.
 
-### Calling untrusted APIs
+### 신뢰할 수 없는 API 호출
 
-Calling untrusted HTML APIs is lunacy. Never do this.
+신뢰할 수 없는 HTML API를 호출하는 것은 미친 짓입니다. 절대 그렇게 하지 마세요.
 
-There are cases where you might want to call someone else's JSON API from the client, and that's fine, because JSON cannot execute arbitrary scripts. In that case, you'll probably want to do something with that data to turn it into HTML. Don't use htmx to do that—use `fetch` and `JSON.parse()`; if the untrusted API pulls a fast one and returns HTML instead of JSON, `JSON.parse()` will just fail harmlessly.
+다른 경우에는 클라이언트에서 다른 사람의 JSON API를 호출하고 싶을 수 있습니다. 
+JSON은 임의의 스크립트를 실행할 수 없으므로 괜찮습니다. 이 경우, 데이터를 HTML로 변환하기 위해 무언가를 해야 할 것입니다. 
+이때 htmx를 사용하지 말고, `fetch`와 `JSON.parse()`를 사용하세요. 신뢰할 수 없는 API가 HTML 대신 JSON을 반환하면, `JSON.parse()`는 단순히 안전하게 실패합니다.
 
-Keep in mind that the JSON you parse might have a *property* that is formatted as HTML, though:
+하지만 파싱한 JSON에 HTML로 포맷된 *속성*이 있을 수 있습니다:
 
 ```json
-{ "name": "<script>alert('Hahaha I am a script')</script>" }
+{ "name": "<script>alert('하하하, 나는 스크립트다')</script>" }
 ```
 
-Therefore, don't insert JSON values as HTML either—use `textContent` if you're doing something like that. This is well outside the realm of htmx-controlled UI though.
+따라서 JSON 값을 HTML로 삽입하지 말고, `textContent`를 사용하세요. 이는 htmx가 제어하는 UI 범위를 벗어나는 것이지만 중요한 점입니다.
 
-The 2.0 version of htmx will include a `textContent` swap, if you want to call someone else's API directly from the client and just put that text into the page.
+htmx 2.0 버전에서는 다른 사람의 API를 클라이언트에서 직접 호출하고 해당 텍스트를 페이지에 넣을 수 있도록 `textContent` 교체 기능을 포함할 예정입니다.
 
-### Custom HTML controls
+### 사용자 정의 HTML 컨트롤
 
-Unlike calling untrusted HTML routes, there are a lot of good reasons to let users do dynamic HTML-formatted content.
+신뢰할 수 없는 HTML 경로를 호출하는 것과 달리, 동적으로 HTML 형식의 콘텐츠를 사용자가 만들도록 허용하는 것에는 많은 좋은 이유가 있습니다.
 
-What if, say, you want to let users link to an image?
+예를 들어, 사용자가 이미지를 링크하도록 하고 싶다면 어떻게 할까요?
 
 ```html
 <img src="{{ user.fav_img }}">
 ```
 
-Or link to their personal website?
+또는 개인 웹사이트로 연결하는 링크를 만들고 싶다면?
 ```html
 <a href="{{ user.fav_link }}">
 ```
 
-The default "escape everything" approach escapes forward slashes, so it will bork user-submitted URLs.
+기본적으로 "모든 것을 이스케이프"하는 접근 방식은 슬래시(/)를 이스케이프하기 때문에 사용자가 제출한 URL을 망가뜨릴 수 있습니다.
 
-You can fix this in a couple of ways. The simplest, and safest, trick is to let users customize these values, but don't let them define the literal text. In the image example, you might upload the image to your own server (or S3 bucket, or the like), generate the link yourself, and then include it, unescaped. In nunjucks, you use the [safe](https://mozilla.github.io/nunjucks/templating.html#safe) function:
+이를 해결하는 몇 가지 방법이 있습니다. 가장 간단하고 안전한 방법은 사용자가 이러한 값을 커스터마이징할 수 있도록 하되, 실제 텍스트를 정의하지 못하도록 하는 것입니다. 
+이미지 예제에서는 이미지를 자체 서버(또는 S3 버킷 등)에 업로드하고, 링크를 직접 생성한 후 이를 이스케이프하지 않고 포함할 수 있습니다. 
+Nunjucks에서는 [safe](https://mozilla.github.io/nunjucks/templating.html#safe) 함수를 사용합니다:
 
 ```html
 <img src="{{ user.fav_img_s3_url | safe }}">
 ```
 
-Yes, you're including unescaped content, but it's a link that you generated, so you know it's safe.
+네, 이스케이프되지 않은 콘텐츠를 포함하고 있지만, 이는 여러분이 생성한 링크이므로 안전하다고 확신할 수 있습니다.
 
-You can handle custom CSS in the same way. Rather than let your users specify the color directly, give them some limited choices, and set the choices based on their input.
+사용자 정의 CSS도 같은 방식으로 처리할 수 있습니다. 사용자가 색상을 직접 지정하는 대신, 제한된 선택지를 제공하고 그들의 입력에 따라 선택지를 설정합니다.
 
 ```css
 {% if user.favorite_color === 'red' %}
@@ -280,43 +320,72 @@ h1 { color: 'blue'; }
 {% endif %}
 ```
 
-In that example, the user can set `favorite_color` to whatever they like, but it's never going to be anything but red or blue. A less trivial example might ensure that only properly-formatted hex codes can be entered, using a regex. You get the idea.
+이 예에서 사용자는 `favorite_color`을 원하는 대로 설정할 수 있지만, 결국 빨간색이나 파란색으로만 제한됩니다. 
+좀 더 복잡한 예로는 정규식을 사용하여 적절한 형식의 헥스 코드를 입력할 수 있도록 하는 것이 있습니다. 이런 아이디어입니다.
 
-Depending on what kind of customization you're supporting, securing it might be relatively easy, or quite difficult. Some attributes are ["safe sinks,"](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#safe-sinks) which means that their values will never be interpreted as code; these are quite easy to secure. If you're going to include dynamic input in ["dangerous contexts,"](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#dangerous-contexts) you need to research *what* is dangerous about those contexts, and ensure that that kind of input won't make it into the document.
+어떤 종류의 커스터마이징을 지원하느냐에 따라, 이를 보안하는 것이 상대적으로 쉬울 수도 있고, 매우 어려울 수도 있습니다. 
+일부 속성은 ["안전한 싱크(safe sinks)"](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#safe-sinks)로 간주되며, 
+이들의 값은 코드로 해석되지 않으므로 비교적 쉽게 보안할 수 있습니다. 
+그러나 ["위험한 컨텍스트"](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#dangerous-contexts)에 동적 입력을 포함하려는 경우, 
+해당 컨텍스트의 위험한 부분이 무엇인지 연구하고, 그 종류의 입력이 문서에 들어가지 않도록 해야 합니다.
 
-If you want to let users link to arbitrary websites or images, for instance, that's a lot more complicated. First, make sure to put the attributes inside quotes (most people do this anyway). Then you will need to do something like write a custom escaping function that escapes everything *but* forward slashes (and possibly ampersands), so the link will work properly.
+예를 들어, 사용자가 임의의 웹사이트나 이미지로 연결할 수 있도록 하려면, 이는 훨씬 더 복잡해집니다. 먼저 속성을 따옴표 안에 넣도록 하세요(대부분의 사람들은 어쨌든 이렇게 합니다). 
+그런 다음, 슬래시(및 경우에 따라 앰퍼샌드)를 제외한 모든 것을 이스케이프하는 사용자 정의 이스케이프 함수를 작성하여 링크가 올바르게 작동하도록 해야 합니다.
 
-But even if you do that correctly, you are introducing some new security challenges. That image link can be used to track your users, since your users will request it directly from someone else's server. Maybe you're fine with that, maybe you include other mitigations. The important part is that you are aware that introducing this level of customization comes with a more difficult security model, and if you don't have the bandwidth to research and test it, you shouldn't do it.
+그러나 올바르게 수행하더라도 새로운 보안 문제를 도입할 수 있습니다. 예를 들어, 그 이미지 링크는 사용자의 요청을 다른 서버에서 직접 수신하므로 사용자를 추적하는 데 사용될 수 있습니다. 
+이것이 괜찮다고 생각할 수도 있고, 다른 완화 조치를 포함할 수도 있습니다.
+중요한 점은 이러한 수준의 커스터마이징을 도입하면 더 어려운 보안 모델이 필요하다는 점을 인식하고, 이를 연구하고 테스트할 수 있는 여력이 없다면 하지 말아야 한다는 것입니다.
 
-### Non-cookie authentication
+### 비쿠키 인증
 
-JavaScript SPAs sometimes authenticate by saving a token in the client's local storage, and then adding that to the [`Authorization` header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization) of each request. Unfortunately, there's no way to set the `Authorization` header without using JavaScript, which is not as secure; if it's available to your trusted JavaScript, it's available to attackers if they manage to get a malicious script onto your page. Instead, use a cookie (with the above attributes), which can be set and secured without touching JavaScript at all.
+JavaScript SPA에서는 때때로 토큰을 클라이언트의 로컬 스토리지에 저장한 다음 각 요청의 
+[`Authorization` 헤더](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization)에 추가하여 인증을 수행합니다. 
+그러나 불행히도 JavaScript를 사용하지 않고는 `Authorization` 헤더를 설정할 수 없으며, 이는 안전하지 않습니다. 
+신뢰할 수 있는 JavaScript에 접근할 수 있다면, 악성 스크립트가 페이지에 삽입될 경우 공격자도 접근할 수 있기 때문입니다. 
+대신, 쿠키(위에서 언급한 속성 포함)를 사용하세요. 쿠키는 JavaScript에 전혀 접근하지 않고도 설정하고 보호할 수 있습니다.
 
-Why is there an `Authorization` header but no way to set it with hypermedia controls? Well, that's just one of WHATWG's ~~outrageous omissions~~ little mysteries.
+`Authorization` 헤더가 있지만 하이퍼미디어 컨트롤로 이를 설정할 수 없는 이유는 무엇일까요? 글쎄요, 그것은 WHATWG의 ~~놀라운 누락~~ 작은 미스터리 중 하나일 뿐입니다.
 
-You might need to use an `Authorization` header if you're authenticating the user's client with an API that you don't control, in which case the regular precautions about routes you don't control apply.
+만약 사용자의 클라이언트를 여러분이 제어하지 않는 API로 인증해야 한다면, 일반적인 비신뢰 경로에 대한 주의 사항이 적용됩니다.
 
-## Bonus: Content Security Policy
+## 보너스: 콘텐츠 보안 정책
 
-You should also be aware of the [Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy) (CSP), which uses HTTP headers to set rules about the kind of content that your page is allowed to run. You can restrict the page to only load images from your domain, for example, or to disable inline scripts.
+[콘텐츠 보안 정책](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy)(CSP)도 알고 있어야 합니다. 
+CSP는 HTTP 헤더를 사용하여 페이지에서 실행할 수 있는 콘텐츠의 종류에 대한 규칙을 설정합니다. 
+예를 들어, 페이지가 특정 도메인에서만 이미지를 로드하도록 제한하거나, 인라인 스크립트를 비활성화할 수 있습니다.
 
-This is not one of the golden rules because it's not as easy to apply universally. There's no "one size fits most" CSP. Some htmx applications make use of inline scripting—the [`hx-on` attribute](https://htmx.org/attributes/hx-on/) is a generalized attribute listener that can evaluate arbitrary scripts (although [it can be disabled](https://htmx.org/docs/#configuration-options) if you don't need it). Sometimes inline scripts are appropriate to preserve [locality of behavior](https://htmx.org/essays/locality-of-behaviour/) on a application that is sufficiently secured against XSS, sometimes inline scripts aren't necessary and you can adopt a stricter CSP. It all depends on your application's security profile—it's on to you to be aware of the options available to you and able to perform that analysis.
+이것이 "골든 룰" 중 하나가 아닌 이유는 모든 곳에 보편적으로 적용하기 쉽지 않기 때문입니다. "대부분에 적합한" CSP라는 것은 없습니다. 
+일부 htmx 애플리케이션은 인라인 스크립트를 사용하며, 
+[`hx-on` 속성](https://htmx.pinstella.com/attributes/hx-on/)은 임의의 스크립트를 평가할 수 있는 일반화된 속성 리스너입니다(필요하지 않다면 [비활성화할 수 있습니다](https://htmx.pinstella.com/docs/#configuration-options)). 
+인라인 스크립트가 필요하지 않고, 더 엄격한 CSP를 채택할 수 있는 경우도 있습니다. 
+이 모든 것은 애플리케이션의 보안 프로필에 따라 달라지며, 사용할 수 있는 옵션을 알고 그 분석을 수행할 수 있어야 합니다.
 
-## Is this a step back?
+## 이것이 한 걸음 뒤로 가는 것일까요?
 
-You might reasonably wonder: if I didn't have to know these things when I was building SPAs, isn't htmx a step back in security? We would challenge both parts of that statement.
+SPA를 만들 때 이러한 것들을 몰라도 되었다면, htmx가 보안 측면에서 한 걸음 뒤로 가는 것이 아닌가 의문이 들 수 있습니다. 우리는 이 주장의 두 부분 모두에 대해 도전하고 싶습니다.
 
-This article is not intended to be a defense of htmx's security properties, but there are a lot of areas where hypermedia applications are, by default, a lot more secure than JSON-based frontends. HTML APIs only send back the information that's supposed to be rendered—it's a lot easier for unintended data to "hide" in a JSON response and leak to the user. Hypermedia APIs also don't lend themselves to implementing a generalized query language, like GraphQL, on the client, which [require a *massively* more complicated security model](https://intercoolerjs.org/2016/02/17/api-churn-vs-security.html). Flaws of all kinds hide in your application's complexity; hypermedia applications are, generally speaking, less complex, and therefore easier to secure.
+이 기사는 htmx의 보안 속성을 변호하기 위한 것이 아니지만, 하이퍼미디어 애플리케이션이 기본적으로 JSON 기반 프런트엔드보다 훨씬 더 안전한 여러 영역이 있습니다. 
+HTML API는 렌더링되어야 하는 정보만 반환하므로, JSON 응답에서 의도치 않은 데이터가 "숨겨져" 사용자가 이를 유출하는 일이 훨씬 더 쉽게 발생할 수 있습니다. 
+하이퍼미디어 API는 또한 클라이언트에서 [훨씬 더 복잡한 보안 모델](https://intercoolerjs.org/2016/02/17/api-churn-vs-security.html)을 필요로 하는 GraphQL과 같은 일반화된 쿼리 언어를 구현하는 데 적합하지 않습니다. 
+모든 종류의 결함은 애플리케이션의 복잡성에 숨어 있습니다. 일반적으로 하이퍼미디어 애플리케이션은 덜 복잡하므로 보안이 더 쉽습니다.
 
-You also need to know about XSS attacks if you're putting dynamic content on the web, period. A developer who doesn't understand how XSS works won't understand what's dangerous about using React's [`dangerouslySetInnerHTML`](https://react.dev/reference/react-dom/components/common#dangerously-setting-the-inner-html)—and they'll go ahead and set it the first time they need to render rich user-generated text. It is the library's responsibility to make those security basics as easy to find as possible; it has always been the developer's responsibility to learn and follow them.
+또한, 웹에 동적 콘텐츠를 배포하는 경우 XSS 공격에 대해 알아야 합니다. 
+XSS가 어떻게 작동하는지 이해하지 못하는 개발자는 React의 [`dangerouslySetInnerHTML`](https://react.dev/reference/react-dom/components/common#dangerously-setting-the-inner-html)이 왜 위험한지 이해하지 못할 것이며, 
+사용자 생성 텍스트를 렌더링해야 할 때 바로 이 기능을 사용할 것입니다. 
+라이브러리는 이러한 보안 기본 사항을 가능한 한 쉽게 찾을 수 있도록 해야 하며, 개발자는 항상 이를 배우고 준수해야 할 책임이 있습니다.
 
-This article is organized to making securing your htmx application a "pit of success"—follow these simple rules and you are very unlikely to code an XSS vulnerability. But it's impossible to write a library that's going to be secure in the hands of a developer who refuses to learn *anything* about security, because security is about controlling access to information, and it will always be the human's job to explain to the computer precisely who has access to what information.
+이 기사는 htmx 애플리케이션을 보안적으로 성공하기 쉽게 만들기 위해 구성되어 있습니다. 
+이 간단한 규칙을 따르기만 하면 XSS 취약점을 코딩할 가능성은 매우 낮아집니다. 그러나 보안에 대해 전혀 배우지 않으려는 개발자 손에 들어간 라이브러리가 안전할 수는 없습니다. 
+보안은 정보에 대한 접근을 제어하는 것과 관련이 있으며, 어떤 정보에 누가 접근할 수 있는지를 컴퓨터에게 설명하는 것은 항상 인간의 역할이기 때문입니다.
 
-Writing secure web applications is *hard*. There are plenty of easy pitfalls related to routing, database access, HTML templating, business logic, and more. And yet, if security is only the domain of security experts, then only security experts should be making web applications. Maybe that should be the case! But if only security experts are making web applications, they definitely know how to use a template engine correctly, so htmx will be no trouble for them.
+안전한 웹 애플리케이션을 작성하는 것은 *어렵습니다*. 
+라우팅, 데이터베이스 접근, HTML 템플릿, 비즈니스 로직 등과 관련된 많은 쉬운 함정들이 존재합니다. 그럼에도 불구하고, 보안이 보안 전문가들의 영역에만 국한된다면, 
+오직 보안 전문가들만 웹 애플리케이션을 만들어야 합니다. 그것이 정말로 그렇게 되어야 할 수도 있습니다! 
+하지만 보안 전문가들만이 웹 애플리케이션을 만든다면, 그들은 분명히 템플릿 엔진을 올바르게 사용하는 방법을 알고 있을 것이며, htmx도 그들에게는 아무런 문제가 되지 않을 것입니다.
 
-For everyone else:
+모든 사람들에게:
 
-1. Don't call untrusted routes
-2. Use an auto-escaping template engine
-3. Only put user-generated content inside HTML tags
-4. Secure your cookies
+1. 신뢰할 수 없는 경로를 호출하지 마세요.
+2. 자동 이스케이프 템플릿 엔진을 사용하세요.
+3. 사용자 생성 콘텐츠는 HTML 태그 안에만 넣으세요.
+4. 쿠키를 안전하게 설정하세요.

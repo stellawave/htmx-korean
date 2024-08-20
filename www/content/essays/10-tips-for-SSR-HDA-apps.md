@@ -7,154 +7,127 @@ author = ["Carson Gross"]
 tag = ["posts"]
 +++
 
-Building web applications using traditional Server-Side Rendering (SSR) or, saying the same thing another way, building 
-[Hypermedia-Driven Applications](@/essays/hypermedia-driven-applications.md) (HDAs) requires a mindset shift when
-compared with building web applications with Single Page Application frameworks like React.
+전통적인 서버사이드 렌더링(SSR) 방식으로 웹 애플리케이션을 구축하거나, 
+다른 말로 [하이퍼미디어 기반 애플리케이션(HDA)](@/essays/hypermedia-driven-applications.md)을 구축하는 것은 React와 같은 싱글 페이지 애플리케이션(SPA) 프레임워크를 사용하여 웹 애플리케이션을 개발하는 것과 비교했을 때 사고방식의 전환이 필요합니다.
 
-If you come at this style of development with an SPA-engineering hat on, you are likely to be frustrated and miss out
-on many advantages of this particular architectural choice.
+SPA 개발 방식에 익숙한 상태로 이 개발 스타일에 접근하면, 이 특정 아키텍처 선택의 많은 장점을 놓치고 좌절하게 될 가능성이 큽니다.
 
-Here are 10 tip to help you make the mental shift smoothly, taking advantage of the strengths of this approach and
-minimizing the weaknesses of it:
+이러한 접근 방식의 강점을 최대한 활용하고 약점을 최소화할 수 있도록 사고방식을 원활하게 전환하는 데 도움이 되는 10가지 팁을 소개합니다:
 
-### Tip 1: Maximize Your Server-Side Strengths
+### 팁 1: 서버사이드의 강점을 최대한 활용하라
 
-A big advantage of the hypermedia-driven approach is that it makes the server-side environment far more important when
-building your web application.  Rather than simply producing JSON, your back end is an integral component in the user
-experience of your web application.
+하이퍼미디어 기반 접근 방식의 큰 장점은 웹 애플리케이션을 구축할 때 서버사이드 환경이 훨씬 더 중요해진다는 것입니다. JSON만 생성하는 것이 아니라, 
+백엔드는 웹 애플리케이션의 사용자 경험에서 중요한 구성 요소가 됩니다.
 
-Because of this, it makes sense to look deeply into the functionality available there.  Many older web frameworks have
-incredibly deep functionality available around producing HTML.  Features like 
-[server-side caching](https://guides.rubyonrails.org/caching_with_rails.html) can make the difference between an incredibly 
-snappy web application and a sluggish user experience.
+이 때문에 서버사이드에서 제공하는 기능을 깊이 탐구하는 것이 중요합니다. 많은 오래된 웹 프레임워크는 HTML을 생성하는 데 있어 매우 깊은 기능을 제공합니다. 
+예를 들어, [서버사이드 캐싱](https://guides.rubyonrails.org/caching_with_rails.html)과 같은 기능은 빠르고 반응이 좋은 웹 애플리케이션과 느린 사용자 경험의 차이를 만들 수 있습니다.
 
-Take time to learn all the tools available to you.  
+사용 가능한 모든 도구를 배우는 데 시간을 투자하십시오.
 
-A good rule of thumb is to shoot to have responses in your application take less than 100ms to complete, and mature
-server side frameworks have tools to help make this happen.
+일반적인 규칙은 애플리케이션의 응답 시간이 100ms 이하가 되도록 하는 것이며, 성숙한 서버사이드 프레임워크는 이를 달성하는 데 도움이 되는 도구를 제공합니다.
 
-### Tip 2: Factor Your Application On The Server
+### 팁 2: 서버에서 애플리케이션을 구성하라
 
-Server-side environments often have extremely mature mechanisms for factoring (or organizing) your code properly.  The
-[Model/View/Controller](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) pattern is well-developed in
-most environments, and tools like modules, packages, etc. provide an excellent way to organize your code.
+서버사이드 환경은 코드를 적절히 구성하는 매우 성숙한 메커니즘을 제공합니다. 대부분의 환경에서는 
+[모델/뷰/컨트롤러(MVC)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller) 패턴이 잘 개발되어 있으며, 
+모듈, 패키지 등의 도구는 코드를 조직화하는 데 탁월한 방법을 제공합니다.
 
-Whereas SPAs user interfaces are typically organized via _components_, hypermedia-driven applications are typically 
-organized via _template inclusion_, where the server-side templates are broken up according to the HTML-rendering needs 
-of the application, and then included in one another as needed.  This tends to lead to fewer, chunkier files than you 
-would find in a component-based application.
+SPA의 사용자 인터페이스가 일반적으로 _컴포넌트_ 를 통해 구성되는 반면, 하이퍼미디어 기반 애플리케이션은 일반적으로 _템플릿 포함_ 을 통해 구성됩니다. 
+서버사이드 템플릿은 애플리케이션의 HTML 렌더링 요구에 따라 분리되어 필요에 따라 서로 포함됩니다. 
+이는 컴포넌트 기반 애플리케이션에서 찾을 수 있는 것보다 더 적고 더 덩어리진 파일로 이어지는 경향이 있습니다.
 
-Another technology to look for are [Template Fragments](@/essays/template-fragments.md), which allow you to render only
-part of a template file.  This can reduce even further the number of template files required for your server-side 
-application.
+또 다른 유용한 기술로는 [템플릿 프래그먼트](@/essays/template-fragments.md)를 들 수 있습니다. 이를 통해 템플릿 파일의 일부만 렌더링할 수 있으며, 
+이는 서버사이드 애플리케이션에 필요한 템플릿 파일의 수를 더욱 줄여줍니다.
 
-### Tip 3: Specialize Your API End Points
+### 팁 3: API 엔드포인트를 특화하라
 
-Unlike a [JSON API](@/essays/hypermedia-apis-vs-data-apis.md), the hypermedia API you produce for your hypermedia-driven
-application _should_ feature end-points specialized for your particular application's UI needs.  
+[JSON API](@/essays/hypermedia-apis-vs-data-apis.md)와 달리, 
+하이퍼미디어 기반 애플리케이션을 위해 생성한 하이퍼미디어 API는 애플리케이션의 UI 요구 사항에 특화된 엔드포인트를 포함해야 합니다.
 
-Because hypermedia APIs are [not designed to be consumed by general-purpose clients](@/essays/hypermedia-clients.md) you 
-can set aside the pressure to keep them generalized and produce the content specifically needed for your application.  
-Your end-points should be optimized to support your particular applications UI/UX needs, not for a general-purpose 
-data-access model for your domain model.
+하이퍼미디어 API는 [일반 목적의 클라이언트가 소비하도록 설계되지 않았기](@/essays/hypermedia-clients.md) 때문에, 
+이를 일반화하려는 압박을 내려놓고 애플리케이션에 필요한 콘텐츠를 구체적으로 생성할 수 있습니다. 엔드포인트는 도메인 모델에 대한 일반적인 데이터 접근 모델을 위한 것이 아니라, 
+애플리케이션의 UI/UX 요구 사항을 지원하도록 최적화되어야 합니다.
 
-### Tip 4: Aggressively Refactor Your API End Points
+### 팁 4: API 엔드포인트를 적극적으로 리팩토링하라
 
-A related tip is that, when you have a hypermedia-based API, you can aggressively refactor your API in a way that is
-heavily discouraged when writing JSON API-based SPAs.  Because hypermedia-based applications use [Hypermedia As The Engine 
-Of Application State](@/essays/hateoas.md), you are able and, in fact, encouraged, to change the shape of them as your
-application developers and as use cases change.
+관련된 팁으로, 하이퍼미디어 기반 API를 사용하는 경우, JSON API 기반 SPA를 작성할 때 강력히 권장되지 않는 방식으로 API를 적극적으로 리팩토링할 수 있습니다. 
+하이퍼미디어 기반 애플리케이션은 [애플리케이션 상태의 엔진으로서의 하이퍼미디어(HATEOAS)](@/essays/hateoas.md)를 사용하기 때문에, 
+애플리케이션이 개발되고 사용 사례가 변경됨에 따라 API의 모양을 변경하는 것이 가능하며, 실제로 권장됩니다.
 
-A great strength of the hypermedia approach is that you can completely rework your API to adapt to new needs over time
-without needing to version the API or even document it.
+하이퍼미디어 접근 방식의 큰 장점은 API를 버전 관리하거나 문서화할 필요 없이 시간이 지남에 따라 새로운 요구 사항에 맞게 완전히 재구성할 수 있다는 것입니다.
 
-### Tip 5: Take Advantage of Direct Access To The Data Store
+### 팁 5: 데이터 스토어에 대한 직접 접근을 활용하라
 
-When an application is built using the SPA approach, the data store typically lives behind a JSON API.  This level of
-indirection often prevents front end developers from being able to take full advantage of the tools available in the
-data store.  GraphQL can help address this issue, but comes with [security-related issues](https://intercoolerjs.org/2016/02/17/api-churn-vs-security.html) 
-that do not appear to be well understood by many developers.
+SPA 접근 방식을 사용하여 애플리케이션을 구축할 때, 데이터 스토어는 일반적으로 JSON API 뒤에 위치합니다. 
+이러한 간접적인 접근 방식은 프론트엔드 개발자가 데이터 스토어에서 사용할 수 있는 도구를 최대한 활용하는 것을 방해하는 경우가 많습니다. 
+GraphQL은 이 문제를 해결하는 데 도움이 될 수 있지만, 많은 개발자가 잘 이해하지 못하는 
+[보안 관련 문제](https://intercoolerjs.org/2016/02/17/api-churn-vs-security.html)가 발생할 수 있습니다.
 
-When you produce your HTML on the server side, on the other hand, the developer creating that HTML can have full access
-to the data store and take advantage of, for example, [joins](https://www.sqltutorial.org/sql-left-join/) and 
-[aggregation functions](https://www.sqltutorial.org/sql-aggregate-functions/) in SQL stores.
+반면, 서버사이드에서 HTML을 생성할 때, 그 HTML을 생성하는 개발자는 데이터 스토어에 대한 완전한 접근 권한을 가지며, 
+예를 들어 SQL 스토어에서 [조인](https://www.sqltutorial.org/sql-left-join/) 및 [집계 함수](https://www.sqltutorial.org/sql-aggregate-functions/)와 같은 기능을 활용할 수 있습니다.
 
-This puts far more expressive power directly in the hands of the developer producing the HTML.  Because your hypermedia
-API can be structured around your UI needs, you can tune each endpoint to issue as few data store requests as possible.
+이는 HTML을 생성하는 개발자에게 훨씬 더 많은 표현력을 제공합니다. 
+하이퍼미디어 API를 UI 요구 사항에 맞게 구조화할 수 있기 때문에 각 엔드포인트를 조정하여 데이터 스토어 요청을 가능한 한 적게 할 수 있습니다.
 
-A good rule of thumb is that every request should shoot to have three or fewer data-store accesses.
+일반적인 규칙으로는 모든 요청이 세 번 이하의 데이터 스토어 접근을 목표로 해야 한다는 것입니다.
 
-### Tip 6: Avoid Modals
+### 팁 6: 모달을 피하라
 
-[Modal windows](https://en.wikipedia.org/wiki/Modal_window) have become popular, almost standard, in many web applications
-today.  
+[모달 창](https://en.wikipedia.org/wiki/Modal_window)은 오늘날 많은 웹 애플리케이션에서 거의 표준처럼 인기를 끌고 있습니다.
 
-Unfortunately, [modal windows do not play well with much of the infrastructure of the web](https://youdontneedamodalwindow.dev/)
-and introduce client-side state that can be difficult (though not impossible) to integrate cleanly with the hypermedia-based
-approach.
+불행히도, [모달 창은 웹의 많은 인프라와 잘 어울리지 않으며](https://youdontneedamodalwindow.dev/), 
+클라이언트 측 상태를 도입하여 하이퍼미디어 기반 접근 방식과 깨끗하게 통합하기 어려울 수 있습니다(불가능하지는 않지만).
 
-Consider using alternatives such as [inline editing](https://htmx.org/examples/click-to-edit/), rather than modals.
+모달 대신 [인라인 편집](https://htmx.pinstella.com/examples/click-to-edit/)과 같은 대안을 고려해보세요.
 
-### Tip 7: Accept "Good Enough" UX
+### 팁 7: "충분히 좋은" UX를 받아들여라
 
-A problem many SPA developers face when coming to the HDA approach is that they look at their current SPA application and
-imagine implementing it _exactly_ using hypermedia.  While htmx and other hypermedia-oriented libraries significantly 
-close the interactivity gap between hypermedia-based applications and SPAs, that gap still exists.
+HDA 접근 방식을 처음 접하는 많은 SPA 개발자들이 현재의 SPA 애플리케이션을 _정확하게_ 하이퍼미디어를 사용하여 구현하는 것을 상상합니다. 
+htmx 및 기타 하이퍼미디어 지향 라이브러리는 하이퍼미디어 기반 애플리케이션과 SPA 간의 상호작용 격차를 상당히 줄이지만, 그 격차는 여전히 존재합니다.
 
-As Roy Fielding [said](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_5) with respect
-to the web's REST-ful network architecture:
+웹의 REST-ful 네트워크 아키텍처와 관련하여 Roy Fielding이 [말했듯이](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_5),
 
-> The trade-off, though, is that a uniform interface degrades efficiency, since information is transferred in a
-> standardized form rather than one which is specific to an application's needs.
+> 그러나 균일한 인터페이스는 정보를 애플리케이션의 필요에 맞게 구체화된 형태가 아닌 표준화된 형태로 전송하기 때문에 효율성이 저하된다.
 
-Accepting a slightly less efficient and interactive solution to a particular UX can save you a tremendous amount of
-[complexity](@/essays/complexity-budget.md) when building a web application.
+특정 UX에 대해 약간 덜 효율적이고 덜 상호작용적인 솔루션을 받아들이는 것은 웹 애플리케이션을 구축할 때 [복잡성](@/essays/complexity-budget.md)을 크게 줄일 수 있습니다.
 
-Do not let the perfect be the enemy of the good.
+완벽이 선의 적이 되지 않도록 하세요.
 
-### Tip 8: When Necessary, Create "Islands of Interactivity"
+### 팁 8: 필요할 때 "상호작용 섬"을 만드세요
 
-At some point in your web application, there may come a point where the hypermedia approach, on its own, just doesn't
-cut it.
+웹 애플리케이션을 개발하다 보면 하이퍼미디어 접근 방식만으로는 부족한 상황이 발생할 수 있습니다.
 
-A good example of this is re-ordering a list of things.  This can be done in "pure" hypermedia by clicking up and down
-arrows or having order # drop-downs next to items.  (I am ashamed to admit I have built both of these!)
+그러한 상황의 좋은 예로, 항목의 목록을 재정렬하는 기능을 들 수 있습니다. 
+이를 "순수" 하이퍼미디어 방식으로 구현하려면 위아래 화살표를 클릭하거나 항목 옆에 순서 번호 드롭다운을 배치할 수 있습니다. (부끄럽게도 저도 이 두 가지를 다 만들어 본 적이 있습니다!)
 
-But this experience stinks compared to what people are used to: drag-and-drop.
+하지만 이러한 경험은 사람들이 기대하는 것에 비해 매우 불편합니다. 사람들이 기대하는 것은 드래그 앤 드롭입니다.
 
-In cases like this, it is perfectly fine to use a front-end heavy approach as an "Island of Interactivity".  
+이러한 경우, "상호작용 섬(Island of Interactivity)"으로 프런트엔드 중심의 접근 방식을 사용하는 것은 전혀 문제되지 않습니다.
 
-Consider the [SortableJS](@/examples/sortable.md) example.  Here you have a sophisticated area of interactivity that allows for
-drag-and-drop, and that integrates with htmx and the broader hypermedia-driven application via events.
+[SortableJS 예제](@/examples/sortable.md)을 고려해보세요. 
+여기에서는 드래그 앤 드롭을 허용하는 복잡한 상호작용 영역이 있으며, 이는 이벤트를 통해 htmx 및 더 넓은 하이퍼미디어 기반 애플리케이션과 통합됩니다.
 
-This is an excellent way to encapsulate richer UX within an HDA.
+이것은 HDA 내에서 더 풍부한 UX를 캡슐화하는 훌륭한 방법입니다.
 
-### Tip 9: Don't Be Afraid To Script!
+### 팁 9: 스크립팅을 두려워하지 마세요!
 
-Scripting is [explicitly a part of the web architecture](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7)
-and developers adopting the hypermedia approach shouldn't be afraid to use it.  Of course there is scripting and then
-there is scripting.
+스크립팅은 [웹 아키텍처의 명시적인 일부](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm#sec_5_1_7)이며, 
+하이퍼미디어 접근 방식을 채택한 개발자들은 이를 사용하는 것을 두려워해서는 안 됩니다. 물론 스크립팅에도 여러 가지 방식이 있습니다.
 
-As much as possible, you should try to use the  [hypermedia-friendly scripting](@/essays/hypermedia-friendly-scripting.md)
-approach, retaining hypermedia-exchanges as the primary mechanism for communicating system state changes with the
-server.
+가능한 한, [하이퍼미디어 친화적인 스크립팅](@/essays/hypermedia-friendly-scripting.md) 방식을 사용하여 하이퍼미디어 교환을 서버와 시스템 상태 변경을 위한 주요 통신 메커니즘으로 유지해야 합니다.
 
-Inline-style scripting, as enabled by [alpine.js](https://alpinejs.dev/) & [hyperscript](https://hyperscript.org) for example,
-is worth exploring as well, as it refocuses your scripting on the hypermedia (HTML) itself and imposes an aesthetic 
-constraint on just how much code you can write.
+[alpine.js](https://alpinejs.dev/)와 [hyperscript](https://hyperscript.org)와 같은 도구를 사용하여 인라인 스타일 스크립팅을 탐색해보는 것도 좋습니다. 
+이러한 접근 방식은 스크립팅을 하이퍼미디어(HTML) 자체에 집중시키며, 작성할 수 있는 코드의 양에 미학적인 제한을 부과합니다.
 
-### Tip 10: Be Pragmatic
+### 팁 10: 실용적이 되세요
 
-Finally, do not be dogmatic about using hypermedia.  At the end of the day, it is just another technology with its own
-[strengths & weaknesses](@/essays/when-to-use-hypermedia.md).  If a particular part of an app, or if an entire app,
-demands something more interactive than what hypermedia can deliver, then go with a technology that can.  
+마지막으로, 하이퍼미디어 사용에 대해 교조적이지 않도록 하세요. 결국, 하이퍼미디어는 고유한 [강점과 약점](@/essays/when-to-use-hypermedia.md)을 가진 또 다른 기술일 뿐입니다. 
+특정 앱의 일부나 전체 앱이 하이퍼미디어가 제공할 수 있는 것보다 더 상호작용적인 기능을 요구한다면, 그에 적합한 기술을 선택하세요.
 
-Just be familiar with [what hypermedia can do](@/examples/_index.md), so you can make that decision as an informed 
-developer.
+단, [하이퍼미디어가 할 수 있는 것](@/examples/_index.md)을 잘 이해하고 있어야, informed developer로서 그 결정을 내릴 수 있습니다.
 
-## Conclusion
+## 결론
 
-Hopefully these tips help you adopt hypermedia and server-side rendering as a tool more effectively and smoothly.  It
-isn't a perfect client-server architecture, and it involves explicit tradeoffs, but it can be extremely effective for
-many web applications (far more than most web developers today suspect) and provides a much simpler overall development
-experience in those cases.
+이 팁들이 하이퍼미디어와 서버사이드 렌더링을 보다 효과적이고 원활하게 도구로 활용하는 데 도움이 되기를 바랍니다. 
+하이퍼미디어는 완벽한 클라이언트-서버 아키텍처는 아니며, 명확한 트레이드오프가 존재하지만, 
+많은 웹 애플리케이션(오늘날 대부분의 웹 개발자들이 예상하는 것보다 훨씬 더 많은 경우)에 매우 효과적일 수 있으며, 그 경우 훨씬 간단한 전체 개발 경험을 제공합니다.

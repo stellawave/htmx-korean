@@ -7,33 +7,32 @@ author = ["Carson Gross"]
 tag = ["posts"]
 +++
 
-> "The primary feature for easy maintenance is locality: Locality is that characteristic of source code that enables a 
-> programmer to understand that source by looking at only a small portion of it." -- [Richard Gabriel](https://www.dreamsongs.com/Files/PatternsOfSoftware.pdf)
+> "유지 보수를 쉽게 하는 주요 기능은 지역성입니다. 지역성은 소스 코드의 작은 부분만을 보고도 해당 소스를 이해할 수 있게 해주는 특성입니다." 
+> -- [리처드 가브리엘](https://www.dreamsongs.com/Files/PatternsOfSoftware.pdf)
 
-## The LoB Principle
+## LoB 원칙
 
-Locality of Behaviour is the principle that: 
+행동의 지역성(Locality of Behaviour, LoB)은 다음과 같은 원칙입니다:
 
-> The behaviour of a unit of code should be as obvious as possible by looking only at that unit of code
+> 코드 단위의 동작은 해당 코드 단위만을 보고도 최대한 명확하게 이해할 수 있어야 한다.
 
-## Discussion
+## 논의
 
-The LoB principle is a simple prescriptive formulation of the quoted statement from [Richard Gabriel](https://www.dreamsongs.com).
-In as much as it is possible, and in balance with other concerns, developers should strive to make the behaviour of
-a code element obvious on inspection.
+LoB 원칙은 [리처드 가브리엘](https://www.dreamsongs.com)의 인용문에서 나온 단순한 처방적 공식입니다. 
+가능한 한, 그리고 다른 고려사항들과 균형을 맞추면서, 개발자들은 코드 요소의 동작을 명확하게 하려고 노력해야 합니다.
 
-Consider two different implementations of an AJAX request in HTML, the first in [htmx](@/_index.md):
+HTML에서 두 가지 다른 AJAX 요청 구현 방식을 고려해봅시다. 첫 번째는 [htmx](@/_index.md)를 사용하는 경우입니다:
 
 ```html
 <button hx-get="/clicked">Click Me</button>
 ```
 
-and the second in [jQuery](https://jquery.com/):
+두 번째는 [jQuery](https://jquery.com/)를 사용하는 경우입니다:
 
 ```javascript
   $("#d1").on("click", function(){
     $.ajax({
-         /* AJAX options... */
+         /* AJAX 옵션들... */
     });
   });
 ```
@@ -42,63 +41,44 @@ and the second in [jQuery](https://jquery.com/):
 <button id="d1">Click Me</button>
 ```
 
-In the former, the behaviour of the `button` element is obvious on inspection, satisfying the LoB principle.
+첫 번째 경우에서 `button` 요소의 동작은 명확하게 드러나며, LoB 원칙을 충족합니다.
 
-In the latter, the behaviour of the `button` element is spread out amongst multiple files.  It is difficult to know
-exactly what the button does without a total knowledge of the code base.  This "spooky action at a distance" is a source
-of maintenance issues and stands in the way of developers understanding of the code base.
+두 번째 경우에서는 `button` 요소의 동작이 여러 파일에 분산되어 있습니다. 버튼이 정확히 어떤 동작을 하는지 알기 위해서는 코드 베이스 전체를 이해해야 합니다. 
+이러한 "거리의 스푸키 액션"은 유지보수 문제의 원인이 되며, 개발자들이 코드 베이스를 이해하는 데 방해가 됩니다.
 
-The htmx example demonstrates good Locality of Behaviour, while the jQuery example has poor Locality of Behaviour.
+htmx 예시는 좋은 행동의 지역성을 보여주며, jQuery 예시는 나쁜 행동의 지역성을 보여줍니다.
 
-### Surfacing Behaviour vs. Inlining Implementation
+### 동작 노출 vs. 구현 인라인화
 
-A common objection to Locality of Behaviour is that it is inlining implementation details within a code unit, making the
-code unit less abstract and more brittle.  However, it is important to make the distinction between inlining the
-*implementation* of some behaviour and inlining the invocation (or declaration) of some behaviour.  
+행동의 지역성에 대한 일반적인 반대 의견은, 이것이 코드 단위 내에서 구현 세부 사항을 인라인화하여 코드 단위를 덜 추상적이고 더 취약하게 만든다는 것입니다. 
+그러나 행동의 구현을 인라인화하는 것과 행동의 호출(또는 선언)을 인라인화하는 것은 중요한 차이가 있다는 점을 이해하는 것이 중요합니다.
 
-Consider functions in most programming languages: there is a distinction between the declaration of function and its 
-use at call sites.  A good function abstracts away its implementation details, but is also invoked in an obvious manner, 
-without any spooky action at a distance.
+대부분의 프로그래밍 언어에서 함수는 선언과 호출 지점이 구분됩니다. 좋은 함수는 구현 세부 사항을 추상화하지만, 또한 명확한 방식으로 호출되어 거리의 스푸키 액션 없이 동작합니다.
 
-Increasing the obviousness of the behaviour of an element is, ceteris paribus, a good thing, but it falls to both end-developers
-and especially framework developers to make LoB both as easy and as conceptually clean as possible.
+요소의 동작을 명확하게 하는 것은, 조건이 동일하다면, 좋은 일이지만, 최종 개발자와 특히 프레임워크 개발자는 LoB를 쉽게 유지하고 개념적으로도 깔끔하게 만들기 위해 노력해야 합니다.
 
-### Conflict With Other Development Principles
+### 다른 개발 원칙과의 충돌
 
-The LoB will often conflict with other software development principles.  Two important ones
-are:
+LoB는 종종 다른 소프트웨어 개발 원칙들과 충돌합니다. 중요한 두 가지 원칙은 다음과 같습니다:
 
 * [DRY - Don't Repeat Yourself](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
-  
-  Software developers typically strive to avoid redundancy in their code or data.  This has come to be called "Staying DRY",
-  i.e. Don't Repeat Yourself.  Like other software design principles this, on its own, is a good thing.  htmx, for example, 
-  allows you to place many attributes on parent elements in a DOM and avoid repeating these attributes on children.  This is a 
-  violation of LoB, in favor of DRY, and such tradeoffs need to be made judiciously by developers.
-  
-  Note that the further behaviour gets from the code unit it effects, the more severe the violation of LoB.  If it is
-  within a few lines of the code unit, this is less serious than if it is a page away, which is less serious than if
-  it is in a separate file entirely.  
-  
-  There is no hard and fast rule, but rather subjective tradeoffs that must be made as software developers.
-  
-* [SoC - Separation Of Concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
-  
-  Separation of concerns a design principle for separating a computer program into distinct sections such that each 
-  section addresses a separate concern.  A canonical example of this is splitting HTML, CSS, and Javascript.  Again, on its own and
-  in isolation this may, indeed, be a good thing.  Inlining styles [has become more prevalent lately](https://tailwindcss.com/), 
-  but there are still strong arguments in favor of SoC in this regard.
-  
-  Note that SoC is, however, in conflict with LoB.  By tweaking a CSS file the look and, to an extent, behaviour of an
-  element can change dramatically, and it is not obvious where this dramatic change came from.  Tools can help to an extent
-  here, but there is still "spooky action at a distance" going on.
-  
-  Again, this isn't to condemn SoC wholesale, just to say that there are subjective tradeoffs that must be made when
-  considering how to structure your code.  The fact that inline styles have become more prevalent as of late is an
-  indication that SoC is losing some support amongst developers.
-  
-## Conclusion
 
-LoB is a subjective software design principle that can help make a code base more humane and maintainable.  It must be traded
-off against other design principles and be considered in terms of the limitations of the system a code unit is
-written in, but, as much as is it is practical, adherence to this principle will increase your software maintainability,
-quality and sustainability.
+  소프트웨어 개발자들은 일반적으로 코드나 데이터에서 중복을 피하려고 노력합니다. 이를 "DRY 유지"라고 부르며, 즉 "자기 자신을 반복하지 말라"는 의미입니다. 예를 들어, htmx는 부모 요소에 많은 속성을 배치하여 자식 요소에서 이러한 속성을 반복하지 않도록 할 수 있습니다. 
+  이는 DRY를 우선시한 LoB의 위반이며, 이러한 트레이드오프는 개발자들이 신중하게 결정해야 합니다.
+
+  행동이 코드 단위에서 멀어질수록, LoB의 위반은 더욱 심각해집니다. 행동이 코드 단위에서 몇 줄 떨어져 있는 경우, 별로 심각하지 않지만, 코드 단위에서 한 페이지 이상 떨어져 있는 경우, 그리고 별도의 파일에 있는 경우에는 더 심각해집니다.
+
+  이는 엄격한 규칙이 아니라, 소프트웨어 개발자들이 주관적으로 선택해야 하는 트레이드오프입니다.
+
+* [SoC - 관심사의 분리](https://en.wikipedia.org/wiki/Separation_of_concerns)
+
+  관심사의 분리는 컴퓨터 프로그램을 별개의 관심사로 분리하는 설계 원칙입니다. HTML, CSS, Javascript를 분리하는 것이 그 예입니다. 최근에는 스타일을 인라인화하는 [경향이 증가](https://tailwindcss.com/)하고 있지만, 이와 관련하여 SoC를 지지하는 강력한 논거들이 여전히 존재합니다.
+
+  그러나 SoC는 LoB와 충돌합니다. CSS 파일을 조정함으로써 요소의 외관 및 동작이 크게 변경될 수 있으며, 이러한 큰 변경이 어디에서 발생했는지 명확하지 않습니다. 도구가 어느 정도 도움이 될 수 있지만, 여전히 "거리의 스푸키 액션"이 발생하고 있습니다.
+
+  다시 말하지만, SoC를 전면적으로 비난하는 것이 아니라, 코드를 구조화할 때 주관적인 트레이드오프가 필요하다는 것을 말하고자 합니다. 최근에 인라인 스타일이 더 많이 사용되고 있는 것은 개발자들 사이에서 SoC에 대한 지지가 감소하고 있음을 나타냅니다.
+
+## 결론
+
+LoB는 코드 베이스를 더 인간적이고 유지보수 가능하게 만드는 주관적인 소프트웨어 설계 원칙입니다. 
+다른 설계 원칙들과의 트레이드오프가 필요하며, 코드 단위가 작성된 시스템의 제한 사항을 고려해야 하지만, 실용적일 수 있는 한 이 원칙을 준수하면 소프트웨어의 유지보수성, 품질, 지속 가능성을 높일 수 있습니다.
