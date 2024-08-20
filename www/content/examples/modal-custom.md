@@ -3,22 +3,23 @@ title = "Custom Modal Dialogs"
 template = "demo.html"
 +++
 
-While htmx works great with dialogs built into CSS frameworks (like [Bootstrap](@/examples/modal-bootstrap.md) and [UIKit](@/examples/modal-uikit.md)), htmx also makes
-it easy to build modal dialogs from scratch.  Here is a quick example of one way to build them.
+htmx는 [Bootstrap](@/examples/modal-bootstrap.md)이나 [UIKit](@/examples/modal-uikit.md)과 같은 CSS 프레임워크에 내장된 다이얼로그와 잘 작동하지만, 
+htmx를 사용하면 모달 다이얼로그를 처음부터 쉽게 만들 수도 있습니다. 
+여기에서는 모달 다이얼로그를 만드는 한 가지 방법을 간단히 예시로 보여드립니다.
 
-Click here to see a demo of the final result:
+최종 결과의 데모를 보려면 여기를 클릭하세요:
 
+```html
 <button class="btn primary" hx-get="/modal" hx-target="body" hx-swap="beforeend">Open a Modal</button>
+```
 
-## High Level Plan
+## 전반적인 계획
 
-We're going to make a button that loads remote content from the server, then displays it in a modal dialog.  The modal
-content will be added to the end of the `<body>` element, in a div named `#modal`.
+우리는 서버에서 원격 콘텐츠를 로드한 다음, 이를 모달 다이얼로그에 표시하는 버튼을 만들 것입니다. 모달 콘텐츠는 `<body>` 요소의 끝에 `#modal`이라는 이름의 `div`에 추가될 것입니다.
 
-In this demo we'll define some nice animations in CSS, and then use some [Hyperscript](https://hyperscript.org) to remove the
-modals from the DOM when the user is done.  Hyperscript is *not* required with htmx, but the two were designed to be used
-together and it is much nicer for writing async & event oriented code than JavaScript, which is why we chose it for this
-example.
+이 데모에서는 CSS로 멋진 애니메이션을 정의한 다음, 사용자가 완료되었을 때 모달을 DOM에서 제거하기 위해 [Hyperscript](https://hyperscript.org)를 사용할 것입니다. 
+htmx와 함께 Hyperscript를 반드시 사용할 필요는 없지만, 
+두 가지는 함께 사용하도록 설계되었으며 비동기 및 이벤트 중심의 코드를 작성하는 데 JavaScript보다 훨씬 더 편리하므로 이 예시에서는 Hyperscript를 선택했습니다.
 
 ## Main Page HTML
 

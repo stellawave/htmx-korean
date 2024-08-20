@@ -3,7 +3,8 @@ title = "Dialogs"
 template = "demo.html"
 +++
 
-Dialogs can be triggered with the [`hx-prompt`](@/attributes/hx-prompt.md) and [`hx-confirm`](@/attributes/hx-confirm.md)attributes.  These are triggered by the user interaction that would trigger the AJAX request, but the request is only sent if the dialog is accepted.
+다이얼로그는 [`hx-prompt`](@/attributes/hx-prompt.md)와 [`hx-confirm`](@/attributes/hx-confirm.md) 속성을 사용하여 트리거될 수 있습니다. 
+이러한 속성들은 AJAX 요청을 트리거하는 사용자 상호작용에 의해 활성화되며, 다이얼로그가 승인된 경우에만 요청이 전송됩니다.
 
 ```html
 <div>
@@ -18,7 +19,7 @@ Dialogs can be triggered with the [`hx-prompt`](@/attributes/hx-prompt.md) and [
 </div>
 ```
 
-The value provided by the user to the prompt dialog is sent to the server in a `HX-Prompt` header.  In this case, the server simply echos the user input back.
+사용자가 프롬프트 다이얼로그에 입력한 값은 `HX-Prompt` 헤더로 서버에 전송됩니다. 이 예제에서는 서버가 단순히 사용자의 입력값을 그대로 반환합니다.
 
 ```html
 User entered <i>${response}</i>

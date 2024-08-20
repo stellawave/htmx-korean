@@ -3,16 +3,16 @@ title = "Cascading Selects"
 template = "demo.html"
 +++
 
-In this example we show how to make the values in one `select` depend on the value selected in another `select`.
+이 예제에서는 한 `select`의 값이 다른 `select`에서 선택된 값에 따라 달라지도록 만드는 방법을 보여줍니다.
 
-To begin we start with a default value for the `make` select: Audi.  We render the `model` select for this make.  We
-then have the `make` select trigger a `GET` to `/models` to retrieve the models options and target the `models` select.
+먼저 `make` 선택에 대해 기본값으로 Audi를 설정합니다. 그런 다음 이 `make`에 대한 `model` 선택 항목을 렌더링합니다. 
+`make` 선택 항목은 `models` 선택 항목을 대상으로 `/models`로 `GET` 요청을 트리거하도록 설정합니다.
 
-Here is the code:
+여기 코드가 있습니다:
 
 ```html
 <div>
-    <label >Make</label>
+    <label>Make</label>
     <select name="make" hx-get="/models" hx-target="#models" hx-indicator=".htmx-indicator">
       <option value="audi">Audi</option>
       <option value="toyota">Toyota</option>
@@ -29,7 +29,7 @@ Here is the code:
 </div>
 ```
 
-When a request is made to the `/models` end point, we return the models for that make:
+`/models` 엔드포인트로 요청이 전송될 때, 해당 `make`에 대한 모델이 반환됩니다.
 
 ```html
 <option value='325i'>325i</option>
@@ -37,7 +37,7 @@ When a request is made to the `/models` end point, we return the models for that
 <option value='X5'>X5</option> 
 ```
 
-And they become available in the `model` select.
+그리고 `model` select에서 사용할 수 있게 됩니다.
 
 {{ demoenv() }}
 

@@ -3,16 +3,19 @@ title = "Tabs (Using HATEOAS)"
 template = "demo.html"
 +++
 
-This example shows how easy it is to implement tabs using htmx.  Following the principle of [Hypertext As The Engine Of Application State](https://en.wikipedia.org/wiki/HATEOAS), the selected tab is a part of the application state.  Therefore, to display and select tabs in your application, simply include the tab markup in the returned HTML.  If this does not suit your application server design, you can also use a little bit of [JavaScript to select tabs instead](@/examples/tabs-javascript.md).
+이 예는 htmx를 사용하여 탭을 구현하는 것이 얼마나 쉬운지 보여줍니다.  
+[애플리케이션 상태의 엔진으로서의 하이퍼텍스트](https://en.wikipedia.org/wiki/HATEOAS)의 원칙에 따라 선택한 탭은 애플리케이션 상태의 일부가 됩니다.  
+따라서 애플리케이션에서 탭을 표시하고 선택하려면 반환된 HTML에 탭 마크업을 포함하기만 하면 됩니다.  
+이 방법이 애플리케이션 서버 디자인에 적합하지 않은 경우 [자바스크립트로 탭 선택하기](@/examples/tabs-javascript.md)를 사용할 수도 있습니다.
 
 ## Example Code (Main Page)
-The main page simply includes the following HTML to load the initial tab into the DOM.
+메인 페이지에는 초기 탭을 DOM에 로드하는 다음 HTML이 포함되어 있습니다.
 ```html
 <div id="tabs" hx-get="/tab1" hx-trigger="load delay:100ms" hx-target="#tabs" hx-swap="innerHTML"></div>
 ```
 
 ## Example Code (Each Tab)
-Subsequent tab pages display all tabs and highlight the selected one accordingly.
+이후 탭 페이지에는 모든 탭이 표시되고 선택한 탭이 그에 따라 강조 표시됩니다.
 
 ```html
 <div class="tab-list" role="tablist">

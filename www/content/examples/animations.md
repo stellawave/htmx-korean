@@ -3,22 +3,19 @@ title = "Animations"
 template = "demo.html"
 +++
 
-htmx is designed to allow you to use [CSS transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions)
-to add smooth animations and transitions to your web page using only CSS and HTML.  Below are a few examples of
-various animation techniques.
+htmx는 [CSS 전환](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions)을 사용하여 
+CSS와 HTML만으로 웹 페이지에 부드러운 애니메이션과 전환 효과를 추가할 수 있도록 설계되었습니다. 아래에는 다양한 애니메이션 기법의 몇 가지 예시가 나와 있습니다.
 
-htmx also allows you to use the new [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API)
-for creating animations.
+또한 htmx는 새로운 [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API)를 사용하여 애니메이션을 생성할 수 있도록 합니다.
 
-### Basic CSS Animations {#basic}
+### 기본 CSS 애니메이션 {#basic}
 
-### Color Throb
+### 색상 변화
 
-The simplest animation technique in htmx is to keep the `id` of an element stable across a content swap.  If the
-`id` of an element is kept stable, htmx will swap it in such a way that CSS transitions can be written between
-the old version of the element and the new one.
+htmx에서 가장 간단한 애니메이션 기법은 콘텐츠 교체 중에 요소의 `id`를 유지하는 것입니다. 요소의 `id`가 유지되면, 
+htmx는 CSS 전환을 통해 해당 요소의 이전 버전과 새 버전 사이에 전환 효과를 작성할 수 있도록 교체를 구조화합니다.
 
-Consider this div:
+다음의 div를 예로 들어보겠습니다:
 
 ```html
 <style>
@@ -30,11 +27,9 @@ Consider this div:
       hx-get="/colors" hx-swap="outerHTML" hx-trigger="every 1s">
   Color Swap Demo
 </div>
-
 ```
 
-This div will poll every second and will get replaced with new content which changes the `color` style to a new value
-(e.g. `blue`):
+이 div는 매초마다 폴링(polling)하며 `color` 스타일을 새로운 값(예: `blue`)으로 변경하는 새로운 콘텐츠로 교체됩니다:
 
 ```html
 <div id="color-demo" class="smooth" style="color:blue"
@@ -43,8 +38,8 @@ This div will poll every second and will get replaced with new content which cha
 </div>
 ```
 
-Because the div has a stable id, `color-demo`, htmx will structure the swap such that a CSS transition, defined on the
-`.smooth` class, applies to the style update from `red` to `blue`, and smoothly transitions between them.
+이 div는 `color-demo`라는 안정적인 id를 가지고 있기 때문에, htmx는 교체를 구조화하여 `.smooth` 클래스에 정의된 CSS 전환이 `red`에서 `blue`로 스타일 업데이트에 적용되고, 
+두 색상 사이를 부드럽게 전환할 수 있도록 합니다.
 
 #### Demo {#throb-demo}
 
@@ -71,16 +66,15 @@ Because the div has a stable id, `color-demo`, htmx will structure the swap such
 
 ### Smooth Progress Bar
 
-The [Progress Bar](@/examples/progress-bar.md) demo uses this basic CSS animation technique as well, by updating the `length`
-property of a progress bar element, allowing for a smooth animation.
+[진행률 표시줄](@/examples/progress-bar.md) 데모에서는 진행률 표시줄 요소의 `length` 속성을 업데이트하여 부드러운 애니메이션을 구현하는 이 기본 CSS 애니메이션 기법도 사용하고 있습니다.
 
 ## Swap Transitions {#swapping}
 
 ### Fade Out On Swap
 
-If you want to fade out an element that is going to be removed when the request ends, you want to take advantage
-of the `htmx-swapping` class with some CSS and extend the swap phase to be long enough for your animation to
-complete.  This can be done like so:
+요청이 종료될 때 제거될 요소를 페이드 아웃하려면 일부 CSS를 사용하여 
+`htmx-swapping` 클래스를 활용하고 애니메이션이 완료될 때까지 교체 단계를 충분히 길게 연장할 수 있습니다.  
+이렇게 하면 됩니다:
 
 ```html
 <style>
@@ -119,9 +113,8 @@ complete.  This can be done like so:
 
 ### Fade In On Addition
 
-Building on the last example, we can fade in the new content by using the `htmx-added` class during the settle
-phase.  You can also write CSS transitions against the target, rather than the new content, by using the `htmx-settling`
-class.
+마지막 예제를 기반으로 설정 단계에서 `htmx-added` 클래스를 사용하여 새 콘텐츠를 페이드 인할 수 있습니다.  
+새 콘텐츠가 아닌 타깃에 대한 CSS Transition을 `htmx-settling` 클래스를 사용하여 작성할 수도 있습니다.
 
 ```html
 <style>
@@ -171,8 +164,8 @@ class.
 
 ## Request In Flight Animation {#request}
 
-You can also take advantage of the `htmx-request` class, which is applied to the element that triggers a request.  Below
-is a form that on submit will change its look to indicate that a request is being processed:
+요청을 트리거하는 요소에 적용되는 `htmx-request` 클래스를 활용할 수도 있습니다.  
+아래는 제출 시 요청이 처리 중임을 나타내기 위해 모양이 변경되는 Form입니다:
 
 ```html
 <style>
@@ -209,10 +202,10 @@ is a form that on submit will change its look to indicate that a request is bein
 
 ## Using the htmx `class-tools` Extension
 
-Many interesting animations can be created by using the [`class-tools`](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/class-tools/README.md) extension.
+[`class-tools`](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/class-tools/README.md) 확장을 사용하면 흥미로운 애니메이션을 많이 만들 수 있습니다.
 
-Here is an example that toggles the opacity of a div.  Note that we set the toggle time to be a bit longer than
-the transition time.  This avoids flickering that can happen if the transition is interrupted by a class change.
+다음은 div의 불투명도를 토글하는 예제입니다. 토글 시간을 전환 시간보다 약간 길게 설정한 것을 주목하세요.  
+이렇게 하면 클래스 변경으로 인해 전환이 중단될 때 발생할 수 있는 깜박임을 방지할 수 있습니다.
 
 ```html
 <style>
@@ -242,18 +235,16 @@ the transition time.  This avoids flickering that can happen if the transition i
 
 ### Using the View Transition API {#view-transitions}
 
-htmx provides access to the new  [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API)
-via the `transition` option of the [`hx-swap`](/attributes/hx-swap) attribute.
+htmx는 [`hx-swap`](/attributes/hx-swap) 속성의 `transition` 옵션을 통해 새로운 
+[View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API)에 접근할 수 있도록 지원합니다.
 
-Below is an example of a swap that uses a view transition.  The transition is tied to the outer div via a
-`view-transition-name` property in CSS, and that transition is defined in terms of `::view-transition-old`
-and `::view-transition-new`, using `@keyframes` to define the animation.  (Fuller details on the View Transition
-API can be found on the [Chrome Developer Page](https://developer.chrome.com/docs/web-platform/view-transitions/) on them.)
+아래는 뷰 전환을 사용하는 교체(swap)의 예시입니다. 이 전환은 CSS에서 `view-transition-name` 속성을 통해 외부 div에 연결되며, 해당 전환은 
+`::view-transition-old`와 `::view-transition-new`를 사용하여 정의되며, `@keyframes`를 통해 애니메이션을 정의합니다. 
+(View Transition API에 대한 자세한 내용은 [Chrome Developer Page](https://developer.chrome.com/docs/web-platform/view-transitions/)에서 확인할 수 있습니다.)
 
-The old content of this transition should slide out to the left and the new content should slide in from the right.
+이 전환의 이전 콘텐츠는 왼쪽으로 슬라이드 아웃되고, 새로운 콘텐츠는 오른쪽에서 슬라이드 인되어야 합니다.
 
-Note that, as of this writing, the visual transition will only occur on Chrome 111+, but more browsers are expected to
-implement this feature in the near future.
+작성 시점에서 이 시각적 전환은 Chrome 111+에서만 발생하지만, 가까운 미래에 더 많은 브라우저에서 이 기능을 구현할 것으로 예상됩니다.
 
 ```html
 <style>
@@ -350,4 +341,4 @@ implement this feature in the near future.
 
 ## Conclusion
 
-You can use the techniques above to create quite a few interesting and pleasing effects with plain old HTML while using htmx.
+위의 기법을 사용하면 htmx를 사용하면서 일반 HTML로 흥미롭고 즐거운 효과를 꽤 많이 만들 수 있습니다.

@@ -3,9 +3,8 @@ title = "Bulk Update"
 template = "demo.html"
 +++
 
-This demo shows how to implement a common pattern where rows are selected and then bulk updated.  This is
-accomplished by putting a form around a table, with checkboxes in the table, and then including the checked
-values in the form submission (`POST` request):
+이 데모는 행을 선택한 후 일괄 업데이트하는 일반적인 패턴을 구현하는 방법을 보여줍니다. 이는 테이블 주위에 form을 배치하고, 
+테이블 안에 체크박스를 넣고, 체크된 값을 form 제출(`POST` 요청)에 포함시켜 수행됩니다:
 
 ```html
 <form id="checked-contacts"
@@ -34,9 +33,8 @@ values in the form submission (`POST` request):
 </form>
 ```
 
-The server will bulk-update the statuses based on the values of the checkboxes.
-We respond with a small toast message about the update to inform the user, and
-use ARIA to politely announce the update for accessibility.
+서버는 체크박스의 값에 따라 상태를 일괄 업데이트합니다. 
+서버는 업데이트에 대한 작은 토스트 메시지로 응답하여 사용자에게 알리고, 접근성을 위해 ARIA를 사용하여 업데이트를 공손하게 알립니다.
 
 ```css
 #toast.htmx-settling {
@@ -50,11 +48,10 @@ use ARIA to politely announce the update for accessibility.
 }
 ```
 
-The cool thing is that, because HTML form inputs already manage their own state,
-we don't need to re-render any part of the users table. The active users are
-already checked and the inactive ones unchecked!
+흥미로운 점은 HTML form 입력이 이미 자체 상태를 관리하기 때문에 사용자 테이블의 일부를 다시 렌더링할 필요가 없다는 것입니다. 
+활성 사용자 체크박스는 이미 체크되어 있고, 비활성 사용자 체크박스는 체크 해제되어 있습니다!
 
-You can see a working example of this code below.
+아래에서 이 코드의 작동 예제를 확인할 수 있습니다.
 
 <style scoped="">
 #toast.htmx-settling {

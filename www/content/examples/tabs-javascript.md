@@ -3,17 +3,16 @@ title = "Tabs (Using JavaScript)"
 template = "demo.html"
 +++
 
-This example shows how to load tab contents using htmx, and to select the "active" tab using Javascript.  This reduces
-some duplication by offloading some of the work of re-rendering the tab HTML from your application server to your
-clients' browsers.
+이 예제에서는 htmx를 사용하여 탭 내용을 로드하고, 자바스크립트를 사용하여 "활성" 탭을 선택하는 방법을 보여줍니다. 
+이를 통해 탭 HTML을 다시 렌더링하는 작업의 일부를 애플리케이션 서버에서 클라이언트의 브라우저로 오프로드하여 중복을 줄일 수 있습니다.
 
-You may also consider [a more idiomatic approach](@/examples/tabs-hateoas.md) that follows the principle of [Hypertext As The Engine Of Application State](https://en.wikipedia.org/wiki/HATEOAS).
+[Hypertext As The Engine Of Application State](https://en.wikipedia.org/wiki/HATEOAS) 원칙을 따르는 
+[더 정통적인 접근 방식](https://htmx.org/examples/tabs-hateoas/)을 고려해 볼 수도 있습니다.
 
-## Example Code
+## 예제 코드
 
-The HTML below displays a list of tabs, with added HTMX to dynamically load each tab pane from the server.  A simple
-JavaScript event handler uses the [`take` function](https://hyperscript.org/commands/take/) to switch the selected tab
-when the content is swapped into the DOM.
+아래 HTML은 탭 목록을 표시하며, htmx를 추가하여 서버에서 각 탭 패널을 동적으로 로드합니다. 
+간단한 JavaScript 이벤트 핸들러는 [`take` 함수](https://hyperscript.org/commands/take/)를 사용하여 콘텐츠가 DOM에 스왑될 때 선택된 탭을 전환합니다.
 
 ```html
 

@@ -3,9 +3,9 @@ title = "Click to Edit"
 template = "demo.html"
 +++
 
-The click to edit pattern provides a way to offer inline editing of all or part of a record without a page refresh.
+클릭하여 편집하는 패턴은 페이지 새로고침 없이 레코드의 일부 또는 전체를 인라인으로 편집할 수 있는 방법을 제공합니다.
 
-* This pattern starts with a UI that shows the details of a contact.  The div has a button that will get the editing UI for the contact from `/contact/1/edit`
+* 이 패턴은 연락처의 세부 정보를 표시하는 UI로 시작합니다. 이 `div`에는 `/contact/1/edit`에서 연락처 편집 UI를 가져올 버튼이 있습니다.
 
 ```html
 <div hx-target="this" hx-swap="outerHTML">
@@ -18,7 +18,7 @@ The click to edit pattern provides a way to offer inline editing of all or part 
 </div>
 ```
 
-* This returns a form that can be used to edit the contact
+* 이것은 연락처를 편집할 수 있는 form을 반환합니다.
 
 ```html
 <form hx-put="/contact/1" hx-target="this" hx-swap="outerHTML">
@@ -39,7 +39,7 @@ The click to edit pattern provides a way to offer inline editing of all or part 
 </form>
 ```
 
-* The form issues a `PUT` back to `/contact/1`, following the usual REST-ful pattern.
+* 이 form은 일반적인 REST-ful 패턴에 따라 `/contact/1`로 `PUT` 요청을 보냅니다.
 
 {{ demoenv() }}
 

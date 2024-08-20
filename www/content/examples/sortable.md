@@ -3,10 +3,9 @@ title = "Sortable"
 template = "demo.html"
 +++
 
-In this example we show how to integrate the [Sortable](https://sortablejs.github.io/Sortable/)
-javascript library with htmx.
+이 예제에서는 [Sortable](https://sortablejs.github.io/Sortable/) 자바스크립트 라이브러리를 htmx와 통합하는 방법을 보여줍니다.
 
-To begin we initialize the `.sortable` class with the `Sortable` javascript library:
+먼저, `Sortable` 자바스크립트 라이브러리로 `.sortable` 클래스를 초기화합니다:
 
 ```js
 htmx.onLoad(function(content) {
@@ -17,19 +16,19 @@ htmx.onLoad(function(content) {
           animation: 150,
           ghostClass: 'blue-background-class',
 
-          // Make the `.htmx-indicator` unsortable
+          // `.htmx-indicator`를 정렬 불가능하게 만듭니다.
           filter: ".htmx-indicator",
           onMove: function (evt) {
             return evt.related.className.indexOf('htmx-indicator') === -1;
           },
 
-          // Disable sorting on the `end` event
+          // `end` 이벤트 시 정렬을 비활성화합니다.
           onEnd: function (evt) {
             this.option("disabled", true);
           }
       });
 
-      // Re-enable sorting on the `htmx:afterSwap` event
+      // `htmx:afterSwap` 이벤트에서 정렬을 다시 활성화합니다.
       sortable.addEventListener("htmx:afterSwap", function() {
         sortableInstance.option("disabled", false);
       });
@@ -37,8 +36,7 @@ htmx.onLoad(function(content) {
 })
 ```
 
-Next, we create a form that has some sortable divs within it, and we trigger an ajax request on the `end` event, fired
-by Sortable.js:
+다음으로, 내부에 정렬 가능한 div들이 있는 폼을 생성하고, Sortable.js의 `end` 이벤트에서 ajax 요청을 트리거합니다:
 
 ```html
 <form class="sortable" hx-post="/items" hx-trigger="end">
@@ -51,12 +49,11 @@ by Sortable.js:
 </form>
 ```
 
-Note that each div has a hidden input inside of it that specifies the item id for that row.
+각 div에는 해당 행의 항목 ID를 지정하는 숨겨진 input이 포함되어 있습니다.
 
-When the list is reordered via the Sortable.js drag-and-drop, the `end` event will be fired.  htmx will then post
-the item ids in the new order to `/items`, to be persisted by the server.
+Sortable.js 드래그 앤 드롭으로 목록이 재정렬되면 `end` 이벤트가 발생합니다. htmx는 새로운 순서의 항목 ID들을 `/items`로 POST하여 서버에 저장하게 됩니다.
 
-That's it!
+이게 전부입니다!
 
 {{ demoenv() }}
 

@@ -3,8 +3,7 @@ title = "Click to Load"
 template = "demo.html"
 +++
 
-This example shows how to implement click-to-load the next page in a table of data.  The crux of the demo is
-the final row:
+이 예제는 데이터 테이블에서 다음 페이지를 클릭하여 로드하는 방법을 보여줍니다. 이 데모의 핵심은 마지막 행입니다:
 
 ```html
 <tr id="replaceMe">
@@ -18,8 +17,8 @@ the final row:
 </tr>
 ```
 
-This row contains a button that will replace the entire row with the next page of
-results (which will contain a button to load the *next* page of results).  And so on.
+이 행에는 버튼이 포함되어 있으며, 이 버튼을 클릭하면 다음 페이지의 결과로 해당 행 전체가 대체됩니다(그리고 이 새로운 행에는 또 다른 페이지를 로드할 버튼이 포함됩니다). 
+이런 식으로 계속해서 다음 페이지를 로드할 수 있습니다.
 
 {{ demoenv() }}
 

@@ -2,10 +2,10 @@
 title = "Infinite Scroll"
 template = "demo.html"
 +++
-        
-The infinite scroll pattern provides a way to load content dynamically on user scrolling action.
 
-Let's focus on the final row (or the last element of your content):
+무한 스크롤 패턴은 사용자가 스크롤할 때 콘텐츠를 동적으로 로드하는 방법을 제공합니다.
+
+여기서는 마지막 행(또는 콘텐츠의 마지막 요소)에 집중해보겠습니다:
 
 ```html
 <tr hx-get="/contacts/?page=2"
@@ -17,10 +17,10 @@ Let's focus on the final row (or the last element of your content):
 </tr>
 ```
 
-This last element contains a listener which, when scrolled into view, will trigger a request. The result is then appended after it.
-The last element of the results will itself contain the listener to load the *next* page of results, and so on.
+이 마지막 요소는 스크롤되어 화면에 보일 때 요청을 트리거하는 리스너를 포함하고 있습니다. 결과는 이 요소 뒤에 추가됩니다. 
+결과의 마지막 요소 역시 다음 페이지의 결과를 로드할 리스너를 포함하게 되며, 이 과정은 계속 반복됩니다.
 
-> `revealed` - triggered when an element is scrolled into the viewport (also useful for lazy-loading). If you are using `overflow` in css like `overflow-y: scroll` you should use `intersect once` instead of `revealed`.
+> `revealed` - 요소가 뷰포트에 스크롤되어 나타날 때 트리거됩니다(지연 로딩에도 유용합니다). CSS에서 `overflow-y: scroll`과 같은 `overflow`를 사용하는 경우, `revealed` 대신 `intersect once`를 사용하는 것이 좋습니다.
 
 {{ demoenv() }}
 

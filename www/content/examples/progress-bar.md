@@ -3,9 +3,9 @@ title = "Progress Bar"
 template = "demo.html"
 +++
 
-This example shows how to implement a smoothly scrolling progress bar.
+이 예제는 부드럽게 스크롤되는 진행 바를 구현하는 방법을 보여줍니다.
 
-We start with an initial state with a button that issues a `POST` to `/start` to begin the job:
+우리는 `/start`로 `POST` 요청을 보내 작업을 시작하는 버튼이 있는 초기 상태로 시작합니다:
 
 ```html
 <div hx-target="this" hx-swap="outerHTML">
@@ -16,7 +16,7 @@ We start with an initial state with a button that issues a `POST` to `/start` to
 </div>
 ```
 
-This div is then replaced with a new div containing status and a progress bar that reloads itself every 600ms:
+이 div는 상태와 진행 바가 포함된 새로운 div로 교체되며, 이 진행 바는 600ms마다 자동으로 새로 고쳐집니다:
 
 ```html
 <div hx-trigger="done" hx-get="/job" hx-swap="outerHTML" hx-target="this">
@@ -32,16 +32,14 @@ This div is then replaced with a new div containing status and a progress bar th
     </div>
   </div>
 </div>
-
 ```
 
-This progress bar is updated every 600 milliseconds, with the "width" style attribute and `aria-valuenow` attributed set to current progress value.
-Because there is an id on the progress bar div, htmx will smoothly transition between requests by settling the
-style attribute into its new value.  This, when coupled with CSS transitions, makes the visual transition continuous
-rather than jumpy.
+이 진행 바는 600밀리초마다 업데이트되며, `width` 스타일 속성과 `aria-valuenow` 속성이 현재 진행 상태로 설정됩니다. 
+진행 바 div에 ID가 있기 때문에, htmx는 스타일 속성을 새로운 값으로 설정하면서 요청 사이의 변화를 부드럽게 전환합니다. 
+이는 CSS 전환과 결합되어 시각적인 전환이 끊김 없이 부드럽게 진행됩니다.
 
-Finally, when the process is complete, a server returns `HX-Trigger: done` header, which triggers an update of the UI to "Complete" state
-with a restart button added to the UI (we are using the [`class-tools`](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/class-tools/README.md) extension in this example to add fade-in effect on the button):
+마지막으로, 프로세스가 완료되면 서버는 `HX-Trigger: done` 헤더를 반환하여 UI를 "Complete" 상태로 업데이트하며, 
+UI에 다시 시작 버튼이 추가됩니다(이 예제에서는 버튼에 페이드인 효과를 추가하기 위해 [`class-tools`](https://github.com/bigskysoftware/htmx-extensions/blob/main/src/class-tools/README.md) 확장을 사용하고 있습니다):
 
 ```html
 <div hx-trigger="done" hx-get="/job" hx-swap="outerHTML" hx-target="this">
@@ -64,7 +62,7 @@ with a restart button added to the UI (we are using the [`class-tools`](https://
 </div>
 ```
 
-This example uses styling cribbed from the bootstrap progress bar:
+이 예제에서는 Bootstrap 진행 바의 스타일을 참조하고 있습니다.
 
 ```css
 .progress {

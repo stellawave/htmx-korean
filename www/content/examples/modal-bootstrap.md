@@ -3,11 +3,10 @@ title = "Modal Dialogs in Bootstrap"
 template = "demo.html"
 +++
 
-Many CSS toolkits include styles (and Javascript) for creating modal dialog boxes.
-This example shows how to use HTMX alongside original JavaScript provided by Bootstrap.
+많은 CSS 툴킷에는 모달 대화 상자를 만들기 위한 스타일(및 자바스크립트)이 포함되어 있습니다.
+이 예는 부트스트랩에서 제공하는 원본 JavaScript와 함께 HTMX를 사용하는 방법을 보여줍니다.
 
-We start with a button that triggers the dialog, along with a DIV at the bottom of your
-markup where the dialog will be loaded:
+먼저 대화 상자를 트리거하는 버튼과 마크업 하단에 대화 상자가 로드되는 DIV가 있습니다:
 
 ```html
 <button
@@ -29,10 +28,10 @@ markup where the dialog will be loaded:
 </div>
 ```
 
-This button uses a `GET` request to `/modal` when this button is clicked.  The
-contents of this file will be added to the DOM underneath the `#modals-here` DIV.
+이 버튼을 클릭하면 `/modal`에 `GET` 요청을 보냅니다.  
+응답의 내용은 `#modals-here` DIV 아래의 DOM에 추가됩니다.
 
-The server responds with a slightly modified version of Bootstrap's standard modal
+서버는 부트스트랩의 표준 모달을 약간 수정한 버전으로 응답합니다.
 
 ```html
 <div class="modal-dialog modal-dialog-centered">

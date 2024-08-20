@@ -3,9 +3,9 @@ title = "Active Search"
 template = "demo.html"
 +++
 
-This example actively searches a contacts database as the user enters text.
+이 예시는 사용자가 텍스트를 입력할 때 연락처 데이터베이스를 실시간으로 검색하는 기능을 구현합니다.
 
-We start with a search input and an empty table:
+먼저, 검색 입력 필드와 빈 테이블을 설정합니다:
 
 ```html
 <h3> 
@@ -34,18 +34,17 @@ We start with a search input and an empty table:
 </table>
 ```
 
-The input issues a `POST` to `/search` on the [`input`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event) event and sets the body of the table to be the resulting content. Note that the `keyup` event could be used as well, but would not fire if the user pasted text with their mouse (or any other non-keyboard method).
+이 입력 필드는 [`input`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event) 이벤트가 발생할 때 `/search`로 `POST` 요청을 보내고, 
+테이블의 본문을 반환된 내용으로 설정합니다. `keyup` 이벤트도 사용할 수 있지만, 사용자가 마우스로 텍스트를 붙여넣는 등의 비키보드 방법으로 텍스트를 입력할 때는 트리거되지 않을 수 있습니다.
 
-We add the `delay:500ms` modifier to the trigger to delay sending the query until the user stops typing.  Additionally,
-we add the `changed` modifier to the trigger to ensure we don't send new queries when the user doesn't change the
-value of the input (e.g. they hit an arrow key, or pasted the same value).  
+우리는 `delay:500ms` 수정자를 트리거에 추가하여 사용자가 입력을 멈출 때까지 쿼리 전송을 지연시킵니다. 
+또한, `changed` 수정자를 트리거에 추가하여 사용자가 입력 값에 변화를 주지 않았을 때(예: 화살표 키를 누르거나 동일한 값을 붙여넣었을 때) 새로운 쿼리가 전송되지 않도록 합니다.
 
-Since we use a `search` type input we will get an `x` in the input field to clear the input. 
-To make this trigger a new `POST` we have to specify another trigger. We specify another trigger by using a comma to 
-separate them. The `search` trigger will be run when the field is cleared but it also makes it possible to override 
-the 500 ms `input` event delay by just pressing enter.
+`search` 타입의 입력 필드를 사용하기 때문에 입력 필드에 입력을 지울 수 있는 `x` 버튼이 표시됩니다. 
+입력을 지웠을 때 새로운 `POST` 요청이 트리거되도록 하기 위해 다른 트리거를 지정해야 합니다. 트리거를 구분하기 위해 쉼표를 사용하여 여러 트리거를 지정할 수 있습니다. 
+`search` 트리거는 필드를 지웠을 때 실행되며, 엔터 키를 눌러 500ms의 `input` 이벤트 지연을 무시할 수도 있습니다.
 
-Finally, we show an indicator when the search is in flight with the `hx-indicator` attribute. 
+마지막으로, `hx-indicator` 속성을 사용하여 검색이 진행 중일 때 인디케이터를 표시합니다.
 
 {{ demoenv() }}
 

@@ -3,16 +3,13 @@ title = "Modal Dialogs with UIKit"
 template = "demo.html"
 +++
 
-Many CSS toolkits include styles (and Javascript) for creating modal dialog boxes. 
-This example shows how to use HTMX to display dynamic dialog using UIKit, and how to 
-trigger its animation styles with little or no Javascript.
+많은 CSS 툴킷에는 모달 대화 상자를 생성하기 위한 스타일(및 JavaScript)이 포함되어 있습니다. 
+이 예제에서는 HTMX를 사용하여 동적 대화 상자를 UIKit을 사용하여 표시하는 방법과 JavaScript를 거의 또는 전혀 사용하지 않고도 애니메이션 스타일을 트리거하는 방법을 보여줍니다.
 
-We start with a button that triggers the dialog, along with a DIV at the bottom of your 
-markup where the dialog will be loaded:
+먼저, 대화 상자를 트리거하는 버튼과 대화 상자가 로드될 DIV를 마크업 하단에 추가합니다:
 
-This is an example of using HTMX to remotely load modal dialogs using UIKit.  In this example we will use
-[Hyperscript](https://hyperscript.org) to demonstrate how cleanly that scripting language allows you to
-glue htmx and other libraries together.
+이 예제는 HTMX를 사용하여 원격으로 모달 대화 상자를 로드하고 UIKit을 사용하는 방법을 보여줍니다. 
+이 예제에서는 [Hyperscript](https://hyperscript.org)를 사용하여 htmx와 다른 라이브러리들을 얼마나 깔끔하게 결합할 수 있는지 시연합니다.
 
 ```html
 <button 
@@ -25,14 +22,12 @@ glue htmx and other libraries together.
 <div id="modals-here"></div>
 ```
 
-This button uses a `GET` request to `/uikit-modal.html` when this button is clicked.  The
-contents of this file will be added to the DOM underneath the `#modals-here` DIV.
+이 버튼은 클릭 시 `/uikit-modal.html`에 `GET` 요청을 보냅니다. 이 파일의 내용은 `#modals-here` DIV 아래에 DOM에 추가됩니다.
 
-Rather than using the standard UIKit Javascript library we are using a bit of Hyperscript, 
-which triggers UIKit's smooth animations. It is delayed by 10ms so that UIKit's animations
-will run correctly.
+표준 UIKit JavaScript 라이브러리를 사용하는 대신, 우리는 Hyperscript를 사용하여 UIKit의 부드러운 애니메이션을 트리거합니다. 
+애니메이션이 올바르게 실행될 수 있도록 10ms의 지연이 있습니다.
 
-Finally, the server responds with a slightly modified version of UIKit's standard modal
+마지막으로, 서버는 UIKit의 표준 모달을 약간 수정한 버전으로 응답합니다:
 
 ```html
 <div id="modal" class="uk-modal" style="display:block;">
@@ -55,11 +50,10 @@ Finally, the server responds with a slightly modified version of UIKit's standar
 </div>
 ```
 
-Hyperscript on the button and the form trigger animations when this dialog is completed
-or canceled.  If you didn't use this Hyperscript, the modals will still work but UIKit's
-fade in animations will not be triggered.
+버튼과 폼의 Hyperscript는 이 대화 상자가 완료되거나 취소될 때 애니메이션을 트리거합니다. 
+Hyperscript를 사용하지 않더라도 모달은 작동하지만 UIKit의 페이드 인 애니메이션이 트리거되지 않습니다.
 
-You can, of course, use JavaScript rather than Hyperscript for this work, it's just a lot more code:
+물론, 이 작업을 위해 JavaScript를 사용할 수도 있지만, 코드가 훨씬 길어집니다.
 
 ```javascript
 

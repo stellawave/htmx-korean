@@ -3,8 +3,7 @@ title = "Delete Row"
 template = "demo.html"
 +++
 
-This example shows how to implement a delete button that removes a table row upon completion.  First let's look at the
-table body:
+이 예제에서는 삭제 버튼을 구현하여 완료 시 테이블 행을 제거하는 방법을 보여줍니다. 먼저 테이블 본문을 살펴보겠습니다:
 
 ```html
 <table class="table delete-row-example">
@@ -22,11 +21,10 @@ table body:
 </table>
 ```
 
-The table body has a [`hx-confirm`](@/attributes/hx-confirm.md) attribute to confirm the delete action.  It also
-set the target to be the `closest tr` that is, the closest table row, for all the buttons ([`hx-target`](@/attributes/hx-target.md)
-is inherited from parents in the DOM.)  The swap specification in [`hx-swap`](@/attributes/hx-swap.md) says to swap the
-entire target out and to wait 1 second after receiving a response.  This last bit is so that we can use the following
-CSS:
+테이블 본문에는 삭제 작업을 확인하기 위한 [`hx-confirm`](@/attributes/hx-confirm.md) 속성이 있습니다. 
+또한 모든 버튼에 대해 가장 가까운 테이블 행(`tr`)을 타겟으로 설정했습니다. ([`hx-target`](@/attributes/hx-target.md) 속성은 DOM에서 부모 요소로부터 상속됩니다.) 
+[`hx-swap`](@/attributes/hx-swap.md) 속성의 교체 명세는 타겟 전체를 교체하고 응답을 받은 후 1초 동안 대기하도록 설정되어 있습니다. 
+이 마지막 부분은 다음 CSS를 사용하여 행이 교체/제거되기 전에 페이드 아웃되도록 하기 위함입니다:
 
 ```css
 tr.htmx-swapping td {
@@ -35,11 +33,8 @@ tr.htmx-swapping td {
 }
 ```
 
-To fade the row out before it is swapped/removed.
-
-Each row has a button with a [`hx-delete`](@/attributes/hx-delete.md) attribute containing the url on which to issue a `DELETE`
-request to delete the row from the server. This request responds with a `200` status code and empty content, indicating that the
-row should be replaced with nothing.
+각 행에는 `DELETE` 요청을 서버로 보내어 행을 삭제할 수 있는 URL을 포함한 [`hx-delete`](@/attributes/hx-delete.md) 속성이 있는 버튼이 있습니다. 
+이 요청은 `200` 상태 코드와 빈 콘텐츠로 응답하여 해당 행을 아무것도 없는 상태로 교체해야 함을 나타냅니다.
 
 ```html
 <tr>
